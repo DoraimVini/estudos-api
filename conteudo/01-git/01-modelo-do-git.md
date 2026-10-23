@@ -36,6 +36,15 @@ Como cada commit aponta para o pai, o histórico é uma corrente que só cresce 
 
 ## Na prática
 
+Se for o seu primeiro repositório fora do `estudos-api`, configure antes o seu nome e e-mail para **todos** os repositórios (só uma vez). Use o e-mail *noreply* do GitHub, para não expor o seu e-mail pessoal:
+
+```bash
+git config --global user.name "Seu Nome"
+git config --global user.email "ID+usuario@users.noreply.github.com"
+```
+
+Sem isso, o primeiro `git commit` falha com *"Please tell me who you are"*.
+
 Crie uma pasta vazia, abra o terminal nela e rode um comando por vez, observando a saída:
 
 ```bash

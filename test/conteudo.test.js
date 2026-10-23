@@ -71,8 +71,9 @@ describe("GET /topicos/:id com conteúdo", () => {
   });
 
   it("GET /modulos/:id marca quais tópicos têm conteúdo", async () => {
-    const res = await request(app).get("/api/v1/modulos/1");
-    expect(res.body.topicos[0].tem_conteudo).toBe(true);
-    expect(res.body.topicos[1].tem_conteudo).toBe(false);
+    const git = await request(app).get("/api/v1/modulos/1");
+    expect(git.body.topicos.every((t) => t.tem_conteudo)).toBe(true);
+    const aws = await request(app).get("/api/v1/modulos/13");
+    expect(aws.body.topicos.some((t) => t.tem_conteudo)).toBe(false);
   });
 });
