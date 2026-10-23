@@ -1,5 +1,5 @@
 import { badRequest } from "./errors.js";
-import { NIVEIS, PRIORIDADES, STATUS } from "./db/database.js";
+import { NIVEIS, PRIORIDADES, STATUS } from "./constantes.js";
 
 export function parseId(value) {
   const id = Number(value);
