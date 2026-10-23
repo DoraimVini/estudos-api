@@ -32,7 +32,7 @@
       "evidencia": "Projetos tipados no GitHub",
       "onde_estudar": "Curso.dev; docs do TypeScript",
       "mes_inicio": 1,
-      "mes_fim": 3,
+      "mes_fim": 4,
       "hoje": null,
       "meta": 4,
       "status": "Não iniciado"
@@ -79,8 +79,8 @@
       "nome": "SQL / PostgreSQL (SELECT, JOIN, modelagem simples, migrations)",
       "evidencia": "Banco modelado e migrations versionadas",
       "onde_estudar": "Curso.dev; docs do PostgreSQL",
-      "mes_inicio": 4,
-      "mes_fim": 4,
+      "mes_inicio": 3,
+      "mes_fim": 3,
       "hoje": null,
       "meta": 4,
       "status": "Não iniciado"
@@ -116,7 +116,7 @@
       "evidencia": "App em produção com link no README",
       "onde_estudar": "Docs do Docker",
       "mes_inicio": 9,
-      "mes_fim": 9,
+      "mes_fim": 10,
       "hoje": null,
       "meta": 4,
       "status": "Não iniciado"
@@ -348,86 +348,6 @@
       "mes_fim": 12,
       "prioridade": "Alta",
       "status": "Em andamento"
-    },
-    {
-      "nome": "Git e GitHub avançado",
-      "plataforma": "Docs oficiais / gratuito",
-      "conteudo": "Branches, PRs, issues, revisão de código.",
-      "motivo": "Pedido em praticamente todas as vagas júnior.",
-      "mes_inicio": 1,
-      "mes_fim": 2,
-      "prioridade": "Alta",
-      "status": "Não iniciado"
-    },
-    {
-      "nome": "TypeScript",
-      "plataforma": "Docs oficiais / gratuito",
-      "conteudo": "Tipagem, uso com React e Node.",
-      "motivo": "Padrão no ecossistema JS.",
-      "mes_inicio": 3,
-      "mes_fim": 3,
-      "prioridade": "Alta",
-      "status": "Não iniciado"
-    },
-    {
-      "nome": "SQL / PostgreSQL",
-      "plataforma": "A escolher",
-      "conteudo": "SELECT, JOIN, modelagem, índices.",
-      "motivo": "Vagas júnior pedem SQL básico + integração por API.",
-      "mes_inicio": 4,
-      "mes_fim": 4,
-      "prioridade": "Alta",
-      "status": "Não iniciado"
-    },
-    {
-      "nome": "CS50",
-      "plataforma": "Harvard (gratuito)",
-      "conteudo": "Fundamentos de computação.",
-      "motivo": "Preenche lacunas de base.",
-      "mes_inicio": 5,
-      "mes_fim": 6,
-      "prioridade": "Média",
-      "status": "Não iniciado"
-    },
-    {
-      "nome": "React / Next.js",
-      "plataforma": "A escolher",
-      "conteudo": "Componentes, estado, SSR, rotas.",
-      "motivo": "Ecossistema JS domina vagas júnior no Brasil.",
-      "mes_inicio": 7,
-      "mes_fim": 7,
-      "prioridade": "Alta",
-      "status": "Não iniciado"
-    },
-    {
-      "nome": "Testes automatizados",
-      "plataforma": "A escolher",
-      "conteudo": "Unitários e integração.",
-      "motivo": "Diferencial de portfólio.",
-      "mes_inicio": 8,
-      "mes_fim": 8,
-      "prioridade": "Alta",
-      "status": "Não iniciado"
-    },
-    {
-      "nome": "Docker + deploy",
-      "plataforma": "A escolher",
-      "conteudo": "Containers, deploy em produção.",
-      "motivo": "Mostra que você entrega de ponta a ponta.",
-      "mes_inicio": 9,
-      "mes_fim": 9,
-      "prioridade": "Média",
-      "status": "Não iniciado"
-    },
-    {
-      "nome": "CI/CD (GitHub Actions)",
-      "plataforma": "Docs oficiais",
-      "conteudo": "Pipelines de teste e deploy.",
-      "motivo": "Já coberto em parte pelo Curso.dev.",
-      "mes_inicio": 10,
-      "mes_fim": 10,
-      "prioridade": "Média",
-      "status": "Não iniciado"
     },
     {
       "nome": "AWS Certified Cloud Practitioner",

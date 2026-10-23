@@ -1,6 +1,6 @@
 {
   "name": "estudos-api",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "description": "API REST para organizar meus estudos de dev full stack, a partir do plano de 3 anos",
   "type": "module",
   "main": "src/server.js",
@@ -12,10 +12,14 @@
     "dev": "node --no-warnings=ExperimentalWarning --watch src/server.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "db:reset": "node --no-warnings=ExperimentalWarning src/db/reset.js"
+    "db:reset": "node --no-warnings=ExperimentalWarning src/db/reset.js",
+    "plano": "node src/scripts/gerar-plano.js",
+    "exercicio": "node --no-warnings=ExperimentalWarning src/scripts/exercicio.js",
+    "links": "node src/scripts/verificar-links.js"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "marked": "18.0.14"
   },
   "devDependencies": {
     "supertest": "^7.1.0",
