@@ -42,6 +42,8 @@ Cada versão é uma branch `feat/` com PR para `develop`. A `v1.0` vai para a `m
 - Páginas Agora, Trilha, Progresso e Habilidades; Pomodoro que registra a sessão no tópico.
 - `iniciar.cmd`: dois cliques sobem a API e abrem o painel.
 - Pendente: no celular, o Pomodoro ocupa a primeira tela inteira.
+- **Conteúdo de estudo por tópico** (`conteudo/`), escrito a partir da documentação oficial, com a página do tópico no painel e `npm run links`.
+  Meses 1 e 2 completos (módulos 1–4, 37 tópicos). Os outros 77 tópicos entram antes do mês em que cada módulo começa.
 
 ### v0.6 · TypeScript
 - API convertida, `strict` ligado, `tsc --noEmit` no CI. Exercícios e painel continuam em JavaScript.
