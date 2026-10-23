@@ -2,8 +2,10 @@
 
 ## Quem sou e para que serve este projeto
 - Vini, Rio de Janeiro. Game dev (Unity/C#, Godot) migrando para dev full stack júnior.
-- Este projeto é ao mesmo tempo ferramenta e treino: uma API que diz o que estudar agora,
-  com base no meu plano de 3 anos (planilha `..\Plano_3_anos_Vini.xlsx`).
+- Este projeto é ao mesmo tempo ferramenta e treino: uma base condensada de estudos para usar
+  em paralelo ao Curso.dev, e uma API que diz o que estudar agora.
+- O que estudar em cada mês está em `PLANO.md` (trilha de módulos). A planilha `..\Plano_3_anos_Vini.xlsx`
+  fica para visto, orçamento, candidaturas e riscos.
 - Responda em português. Explique o porquê das mudanças: estou aprendendo.
 - Nos exercícios do README, me oriente e revise; não escreva a solução inteira se eu não pedir.
 
@@ -21,11 +23,16 @@
 ## Convenções
 - Nomes de domínio em português (skills/courses/sessions nas rotas por enquanto; campos em português).
 - Cada mudança com teste. Commits pequenos e descritivos em português.
+- Branches: `main` ← `develop` ← `feat/<nome>` ou `mod/<nome>`, uma por tarefa, com PR para `develop`.
 - Cada exercício do README numa branch própria com PR.
+- GitHub: `DoraimVini/estudos-api`. Commits com o e-mail noreply do GitHub.
 
 ## Onde estou no plano (out/2026)
 - Curso.dev (Filipe Deschamps) é a base; projeto do curso no repo `clone-tabnews`. Acesso ao curso em recuperação.
 - Também fiz o curso de Lógica/Python da EV.G (repo `evg-logic-python`).
-- Próximos passos de estudo: Git → JavaScript/TypeScript → SQL → Node/APIs (meses 1–6 do plano).
-- Graduação: avaliando tecnólogo em ADS EAD (provas presenciais são o ponto crítico, porque devo me mudar para os EUA em 2028).
-- Próximo exercício: exercício 1 do README (publicar no GitHub e passar a trabalhar com branches e PRs).
+- Exercício 1 do README concluído (out/2026): projeto no GitHub, fluxo com branches e PRs.
+- Próximo: módulos 1 e 2 do `PLANO.md` (Git e JavaScript moderno) a partir de 01/11/2026.
+  Mini-projetos de cada módulo ficam em repos próprios, não nesta API.
+- Inglês: fluente; só praticar conversação.
+- Graduação: decisão pendente (tecnólogo ADS EAD ou adiar). Provas presenciais são o ponto crítico,
+  porque devo me mudar para os EUA em 2028.
