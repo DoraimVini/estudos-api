@@ -60,7 +60,36 @@ Cada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recurs
 
 **Pronto quando:** Você explica o event loop e escreve código assíncrono sem `.then` aninhado.
 
-### 3. Node e APIs REST · mês 2
+### 3. HTML, CSS e acessibilidade · meses 1–6
+
+**Objetivo:** Construir páginas semânticas, responsivas e acessíveis sem depender de framework. Trilha paralela e leve: pratique nos freelas.
+
+**Tópicos**
+
+1. **HTML semântico:** `header`, `nav`, `main`, `article`, `section`, `footer`; títulos em ordem; por que nem tudo é `div`.
+2. **Formulários:** `label` ligado ao campo, tipos de `input`, validação nativa (`required`, `pattern`), `type` do botão.
+3. **Box model:** `margin`, `border`, `padding` e por que usar `box-sizing: border-box`.
+4. **Seletores e cascata:** Especificidade, herança e ordem; por que evitar `!important`.
+5. **Flexbox:** Eixo principal x cruzado, `justify-content`, `align-items`, `gap`.
+6. **Grid:** Linhas e colunas, unidade `fr`, `grid-template-areas`; quando usar Grid x Flexbox.
+7. **Responsividade:** Mobile first, `@media`, unidades relativas (`rem`, `%`, `vw`), imagens fluidas.
+8. **Variáveis CSS:** Custom properties (`--cor`), tema claro e escuro, nomes de classe consistentes.
+9. **Acessibilidade:** Texto alternativo, contraste, navegação por teclado, foco visível; ARIA só quando o HTML não basta.
+10. **DevTools e Lighthouse:** Inspecionar o layout no navegador e medir acessibilidade e performance.
+
+**Recursos**
+
+- [Learn HTML (web.dev)](https://web.dev/learn/html) (curso)
+- [Learn CSS (web.dev)](https://web.dev/learn/css) (curso)
+- [Learn Accessibility (web.dev)](https://web.dev/learn/accessibility) (curso)
+- [Flexbox Froggy](https://flexboxfroggy.com/#pt-br) (exercícios)
+- [Grid Garden](https://cssgridgarden.com/#pt-br) (exercícios)
+
+**Mini-projeto:** Página de portfólio pessoal sem framework: semântica, responsiva, com tema claro e escuro e nota 100 de acessibilidade no Lighthouse.
+
+**Pronto quando:** Você monta um layout responsivo com Grid e Flexbox sem consultar, e a página passa no Lighthouse de acessibilidade.
+
+### 4. Node e APIs REST · mês 2
 
 **Objetivo:** Construir uma API HTTP correta, validada e testada.
 
@@ -86,7 +115,7 @@ Cada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recurs
 
 **Pronto quando:** Você escolhe o status code certo sem consultar e cada rota tem teste de sucesso e de erro.
 
-### 4. TypeScript · mês 3
+### 5. TypeScript · mês 3
 
 **Objetivo:** Usar o sistema de tipos para pegar erros antes de rodar o código.
 
@@ -112,7 +141,7 @@ Cada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recurs
 
 **Pronto quando:** `tsc --noEmit` passa sem nenhum `any` explícito.
 
-### 5. SQL e PostgreSQL · mês 4
+### 6. SQL e PostgreSQL · mês 4
 
 **Objetivo:** Modelar um banco e escrever consultas sem depender de ORM.
 
@@ -139,7 +168,7 @@ Cada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recurs
 
 **Pronto quando:** Você resolve um JOIN com agregação de cabeça e explica por que cada índice existe.
 
-### 6. Fundamentos de computação · mês 5
+### 7. Fundamentos de computação · mês 5
 
 **Objetivo:** Entender o que acontece por baixo e analisar a eficiência do próprio código.
 
@@ -162,7 +191,7 @@ Cada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recurs
 
 **Pronto quando:** Você explica a complexidade das próprias soluções e escolhe a estrutura de dados certa.
 
-### 7. Autenticação e segurança básica · mês 6
+### 8. Autenticação e segurança básica · mês 6
 
 **Objetivo:** Proteger uma aplicação com login seguro e evitar as falhas mais comuns.
 
@@ -190,7 +219,7 @@ Cada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recurs
 
 ## Fase 2 · Portfólio (meses 7–12)
 
-### 8. React e Next.js · mês 7
+### 9. React e Next.js · mês 7
 
 **Objetivo:** Construir interfaces com React e publicá-las com Next.js.
 
@@ -204,19 +233,18 @@ Cada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recurs
 6. **App Router:** Pastas viram rotas; `layout`, `page`, rotas dinâmicas, `loading` e `error`.
 7. **Server x Client Components:** O que roda no servidor, quando usar `"use client"`, buscar dados no servidor.
 8. **Renderização:** SSR, SSG e revalidação: o problema que cada uma resolve.
-9. **Acessibilidade básica:** HTML semântico, `label` em todo campo, foco visível, contraste.
+9. **Acessibilidade em componentes:** Levar o foco ao abrir um modal, `aria-live` para mensagens, testar tudo só com o teclado.
 
 **Recursos**
 
 - [react.dev (Learn)](https://react.dev/learn) (documentação)
 - [Next.js Learn](https://nextjs.org/learn) (curso)
-- [Learn Accessibility (web.dev)](https://web.dev/learn/accessibility) (curso)
 
 **Mini-projeto:** Front do encurtador: login, lista de links e estatísticas de acesso.
 
 **Pronto quando:** Você explica quando um componente precisa de `"use client"` e busca dados sem `useEffect`.
 
-### 9. Testes · mês 8
+### 10. Testes · mês 8
 
 **Objetivo:** Testar com estratégia: rápido, confiável e no nível certo.
 
@@ -242,7 +270,7 @@ Cada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recurs
 
 **Pronto quando:** Você escreve o teste antes de corrigir um bug, e o CI roda os unitários e os e2e.
 
-### 10. Docker e deploy · mês 9
+### 11. Docker e deploy · mês 9
 
 **Objetivo:** Empacotar a aplicação e colocá-la no ar de forma reproduzível.
 
@@ -267,7 +295,7 @@ Cada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recurs
 
 **Pronto quando:** Qualquer pessoa sobe o projeto com `docker compose up`, e o app está no ar.
 
-### 11. CI/CD · mês 10
+### 12. CI/CD · mês 10
 
 **Objetivo:** Automatizar teste e deploy a cada mudança.
 
@@ -291,7 +319,7 @@ Cada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recurs
 
 **Pronto quando:** Um merge na `main` chega à produção sem nenhum passo manual.
 
-### 12. AWS Cloud Practitioner · meses 11–12
+### 13. AWS Cloud Practitioner · meses 11–12
 
 **Objetivo:** Entender os fundamentos de cloud e conquistar a primeira certificação.
 

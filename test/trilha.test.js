@@ -24,8 +24,18 @@ const idDoTopico = (moduloId, ordem) =>
   db.prepare("SELECT id FROM topicos WHERE modulo_id = ? AND ordem = ?").get(moduloId, ordem).id;
 
 describe("trilha.json (consistência do conteúdo)", () => {
-  it("tem os 12 módulos numerados em sequência", () => {
-    expect(TRILHA.modulos.map((m) => m.id)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+  it("tem os 13 módulos numerados em sequência", () => {
+    expect(TRILHA.modulos.map((m) => m.id)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
+  });
+
+  it("toda habilidade júnior com prazo no plano tem módulo", () => {
+    // Exceções: habilidades contínuas, praticadas no dia a dia e não estudadas em módulo.
+    const continuas = [/^Usar IA/, /^Pedir ajuda/];
+    const comModulo = new Set(TRILHA.modulos.map((m) => m.skill));
+    const semModulo = db.prepare("SELECT nome FROM skills WHERE nivel = 'Júnior'").all()
+      .map((s) => s.nome)
+      .filter((nome) => !comModulo.has(nome) && !continuas.some((re) => re.test(nome)));
+    expect(semModulo).toEqual([]);
   });
 
   it("todo módulo está completo", () => {
@@ -52,10 +62,10 @@ describe("trilha.json (consistência do conteúdo)", () => {
 });
 
 describe("GET /modulos", () => {
-  it("lista os 12 módulos com status e progresso calculados", async () => {
+  it("lista os 13 módulos com status e progresso calculados", async () => {
     const res = await request(app).get("/api/v1/modulos");
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(12);
+    expect(res.body).toHaveLength(13);
     expect(res.body[0]).toMatchObject({
       id: 1, nome: "Git e GitHub", status: "Não iniciado",
       progresso: { concluidos: 0, em_andamento: 0, total: TRILHA.modulos[0].topicos.length },
@@ -65,22 +75,22 @@ describe("GET /modulos", () => {
   it("marca como atrasado o módulo cujo prazo já passou", async () => {
     const res = await request(app).get("/api/v1/modulos");
     const git = res.body.find((m) => m.id === 1);
-    const sql = res.body.find((m) => m.id === 5);
+    const sql = res.body.find((m) => m.id === 6);
     expect(git).toMatchObject({ atrasado: true, meses_de_atraso: 3 });
     expect(sql).toMatchObject({ atrasado: false, meses_de_atraso: 0 });
   });
 
   it("filtra por fase e valida o filtro", async () => {
     const fase2 = await request(app).get("/api/v1/modulos").query({ fase: 2 });
-    expect(fase2.body.map((m) => m.id)).toEqual([8, 9, 10, 11, 12]);
+    expect(fase2.body.map((m) => m.id)).toEqual([9, 10, 11, 12, 13]);
     expect((await request(app).get("/api/v1/modulos").query({ fase: 3 })).status).toBe(400);
   });
 
   it("detalha um módulo com tópicos, recursos e habilidade", async () => {
-    const res = await request(app).get("/api/v1/modulos/5");
+    const res = await request(app).get("/api/v1/modulos/6");
     expect(res.status).toBe(200);
     expect(res.body.nome).toBe("SQL e PostgreSQL");
-    expect(res.body.topicos).toHaveLength(TRILHA.modulos[4].topicos.length);
+    expect(res.body.topicos).toHaveLength(TRILHA.modulos[5].topicos.length);
     expect(res.body.topicos.map((t) => t.ordem)).toEqual(res.body.topicos.map((_, i) => i + 1));
     expect(res.body.recursos.length).toBeGreaterThan(0);
     expect(res.body.skill_nome).toMatch(/^SQL/);
@@ -120,20 +130,19 @@ describe("PATCH /topicos/:id", () => {
 });
 
 describe("GET /proximo com a trilha", () => {
-  it("mostra atrasados primeiro e o módulo do mês", async () => {
+  it("mostra atrasados primeiro, depois quem termina antes", async () => {
     const res = await request(app).get("/api/v1/proximo");
-    const ids = res.body.modulos.map((m) => m.id);
-    expect(ids[0]).toBe(1); // Git: 3 meses de atraso
-    expect(ids).toContain(5); // SQL: mês 4
-    expect(ids).not.toContain(6); // CS50 começa no mês 5
-    expect(res.body.modulos.at(-1)).toMatchObject({ id: 5, atrasado: false });
+    // Mês 4. Atrasados: Git (3 meses), JS e Node (2), TypeScript (1).
+    // No prazo: SQL (termina no mês 4) e HTML/CSS (termina no 6). CS50 (7) só começa no mês 5.
+    expect(res.body.modulos.map((m) => m.id)).toEqual([1, 2, 4, 5, 6, 3]);
+    expect(res.body.modulos.at(-1)).toMatchObject({ id: 3, atrasado: false });
   });
 
   it("sugere tópicos em andamento antes dos outros", async () => {
-    await request(app).patch(`/api/v1/topicos/${idDoTopico(5, 1)}`).send({ status: "Concluído" });
-    await request(app).patch(`/api/v1/topicos/${idDoTopico(5, 4)}`).send({ status: "Em andamento" });
+    await request(app).patch(`/api/v1/topicos/${idDoTopico(6, 1)}`).send({ status: "Concluído" });
+    await request(app).patch(`/api/v1/topicos/${idDoTopico(6, 4)}`).send({ status: "Em andamento" });
     const res = await request(app).get("/api/v1/proximo");
-    const sql = res.body.modulos.find((m) => m.id === 5);
+    const sql = res.body.modulos.find((m) => m.id === 6);
     expect(sql.proximos_topicos.map((t) => t.ordem)).toEqual([4, 2, 3]);
   });
 
@@ -148,15 +157,15 @@ describe("GET /proximo com a trilha", () => {
 
 describe("sessões ligadas a tópicos", () => {
   it("herda a habilidade do módulo e aparece na listagem", async () => {
-    const topicoId = idDoTopico(5, 4);
+    const topicoId = idDoTopico(6, 4);
     const criada = await request(app).post("/api/v1/sessions")
       .send({ topico_id: topicoId, minutos: 50, data: "2027-02-14" });
     expect(criada.status).toBe(201);
-    const skillSql = db.prepare("SELECT skill_id FROM modulos WHERE id = 5").get().skill_id;
+    const skillSql = db.prepare("SELECT skill_id FROM modulos WHERE id = 6").get().skill_id;
     expect(criada.body).toMatchObject({ topico_id: topicoId, skill_id: skillSql });
 
     const lista = await request(app).get("/api/v1/sessions");
-    expect(lista.body[0]).toMatchObject({ topico_nome: "JOINs", modulo_id: 5 });
+    expect(lista.body[0]).toMatchObject({ topico_nome: "JOINs", modulo_id: 6 });
   });
 
   it("404 para tópico inexistente", async () => {
@@ -192,7 +201,7 @@ describe("sincronizarTrilha", () => {
     trilha.modulos.pop();
     sincronizarTrilha(db, trilha);
 
-    expect(db.prepare("SELECT COUNT(*) AS n FROM modulos").get().n).toBe(11);
+    expect(db.prepare("SELECT COUNT(*) AS n FROM modulos").get().n).toBe(TRILHA.modulos.length - 1);
     expect(db.prepare("SELECT COUNT(*) AS n FROM topicos WHERE modulo_id = 1").get().n)
       .toBe(TRILHA.modulos[0].topicos.length - 1);
   });
