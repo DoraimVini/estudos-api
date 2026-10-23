@@ -22,7 +22,7 @@ Cada versão é uma branch `feat/` com PR para `develop`. A `v1.0` vai para a `m
 - CI: GitHub Actions rodando `npm test` em cada PR.
 
 ### v0.3 · Trilha (antes de 01/11) ✅
-- `trilha.json` com os 12 módulos detalhados: tópicos, recursos, mini-projeto, critério de pronto.
+- `trilha.json` com os 13 módulos detalhados: tópicos, recursos, mini-projeto, critério de pronto.
 - Tabelas `modulos`, `topicos`, `recursos`; `modulos.skill_id` liga à habilidade da planilha.
 - `GET /modulos`, `GET /modulos/:id`, `PATCH /topicos/:id` (status do tópico).
 - Sessões ligadas a um tópico (`topico_id`).
@@ -31,9 +31,9 @@ Cada versão é uma branch `feat/` com PR para `develop`. A `v1.0` vai para a `m
 - `courses` reduzida a cursos externos (migração 003).
 
 ### v0.4 · Exercícios (antes de 01/11)
-- `exercicios/node/` (módulos 2 e 3) e `exercicios/sql/` (módulo 5), cada um com `README.md`, arquivo para completar e testes.
+- `exercicios/node/` (módulos 2 e 4) e `exercicios/sql/` (módulo 6), cada um com `README.md`, arquivo para completar e testes.
 - `npm run exercicio node/01` roda os testes daquele exercício e, se passarem, marca como resolvido.
-- `GET /exercicios?modulo=5&status=pendente`; `/proximo` sugere o próximo exercício.
+- `GET /exercicios?modulo=6&status=pendente`; `/proximo` sugere o próximo exercício.
 - Testes dos exercícios ficam fora do `npm test` (senão o CI falharia até você resolver).
 
 ### v0.5 · TypeScript

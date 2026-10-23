@@ -37,7 +37,8 @@
 - Curso.dev (Filipe Deschamps) é a base; projeto do curso no repo `clone-tabnews`. Acesso ao curso em recuperação.
 - Também fiz o curso de Lógica/Python da EV.G (repo `evg-logic-python`).
 - Exercício 1 do README concluído (out/2026): projeto no GitHub, fluxo com branches e PRs.
-- Próximo: módulos 1 e 2 do `PLANO.md` (Git e JavaScript moderno) a partir de 01/11/2026.
+- Próximo: módulos 1 e 2 do `PLANO.md` (Git e JavaScript moderno) a partir de 01/11/2026,
+  com o módulo 3 (HTML, CSS e acessibilidade) em paralelo até o mês 6.
   Mini-projetos de cada módulo ficam em repos próprios, não nesta API.
 - Inglês: fluente; só praticar conversação.
 - Graduação: decisão pendente (tecnólogo ADS EAD ou adiar). Provas presenciais são o ponto crítico,

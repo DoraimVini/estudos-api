@@ -118,7 +118,7 @@ main ← develop ← feat/<nome>   (funcionalidade nova, ex.: feat/post-skills)
 
 ## Trilha, roadmap e exercícios
 
-- [`PLANO.md`](PLANO.md): o que estudar em cada mês (12 módulos).
+- [`PLANO.md`](PLANO.md): o que estudar em cada mês (13 módulos).
 - [`ROADMAP.md`](ROADMAP.md): como a API evolui até a v1.0.
 - `exercicios/` (a partir da v0.4): exercícios de Node e SQL com testes automáticos.
 
