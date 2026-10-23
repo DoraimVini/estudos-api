@@ -15,19 +15,20 @@ Cada versão é uma branch `feat/` com PR para `develop`. A `v1.0` vai para a `m
 
 ## Versões
 
-### v0.2 · Fundação (antes de 01/11)
+### v0.2 · Fundação (antes de 01/11) ✅
 - Camadas: `routes/` (HTTP) → `services/` (regras) → `repositories/` (SQL).
 - Migrações versionadas (`db/migrations/NNN_nome.sql` + `PRAGMA user_version`).
 - Datas no fuso de São Paulo (hoje uma sessão após as 21h cai no dia seguinte).
 - CI: GitHub Actions rodando `npm test` em cada PR.
 
-### v0.3 · Trilha (antes de 01/11)
+### v0.3 · Trilha (antes de 01/11) ✅
 - `trilha.json` com os 12 módulos detalhados: tópicos, recursos, mini-projeto, critério de pronto.
 - Tabelas `modulos`, `topicos`, `recursos`; `modulos.skill_id` liga à habilidade da planilha.
 - `GET /modulos`, `GET /modulos/:id`, `PATCH /topicos/:id` (status do tópico).
 - Sessões ligadas a um tópico (`topico_id`).
 - `/proximo` passa a mostrar o módulo do mês, os próximos tópicos e as habilidades prioritárias.
 - `npm run plano` gera o `PLANO.md`.
+- `courses` reduzida a cursos externos (migração 003).
 
 ### v0.4 · Exercícios (antes de 01/11)
 - `exercicios/node/` (módulos 2 e 3) e `exercicios/sql/` (módulo 5), cada um com `README.md`, arquivo para completar e testes.
