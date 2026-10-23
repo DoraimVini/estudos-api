@@ -7,7 +7,8 @@
 - O que estudar em cada mês está em `PLANO.md` (trilha de módulos). A planilha `..\Plano_3_anos_Vini.xlsx`
   fica para visto, orçamento, candidaturas e riscos.
 - Responda em português. Explique o porquê das mudanças: estou aprendendo.
-- Nos exercícios do README, me oriente e revise; não escreva a solução inteira se eu não pedir.
+- A API é construída pelo Claude, seguindo o `ROADMAP.md`; eu reviso cada PR, então explique as decisões na descrição.
+- Nos exercícios de `exercicios/`, me oriente e revise; não escreva a solução se eu não pedir.
 
 ## Stack e comandos
 - Node.js >= 22.13 (usa `node:sqlite`, sem dependência nativa), Express 5, ESM.
@@ -24,7 +25,7 @@
 - Nomes de domínio em português (skills/courses/sessions nas rotas por enquanto; campos em português).
 - Cada mudança com teste. Commits pequenos e descritivos em português.
 - Branches: `main` ← `develop` ← `feat/<nome>` ou `mod/<nome>`, uma por tarefa, com PR para `develop`.
-- Cada exercício do README numa branch própria com PR.
+- Cada versão do `ROADMAP.md` numa branch `feat/` própria com PR.
 - GitHub: `DoraimVini/estudos-api`. Commits com o e-mail noreply do GitHub.
 
 ## Onde estou no plano (out/2026)
