@@ -1,13 +1,15 @@
-import { NIVEIS, PRIORIDADES } from "../db/database.js";
+import { NIVEIS, PRIORIDADES } from "../constantes.js";
+import { hojeISO } from "../datas.js";
 
 /**
- * Mês do plano (1 = mês de início). Antes do início, retorna 1.
+ * Mês do plano (1 = mês de início), contado no calendário de São Paulo. Antes do início, retorna 1.
  * @param {string} inicio data ISO do primeiro mês do plano (ex.: "2026-11-01")
- * @param {Date} hoje
+ * @param {Date} agora
  */
-export function mesDoPlano(inicio, hoje = new Date()) {
-  const [ano, mes] = inicio.split("-").map(Number);
-  const diff = (hoje.getFullYear() - ano) * 12 + (hoje.getMonth() + 1 - mes);
+export function mesDoPlano(inicio, agora = new Date()) {
+  const [anoInicio, mesInicio] = inicio.split("-").map(Number);
+  const [ano, mes] = hojeISO(agora).split("-").map(Number);
+  const diff = (ano - anoInicio) * 12 + (mes - mesInicio);
   return Math.max(1, diff + 1);
 }
 

@@ -2,7 +2,7 @@ import { Router } from "express";
 import { notFound, badRequest } from "../errors.js";
 import { parseId, validarNivel, validarNota, validarStatus, somenteCampos } from "../validators.js";
 
-export function skillsRouter(db) {
+export function skillsRouter(repos) {
   const router = Router();
 
   // GET /skills?nivel=Júnior&status=Em andamento&area=Backend
@@ -10,20 +10,11 @@ export function skillsRouter(db) {
     const { nivel, status, area } = req.query;
     validarNivel(nivel);
     validarStatus(status);
-
-    const filtros = [];
-    const params = [];
-    if (nivel) { filtros.push("nivel = ?"); params.push(nivel); }
-    if (status) { filtros.push("status = ?"); params.push(status); }
-    if (area) { filtros.push("area = ?"); params.push(area); }
-
-    const where = filtros.length ? `WHERE ${filtros.join(" AND ")}` : "";
-    const rows = db.prepare(`SELECT * FROM skills ${where} ORDER BY id`).all(...params);
-    res.json(rows);
+    res.json(repos.skills.listar({ nivel, status, area }));
   });
 
   router.get("/:id", (req, res) => {
-    const skill = db.prepare("SELECT * FROM skills WHERE id = ?").get(parseId(req.params.id));
+    const skill = repos.skills.buscar(parseId(req.params.id));
     if (!skill) throw notFound("Habilidade");
     res.json(skill);
   });
@@ -38,13 +29,9 @@ export function skillsRouter(db) {
     validarNota("meta", body.meta);
     validarStatus(body.status);
 
-    const atual = db.prepare("SELECT * FROM skills WHERE id = ?").get(id);
-    if (!atual) throw notFound("Habilidade");
-
-    const novo = { ...atual, ...body };
-    db.prepare("UPDATE skills SET hoje = ?, meta = ?, status = ? WHERE id = ?")
-      .run(novo.hoje, novo.meta, novo.status, id);
-    res.json(db.prepare("SELECT * FROM skills WHERE id = ?").get(id));
+    const skill = repos.skills.atualizar(id, body);
+    if (!skill) throw notFound("Habilidade");
+    res.json(skill);
   });
 
   return router;

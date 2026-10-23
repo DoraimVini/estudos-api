@@ -74,14 +74,21 @@ O mês do plano é calculado a partir de 01/11/2026 (mês 1). Para simular outro
 src/
   app.js              monta o Express (sem abrir porta; usado pelos testes)
   server.js           abre a porta
+  routes/             HTTP: lê a requisição, valida e responde
+  services/plano.js   regras de prioridade (funções puras)
+  repositories/       SQL: o único lugar que fala com o banco
+  db/database.js      abre o banco, migra e carrega o seed.json
+  db/migrate.js       aplica db/migrations/NNN_nome.sql em ordem (PRAGMA user_version)
+  db/seed.json        habilidades e cursos exportados da planilha
+  datas.js            datas no fuso de São Paulo
+  constantes.js       níveis, status e prioridades válidos
   errors.js           formato único de erro { erro, detalhes }
   validators.js       validação de entrada
-  db/database.js      schema SQLite + carga inicial do seed.json
-  db/seed.json        habilidades e cursos exportados da planilha
-  routes/             skills, courses, sessions, plano (/proximo e /progresso)
-  services/plano.js   regras de prioridade
-test/api.test.js      18 testes de integração e unidade
+test/                 testes de integração e unidade (Vitest + Supertest)
+.github/workflows/    CI: npm test em cada PR
 ```
+
+Mudou o schema? Crie `src/db/migrations/NNN_descricao.sql` com o próximo número. Nunca edite uma migração que já foi para a `develop`.
 
 ## Fluxo de branches
 
