@@ -83,6 +83,18 @@ src/
 test/api.test.js      18 testes de integração e unidade
 ```
 
+## Fluxo de branches
+
+```
+main ← develop ← feat   (funcionalidades novas)
+               ← mod    (modificações em algo que já existe)
+```
+
+- `main`: só recebe o que já foi testado em `develop`.
+- `develop`: integração. `feat` e `mod` saem dela e voltam para ela por PR.
+- Antes de começar um trabalho, atualize a branch com a `develop` (`git switch feat` e `git merge develop`).
+- Rode `npm test` antes de cada commit; o PR só é aceito com os testes passando.
+
 ## Exercícios para evoluir (na ordem do plano)
 
 Cada um treina uma habilidade da aba Habilidades. Faça com testes antes de considerar pronto.
