@@ -96,18 +96,10 @@ main ← develop ← feat/<nome>   (funcionalidade nova, ex.: feat/post-skills)
 - Depois do merge, apague a branch (`git branch -d feat/<nome>`); a próxima tarefa ganha outra.
 - Rode `npm test` antes de cada commit; o PR só é aceito com os testes passando.
 
-## Exercícios para evoluir (na ordem do plano)
+## Trilha, roadmap e exercícios
 
-Cada um treina uma habilidade da aba Habilidades. Faça com testes antes de considerar pronto.
+- [`PLANO.md`](PLANO.md): o que estudar em cada mês (12 módulos).
+- [`ROADMAP.md`](ROADMAP.md): como a API evolui até a v1.0.
+- `exercicios/` (a partir da v0.4): exercícios de Node e SQL com testes automáticos.
 
-1. **Git** (meses 1–2): suba o projeto para o GitHub e faça cada exercício abaixo numa branch com PR.
-2. **TypeScript** (mês 3): converta o projeto para TypeScript (`tsx` para rodar, `tsc --noEmit` no teste).
-3. **SQL** (mês 4): crie `GET /sessions/semanal` que agrupa minutos por semana com SQL puro.
-4. **API**: crie `POST /skills` para adicionar habilidades novas, com validação e testes.
-5. **Autenticação** (meses 6–10): proteja as rotas de escrita com login (senha com hash + JWT ou sessão).
-6. **React/Next** (mês 7): faça um front que mostra o `/proximo` e um botão "estudei 25 min" (Pomodoro).
-7. **PostgreSQL + Docker** (meses 4 e 9): troque o SQLite por PostgreSQL rodando num `docker-compose.yml`, com migrations versionadas.
-8. **CI/CD** (mês 10): GitHub Actions rodando `npm test` em cada PR; depois, deploy automático.
-9. **Observabilidade** (pleno): logs estruturados com id de requisição e tempo de resposta.
-
-Dica: não peça para a IA fazer o exercício inteiro. Use-a para tirar dúvidas e revisar, e garanta que você consegue explicar cada linha.
+Dica: não peça para a IA resolver o exercício. Use-a para tirar dúvidas e revisar, e garanta que você consegue explicar cada linha.
