@@ -1,5 +1,5 @@
 import { badRequest } from "./errors.js";
-import { NIVEIS, PRIORIDADES, STATUS, STATUS_TOPICO } from "./constantes.js";
+import { NIVEIS, PRIORIDADES, STATUS, STATUS_TOPICO, STATUS_EXERCICIO } from "./constantes.js";
 
 export function parseId(value) {
   const id = Number(value);
@@ -16,6 +16,12 @@ export function validarStatus(status) {
 export function validarStatusTopico(status) {
   if (status !== undefined && !STATUS_TOPICO.includes(status)) {
     throw badRequest(`status inválido para tópico. Use: ${STATUS_TOPICO.join(", ")}.`);
+  }
+}
+
+export function validarStatusExercicio(status) {
+  if (status !== undefined && !STATUS_EXERCICIO.includes(status)) {
+    throw badRequest(`status inválido para exercício. Use: ${STATUS_EXERCICIO.join(", ")}.`);
   }
 }
 

@@ -38,6 +38,17 @@ describe("trilha.json (consistência do conteúdo)", () => {
     expect(semModulo).toEqual([]);
   });
 
+  it("os meses de cada módulo cabem na janela da habilidade ligada", () => {
+    const skill = new Map(db.prepare("SELECT * FROM skills").all().map((s) => [s.nome, s]));
+    const foraDaJanela = TRILHA.modulos
+      .filter((m) => {
+        const s = skill.get(m.skill);
+        return m.mes_inicio < s.mes_inicio || m.mes_fim > s.mes_fim;
+      })
+      .map((m) => `${m.id}. ${m.nome} (meses ${m.mes_inicio}–${m.mes_fim})`);
+    expect(foraDaJanela).toEqual([]);
+  });
+
   it("todo módulo está completo", () => {
     for (const m of TRILHA.modulos) {
       expect(m.topicos.length, `módulo ${m.id}`).toBeGreaterThanOrEqual(5);
@@ -75,9 +86,11 @@ describe("GET /modulos", () => {
   it("marca como atrasado o módulo cujo prazo já passou", async () => {
     const res = await request(app).get("/api/v1/modulos");
     const git = res.body.find((m) => m.id === 1);
-    const sql = res.body.find((m) => m.id === 6);
+    const sql = res.body.find((m) => m.id === 5);
+    const ts = res.body.find((m) => m.id === 6);
     expect(git).toMatchObject({ atrasado: true, meses_de_atraso: 3 });
-    expect(sql).toMatchObject({ atrasado: false, meses_de_atraso: 0 });
+    expect(sql).toMatchObject({ atrasado: true, meses_de_atraso: 1 });
+    expect(ts).toMatchObject({ atrasado: false, meses_de_atraso: 0 });
   });
 
   it("filtra por fase e valida o filtro", async () => {
@@ -87,10 +100,10 @@ describe("GET /modulos", () => {
   });
 
   it("detalha um módulo com tópicos, recursos e habilidade", async () => {
-    const res = await request(app).get("/api/v1/modulos/6");
+    const res = await request(app).get("/api/v1/modulos/5");
     expect(res.status).toBe(200);
     expect(res.body.nome).toBe("SQL e PostgreSQL");
-    expect(res.body.topicos).toHaveLength(TRILHA.modulos[5].topicos.length);
+    expect(res.body.topicos).toHaveLength(TRILHA.modulos[4].topicos.length);
     expect(res.body.topicos.map((t) => t.ordem)).toEqual(res.body.topicos.map((_, i) => i + 1));
     expect(res.body.recursos.length).toBeGreaterThan(0);
     expect(res.body.skill_nome).toMatch(/^SQL/);
@@ -132,17 +145,17 @@ describe("PATCH /topicos/:id", () => {
 describe("GET /proximo com a trilha", () => {
   it("mostra atrasados primeiro, depois quem termina antes", async () => {
     const res = await request(app).get("/api/v1/proximo");
-    // Mês 4. Atrasados: Git (3 meses), JS e Node (2), TypeScript (1).
-    // No prazo: SQL (termina no mês 4) e HTML/CSS (termina no 6). CS50 (7) só começa no mês 5.
+    // Mês 4. Atrasados: Git (3 meses), JS e Node (2), SQL (1).
+    // No prazo: TypeScript (termina no mês 4) e HTML/CSS (termina no 6). CS50 (7) só começa no mês 5.
     expect(res.body.modulos.map((m) => m.id)).toEqual([1, 2, 4, 5, 6, 3]);
     expect(res.body.modulos.at(-1)).toMatchObject({ id: 3, atrasado: false });
   });
 
   it("sugere tópicos em andamento antes dos outros", async () => {
-    await request(app).patch(`/api/v1/topicos/${idDoTopico(6, 1)}`).send({ status: "Concluído" });
-    await request(app).patch(`/api/v1/topicos/${idDoTopico(6, 4)}`).send({ status: "Em andamento" });
+    await request(app).patch(`/api/v1/topicos/${idDoTopico(5, 1)}`).send({ status: "Concluído" });
+    await request(app).patch(`/api/v1/topicos/${idDoTopico(5, 4)}`).send({ status: "Em andamento" });
     const res = await request(app).get("/api/v1/proximo");
-    const sql = res.body.modulos.find((m) => m.id === 6);
+    const sql = res.body.modulos.find((m) => m.id === 5);
     expect(sql.proximos_topicos.map((t) => t.ordem)).toEqual([4, 2, 3]);
   });
 
@@ -157,15 +170,15 @@ describe("GET /proximo com a trilha", () => {
 
 describe("sessões ligadas a tópicos", () => {
   it("herda a habilidade do módulo e aparece na listagem", async () => {
-    const topicoId = idDoTopico(6, 4);
+    const topicoId = idDoTopico(5, 4);
     const criada = await request(app).post("/api/v1/sessions")
       .send({ topico_id: topicoId, minutos: 50, data: "2027-02-14" });
     expect(criada.status).toBe(201);
-    const skillSql = db.prepare("SELECT skill_id FROM modulos WHERE id = 6").get().skill_id;
+    const skillSql = db.prepare("SELECT skill_id FROM modulos WHERE id = 5").get().skill_id;
     expect(criada.body).toMatchObject({ topico_id: topicoId, skill_id: skillSql });
 
     const lista = await request(app).get("/api/v1/sessions");
-    expect(lista.body[0]).toMatchObject({ topico_nome: "JOINs", modulo_id: 6 });
+    expect(lista.body[0]).toMatchObject({ topico_nome: "JOINs", modulo_id: 5 });
   });
 
   it("404 para tópico inexistente", async () => {
@@ -241,5 +254,18 @@ describe("cursos externos (migração 003)", () => {
     migrar(antigo);
     const nomes = antigo.prepare("SELECT nome FROM courses").all().map((c) => c.nome);
     expect(nomes).toEqual(["Curso.dev"]);
+  });
+
+  it("migração 005 ajusta as janelas das habilidades em banco antigo", () => {
+    const antigo = new DatabaseSync(":memory:");
+    antigo.exec(readFileSync(new URL("../src/db/migrations/001_inicial.sql", import.meta.url), "utf8"));
+    antigo.exec("PRAGMA user_version = 1");
+    antigo.exec(`INSERT INTO skills (nivel, area, nome, mes_inicio, mes_fim, meta) VALUES
+      ('Júnior', 'Dados', 'SQL / PostgreSQL (SELECT, JOIN, modelagem simples, migrations)', 4, 4, 4),
+      ('Júnior', 'Entrega', 'Deploy, variáveis de ambiente, Docker básico', 9, 9, 4)`);
+
+    migrar(antigo);
+    const janelas = antigo.prepare("SELECT mes_inicio, mes_fim FROM skills ORDER BY id").all().map((s) => ({ ...s }));
+    expect(janelas).toEqual([{ mes_inicio: 3, mes_fim: 3 }, { mes_inicio: 9, mes_fim: 10 }]);
   });
 });

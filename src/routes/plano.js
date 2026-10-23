@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { NIVEIS } from "../constantes.js";
 import { mesDoPlano, proximasPrioridades } from "../services/plano.js";
-import { modulosEmFoco } from "../services/trilha.js";
+import { modulosEmFoco, exerciciosEmFoco } from "../services/trilha.js";
 import { hojeISO, somarDias } from "../datas.js";
 import { badRequest } from "../errors.js";
 
@@ -26,7 +26,10 @@ export function planoRouter(repos, { agora = () => new Date() } = {}) {
     const { habilidades, cursos_do_mes } =
       proximasPrioridades(repos.skills.listar(), repos.courses.listar(), mes, limite);
     const modulos = modulosEmFoco(repos.trilha.listarModulos(), repos.trilha.topicosPorModulo(), mes, limite);
-    res.json({ mes_do_plano: mes, modulos, habilidades, cursos_do_mes });
+    const exercicios = exerciciosEmFoco(modulos, repos.exercicios.listar({ status: "Pendente" }), limite)
+      .map(({ id, slug, titulo, modulo_id, topico_nome }) =>
+        ({ id, slug, titulo, modulo_id, topico_nome, comando: `npm run exercicio ${slug}` }));
+    res.json({ mes_do_plano: mes, modulos, exercicios, habilidades, cursos_do_mes });
   });
 
   // GET /progresso -> resumo por nível e horas estudadas
@@ -40,6 +43,7 @@ export function planoRouter(repos, { agora = () => new Date() } = {}) {
     res.json({
       mes_do_plano: mes,
       trilha: repos.trilha.resumo(),
+      exercicios: repos.exercicios.resumo(),
       por_nivel: porNivel,
       minutos_ultimos_7_dias: minutos,
       horas_ultimos_7_dias: Math.round((minutos / 60) * 10) / 10,

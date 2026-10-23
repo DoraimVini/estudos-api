@@ -1,0 +1,1 @@
+-- Leia o README.md desta pasta e escreva seu CREATE TABLE abaixo.

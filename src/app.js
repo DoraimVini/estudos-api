@@ -5,6 +5,7 @@ import { coursesRouter } from "./routes/courses.js";
 import { sessionsRouter } from "./routes/sessions.js";
 import { planoRouter } from "./routes/plano.js";
 import { trilhaRouter } from "./routes/trilha.js";
+import { exerciciosRouter } from "./routes/exercicios.js";
 import { errorHandler } from "./errors.js";
 
 /**
@@ -25,6 +26,7 @@ export function createApp(db, opcoes = {}) {
   v1.use("/skills", skillsRouter(repos));
   v1.use("/courses", coursesRouter(repos));
   v1.use("/sessions", sessionsRouter(repos, opcoes));
+  v1.use("/exercicios", exerciciosRouter(repos));
   v1.use("/", planoRouter(repos, opcoes));
   v1.use("/", trilhaRouter(repos, opcoes));
 

@@ -9,11 +9,13 @@
 - Responda em português. Explique o porquê das mudanças: estou aprendendo.
 - A API é construída pelo Claude, seguindo o `ROADMAP.md`; eu reviso cada PR, então explique as decisões na descrição.
 - Nos exercícios de `exercicios/`, me oriente e revise; não escreva a solução se eu não pedir.
+  Nunca commitar solução em `exercicios/` (um teste da API verifica que os esqueletos continuam vazios).
 
 ## Stack e comandos
 - Node.js >= 22.13 (usa `node:sqlite`, sem dependência nativa), Express 5, ESM.
 - Testes: Vitest + Supertest (`test/*.test.js`). Rodar sempre antes de commitar.
-- `npm install` · `npm run dev` · `npm test` · `npm run db:reset` · `npm run plano`
+  Testes de `exercicios/` rodam à parte (`vitest.exercicios.config.js`), fora do `npm test` e do CI.
+- `npm install` · `npm run dev` · `npm test` · `npm run db:reset` · `npm run plano` · `npm run exercicio [slug]`
 - Banco: `estudos.db` (SQLite, fora do Git). Dados iniciais em `src/db/seed.json`, exportados da planilha.
 
 ## Arquitetura
@@ -25,6 +27,8 @@
 - Regra de prioridade em `src/services/plano.js` (`pontuarSkill`, `proximasPrioridades`). Plano começa em 01/11/2026 = mês 1.
 - Trilha: `sincronizarTrilha` (em `src/db/trilha.js`) roda a cada abertura do banco; tópico = (módulo, ordem).
   Status do módulo é derivado dos tópicos (`src/services/trilha.js`), nunca guardado.
+- Exercícios: catálogo em `exercicios/catalogo.json`, sincronizado por slug (`src/db/exercicios.js`).
+  Só `npm run exercicio` marca como Resolvido (não há PATCH de propósito).
 
 ## Convenções
 - Nomes de domínio em português (skills/courses/sessions nas rotas por enquanto; campos em português).

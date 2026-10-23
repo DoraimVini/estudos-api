@@ -115,33 +115,7 @@ Cada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recurs
 
 **Pronto quando:** Você escolhe o status code certo sem consultar e cada rota tem teste de sucesso e de erro.
 
-### 5. TypeScript · mês 3
-
-**Objetivo:** Usar o sistema de tipos para pegar erros antes de rodar o código.
-
-**Tópicos**
-
-1. **Por que tipos:** O que o TS verifica, o que não verifica (tipos somem no runtime) e o papel do `tsc`.
-2. **Tipos básicos:** Primitivos, arrays, tuplas, objetos, `unknown` x `any`, inferência.
-3. **type x interface:** Quando usar cada um; propriedades opcionais e `readonly`.
-4. **Unions e narrowing:** Uniões, estreitar com `typeof`/`in`/discriminante, `never` para checar exaustividade.
-5. **Funções tipadas:** Parâmetros, retorno, callbacks e funções que aceitam mais de um formato.
-6. **Generics:** Funções e tipos genéricos, restrições com `extends`.
-7. **Utility types:** `Partial`, `Pick`, `Omit`, `Record`, `ReturnType`.
-8. **Configuração:** `tsconfig.json`, `strict`, `tsc --noEmit` no CI, rodar com `tsx`.
-9. **Dados de fora:** Tipar `Request`/`Response` do Express; dado externo é `unknown` até ser validado.
-
-**Recursos**
-
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) (documentação)
-- [TypeScript Playground](https://www.typescriptlang.org/play) (ferramenta)
-- [type-challenges](https://github.com/type-challenges/type-challenges) (exercícios)
-
-**Mini-projeto:** Converter o encurtador para TypeScript com `strict` ligado.
-
-**Pronto quando:** `tsc --noEmit` passa sem nenhum `any` explícito.
-
-### 6. SQL e PostgreSQL · mês 4
+### 5. SQL e PostgreSQL · mês 3
 
 **Objetivo:** Modelar um banco e escrever consultas sem depender de ORM.
 
@@ -164,9 +138,35 @@ Cada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recurs
 - [PostgreSQL Exercises](https://pgexercises.com/) (exercícios)
 - [Tutorial do PostgreSQL](https://www.postgresql.org/docs/current/tutorial.html) (documentação)
 
-**Mini-projeto:** Banco de uma biblioteca (livros, autores, leitores, empréstimos) com 20 consultas comentadas.
+**Mini-projeto:** Dar banco ao encurtador: trocar a memória por SQLite com migrações (links e acessos) e escrever 10 consultas de estatística comentadas.
 
 **Pronto quando:** Você resolve um JOIN com agregação de cabeça e explica por que cada índice existe.
+
+### 6. TypeScript · mês 4
+
+**Objetivo:** Usar o sistema de tipos para pegar erros antes de rodar o código.
+
+**Tópicos**
+
+1. **Por que tipos:** O que o TS verifica, o que não verifica (tipos somem no runtime) e o papel do `tsc`.
+2. **Tipos básicos:** Primitivos, arrays, tuplas, objetos, `unknown` x `any`, inferência.
+3. **type x interface:** Quando usar cada um; propriedades opcionais e `readonly`.
+4. **Unions e narrowing:** Uniões, estreitar com `typeof`/`in`/discriminante, `never` para checar exaustividade.
+5. **Funções tipadas:** Parâmetros, retorno, callbacks e funções que aceitam mais de um formato.
+6. **Generics:** Funções e tipos genéricos, restrições com `extends`.
+7. **Utility types:** `Partial`, `Pick`, `Omit`, `Record`, `ReturnType`.
+8. **Configuração:** `tsconfig.json`, `strict`, `tsc --noEmit` no CI, rodar com `tsx`.
+9. **Dados de fora:** Tipar `Request`/`Response` do Express e linhas do banco; dado externo é `unknown` até ser validado.
+
+**Recursos**
+
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) (documentação)
+- [TypeScript Playground](https://www.typescriptlang.org/play) (ferramenta)
+- [type-challenges](https://github.com/type-challenges/type-challenges) (exercícios)
+
+**Mini-projeto:** Converter o encurtador (já com banco) para TypeScript com `strict` ligado.
+
+**Pronto quando:** `tsc --noEmit` passa sem nenhum `any` explícito.
 
 ### 7. Fundamentos de computação · mês 5
 
@@ -244,13 +244,13 @@ Cada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recurs
 
 **Pronto quando:** Você explica quando um componente precisa de `"use client"` e busca dados sem `useEffect`.
 
-### 10. Testes · mês 8
+### 10. Testes avançados: estratégia e e2e · mês 8
 
-**Objetivo:** Testar com estratégia: rápido, confiável e no nível certo.
+**Objetivo:** Ir além dos testes de API que você escreve desde o módulo 4: estratégia, componentes e e2e.
 
 **Tópicos**
 
-1. **Por que testar:** Teste como rede de segurança para refatorar; o que vale e o que não vale testar.
+1. **O que testar:** Teste como rede de segurança para refatorar; o que vale e o que não vale testar.
 2. **Pirâmide de testes:** Muitos unitários, alguns de integração, poucos e2e; custo x confiança.
 3. **Vitest:** `describe`/`it`/`expect`, `beforeEach`, testes isolados e determinísticos.
 4. **Dublês:** Mock, stub e fake; congelar a data (como o `opcoes.agora` deste projeto).

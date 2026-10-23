@@ -25,6 +25,7 @@ export function trilhaRouter(repos, { agora = () => new Date() } = {}) {
       ...resumirModulo(modulo, lerMes(repos, req.query, agora)),
       topicos: repos.trilha.topicosDoModulo(id),
       recursos: repos.trilha.recursosDoModulo(id),
+      exercicios: repos.exercicios.listar({ modulo: id }),
     });
   });
 

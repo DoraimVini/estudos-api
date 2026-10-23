@@ -22,6 +22,17 @@ export function resumirModulo(modulo, mes) {
 }
 
 /**
+ * Próximos exercícios pendentes, na ordem dos módulos em foco (atrasados primeiro).
+ * @param {{ id: number }[]} modulosFoco  resultado de modulosEmFoco
+ * @param {object[]} pendentes  exercícios com status 'Pendente', em ordem de catálogo
+ */
+export function exerciciosEmFoco(modulosFoco, pendentes, limite = 3) {
+  return modulosFoco
+    .flatMap((m) => pendentes.filter((e) => e.modulo_id === m.id))
+    .slice(0, limite);
+}
+
+/**
  * Módulos para estudar no mês: os que estão na janela do mês e os atrasados ainda não concluídos.
  * Cada um traz os próximos tópicos a estudar (os em andamento primeiro, depois na ordem da trilha).
  * Atrasados vêm antes; depois, quem termina antes no plano.
