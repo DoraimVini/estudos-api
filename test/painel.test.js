@@ -22,14 +22,16 @@ describe("painel web (public/)", () => {
     expect(js.headers["content-type"]).toMatch(/javascript/);
   });
 
-  it("todo import relativo dos módulos aponta para um arquivo que existe", async () => {
+  it("todo import dos módulos aponta para um arquivo que o servidor entrega", async () => {
     // O navegador não avisa no build (não há build): um import quebrado só apareceria em produção.
     const arquivos = ["js/", "js/paginas/"].flatMap((pasta) =>
       readdirSync(new URL(pasta, PUBLICO)).filter((n) => n.endsWith(".js")).map((n) => pasta + n));
     for (const arquivo of arquivos) {
       const codigo = readFileSync(new URL(arquivo, PUBLICO), "utf8");
-      for (const [, caminho] of codigo.matchAll(/from "(\.{1,2}\/[^"]+)"/g)) {
-        const alvo = new URL(caminho, new URL(arquivo, PUBLICO)).pathname.replace(/^.*\/public\//, "/");
+      for (const [, caminho] of codigo.matchAll(/from "((?:\.{1,2})?\/[^"]+)"/g)) {
+        const alvo = caminho.startsWith("/") // absoluto, ex.: /vendor/marked/marked.esm.js
+          ? caminho
+          : new URL(caminho, new URL(arquivo, PUBLICO)).pathname.replace(/^.*\/public\//, "/");
         const res = await request(app).get(alvo);
         expect(res.status, `${arquivo} importa ${caminho}`).toBe(200);
       }

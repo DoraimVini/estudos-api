@@ -11,6 +11,8 @@ import { errorHandler } from "./errors.js";
 
 // Painel web (HTML, CSS e JS puros) servido na raiz: http://localhost:3000
 const PUBLICO = fileURLToPath(new URL("../public", import.meta.url));
+// Biblioteca de Markdown usada pela página de tópico, servida direto do node_modules (sem build).
+const MARKED = fileURLToPath(new URL("../node_modules/marked/lib", import.meta.url));
 
 /**
  * Monta o app sem abrir porta: os testes usam esta função com um banco em memória.
@@ -22,6 +24,7 @@ export function createApp(db, opcoes = {}) {
   const repos = criarRepositorios(db);
   const app = express();
   app.use(express.static(PUBLICO));
+  app.use("/vendor/marked", express.static(MARKED));
   app.use(express.json());
 
   const v1 = express.Router();

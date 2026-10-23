@@ -5,15 +5,22 @@ import { escolherTopico } from "./pomodoro.js";
 
 const STATUS_TOPICO = ["Não iniciado", "Em andamento", "Concluído"];
 
-/** Botão "Estudar" + seletor de status de um tópico. */
-export function acoesDoTopico(topico, nomeDoModulo) {
-  const dados = `data-topico="${topico.id}" data-nome="${esc(topico.nome)}"
-    data-modulo="${esc(nomeDoModulo)}" data-status="${esc(topico.status)}"`;
-  const botoesStatus = STATUS_TOPICO.map((s) => `<button type="button" data-acao="status-topico"
+/** Dados do tópico que o Pomodoro precisa, em atributos data-*. */
+export const dadosDoTopico = (topico, nomeDoModulo) => `data-topico="${topico.id}" data-nome="${esc(topico.nome)}"
+  data-modulo="${esc(nomeDoModulo)}" data-status="${esc(topico.status)}"`;
+
+/** Botões de status (Não iniciado / Em andamento / Concluído) de um tópico. */
+export function statusDoTopico(topico) {
+  const botoes = STATUS_TOPICO.map((s) => `<button type="button" data-acao="status-topico"
     data-topico="${topico.id}" data-novo="${esc(s)}" aria-pressed="${s === topico.status}">${esc(s)}</button>`).join("");
+  return `<div class="segmentado" role="group" aria-label="Status de ${esc(topico.nome)}">${botoes}</div>`;
+}
+
+/** Nas listas: "Estudar" abre a página do tópico; ao lado, o status. */
+export function acoesDoTopico(topico) {
   return `<div class="acoes">
-    <button type="button" class="primario" data-acao="estudar" ${dados}>Estudar</button>
-    <div class="segmentado" role="group" aria-label="Status de ${esc(topico.nome)}">${botoesStatus}</div>
+    <a class="botao primario" href="#/topico/${topico.id}">Estudar</a>
+    ${statusDoTopico(topico)}
   </div>`;
 }
 
@@ -25,7 +32,7 @@ export function comandoDoExercicio(exercicio) {
 }
 
 export const acoesComuns = {
-  estudar(el) {
+  cronometrar(el) {
     const { topico, nome, modulo, status } = el.dataset;
     escolherTopico({ id: Number(topico), nome, modulo, status });
   },

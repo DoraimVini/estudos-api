@@ -6,8 +6,11 @@ import agora from "./paginas/agora.js";
 import trilha from "./paginas/trilha.js";
 import progresso from "./paginas/progresso.js";
 import habilidades from "./paginas/habilidades.js";
+import topico from "./paginas/topico.js";
 
-const PAGINAS = { agora, trilha, progresso, habilidades };
+const PAGINAS = { agora, trilha, progresso, habilidades, topico };
+// Páginas sem aba própria no menu: qual aba fica marcada.
+const ABA_DA_PAGINA = { topico: "trilha" };
 const conteudo = document.getElementById("conteudo");
 let paginaAtual = agora;
 
@@ -21,11 +24,12 @@ function lerRota() {
 async function mostrar({ navegando = false } = {}) {
   const { nome, parametro } = lerRota();
   paginaAtual = PAGINAS[nome];
+  const aba = ABA_DA_PAGINA[nome] ?? nome;
   document.querySelectorAll("[data-rota]").forEach((link) => {
-    if (link.dataset.rota === nome) link.setAttribute("aria-current", "page");
+    if (link.dataset.rota === aba) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
   });
-  if (navegando) conteudo.innerHTML = `<p class="carregando">Carregando…</p>`;
+  if (navegando || !conteudo.innerHTML) conteudo.innerHTML = `<p class="carregando">Carregando…</p>`;
 
   try {
     conteudo.innerHTML = await paginaAtual.render(parametro);

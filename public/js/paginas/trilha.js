@@ -33,10 +33,11 @@ async function detalhe(id) {
   const topicos = m.topicos.map((t) => `
     <li>
       <div>
-        <div class="titulo"><strong>${t.ordem}. ${esc(t.nome)}</strong></div>
+        <div class="titulo"><strong>${t.ordem}. ${esc(t.nome)}</strong>
+          ${t.tem_conteudo ? "" : `<span class="chip">só resumo</span>`}</div>
         <p>${md(t.descricao)}</p>
       </div>
-      ${acoesDoTopico(t, m.nome)}
+      ${acoesDoTopico(t)}
     </li>`).join("");
 
   const recursos = m.recursos.map((r) => `
