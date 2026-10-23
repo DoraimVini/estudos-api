@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "painel-demo",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--no-warnings=ExperimentalWarning", "src/server.js"],
+      "env": { "DB_PATH": "demo.db", "PORT": "3100" },
+      "port": 3100
+    }
+  ]
+}

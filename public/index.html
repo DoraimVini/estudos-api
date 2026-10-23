@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estudos</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="topo">
+    <a class="marca" href="#/agora">estudos<span>.api</span></a>
+    <nav aria-label="Principal">
+      <a href="#/agora" data-rota="agora">Agora</a>
+      <a href="#/trilha" data-rota="trilha">Trilha</a>
+      <a href="#/progresso" data-rota="progresso">Progresso</a>
+      <a href="#/habilidades" data-rota="habilidades">Habilidades</a>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <main id="conteudo" tabindex="-1"></main>
+
+    <aside class="pomodoro" aria-labelledby="pomo-titulo">
+      <h2 id="pomo-titulo">Pomodoro</h2>
+      <p class="pomo-topico" id="pomo-topico">Escolha um tópico com o botão <strong>Estudar</strong>.</p>
+      <p class="pomo-tempo" id="pomo-tempo">25:00</p>
+      <div class="pomo-presets" role="group" aria-label="Duração do pomodoro">
+        <button type="button" data-min="25" aria-pressed="true">25 min</button>
+        <button type="button" data-min="50" aria-pressed="false">50 min</button>
+      </div>
+      <div class="pomo-acoes">
+        <button type="button" id="pomo-iniciar" class="primario">Iniciar</button>
+        <button type="button" id="pomo-zerar">Zerar</button>
+      </div>
+      <form id="pomo-form" class="pomo-form">
+        <label for="pomo-minutos">Minutos estudados</label>
+        <input id="pomo-minutos" type="number" min="1" max="1440" required>
+        <label for="pomo-notas">Notas (opcional)</label>
+        <textarea id="pomo-notas" rows="2" placeholder="O que ficou claro? O que travou?"></textarea>
+        <button type="submit" class="primario">Registrar sessão</button>
+      </form>
+    </aside>
+  </div>
+
+  <div id="aviso" class="aviso" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

@@ -37,21 +37,26 @@ Cada versão é uma branch `feat/` com PR para `develop`. A `v1.0` vai para a `m
 - `GET /exercicios?modulo=5&status=Pendente`, `GET /exercicios/:id` (com enunciado); `/proximo` sugere os próximos.
 - Testes dos exercícios ficam fora do `npm test` (senão o CI falharia até você resolver).
 
-### v0.5 · TypeScript
-- Projeto convertido, `strict` ligado, `tsc --noEmit` no CI. Exercícios continuam em JavaScript.
+### v0.5 · Painel web ✅ (adiantado: sem ele, não dava para estudar)
+- HTML, CSS e módulos JS puros em `public/`, servidos pela própria API (sem build, sem dependência nova).
+- Páginas Agora, Trilha, Progresso e Habilidades; Pomodoro que registra a sessão no tópico.
+- `iniciar.cmd`: dois cliques sobem a API e abrem o painel.
+- Pendente: no celular, o Pomodoro ocupa a primeira tela inteira.
 
-### v0.6 · PostgreSQL + Docker
+### v0.6 · TypeScript
+- API convertida, `strict` ligado, `tsc --noEmit` no CI. Exercícios e painel continuam em JavaScript.
+
+### v0.7 · PostgreSQL + Docker
 - `docker-compose.yml` com PostgreSQL; migrações reescritas para PostgreSQL.
 - Exercícios de SQL rodam em PostgreSQL.
 
-### v0.7 · Autenticação
+### v0.8 · Autenticação
 - Um usuário (você): senha com hash, sessão em cookie, rotas protegidas exceto `/status`.
 
-### v0.8 · Front
-- Next.js em `web/` (API vai para `api/`, com npm workspaces).
-- Telas: o que estudar agora, trilha com tópicos, registro de sessão (Pomodoro), exercícios.
+### v0.9 · Front em Next.js
+- Substitui o painel da v0.5: Next.js em `web/` (API vai para `api/`, com npm workspaces).
 
-### v0.9 · Deploy
+### v0.10 · Deploy
 - Deploy automático a cada merge na `main`. Plataforma a escolher (precisa de conta sua).
 
 ### v1.0 · Observabilidade e release
@@ -59,6 +64,6 @@ Cada versão é uma branch `feat/` com PR para `develop`. A `v1.0` vai para a `m
 - PR de `develop` para `main`: primeiro release.
 
 ## Decisões adiadas
-- **v0.6:** PostgreSQL também nos testes (container no CI) ou só em dev e produção.
-- **v0.9:** plataforma de deploy (Render, Fly.io, Railway…).
+- **v0.7:** PostgreSQL também nos testes (container no CI) ou só em dev e produção.
+- **v0.10:** plataforma de deploy (Render, Fly.io, Railway…).
 - **Sem versão:** pré-requisitos entre módulos (`modulos.depende_de`), com o `/proximo` respeitando dependências e não só prazos. Hoje a ordem dos meses já segue as dependências, e um teste garante que cada módulo cabe na janela da sua habilidade.

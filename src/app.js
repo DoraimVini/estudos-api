@@ -1,4 +1,5 @@
 import express from "express";
+import { fileURLToPath } from "node:url";
 import { criarRepositorios } from "./repositories/index.js";
 import { skillsRouter } from "./routes/skills.js";
 import { coursesRouter } from "./routes/courses.js";
@@ -7,6 +8,9 @@ import { planoRouter } from "./routes/plano.js";
 import { trilhaRouter } from "./routes/trilha.js";
 import { exerciciosRouter } from "./routes/exercicios.js";
 import { errorHandler } from "./errors.js";
+
+// Painel web (HTML, CSS e JS puros) servido na raiz: http://localhost:3000
+const PUBLICO = fileURLToPath(new URL("../public", import.meta.url));
 
 /**
  * Monta o app sem abrir porta: os testes usam esta função com um banco em memória.
@@ -17,6 +21,7 @@ import { errorHandler } from "./errors.js";
 export function createApp(db, opcoes = {}) {
   const repos = criarRepositorios(db);
   const app = express();
+  app.use(express.static(PUBLICO));
   app.use(express.json());
 
   const v1 = express.Router();
