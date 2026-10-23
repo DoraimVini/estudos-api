@@ -4,16 +4,16 @@
 - Vini, Rio de Janeiro. Game dev (Unity/C#, Godot) migrando para dev full stack júnior.
 - Este projeto é ao mesmo tempo ferramenta e treino: uma base condensada de estudos para usar
   em paralelo ao Curso.dev, e uma API que diz o que estudar agora.
-- O que estudar em cada mês está em `PLANO.md` (trilha de módulos). A planilha `..\Plano_3_anos_Vini.xlsx`
-  fica para visto, orçamento, candidaturas e riscos.
+- O que estudar em cada mês está na trilha: fonte em `src/db/trilha.json`, `PLANO.md` gerado por `npm run plano`
+  (nunca editar o `PLANO.md` à mão). A planilha `..\Plano_3_anos_Vini.xlsx` fica para visto, orçamento, candidaturas e riscos.
 - Responda em português. Explique o porquê das mudanças: estou aprendendo.
 - A API é construída pelo Claude, seguindo o `ROADMAP.md`; eu reviso cada PR, então explique as decisões na descrição.
 - Nos exercícios de `exercicios/`, me oriente e revise; não escreva a solução se eu não pedir.
 
 ## Stack e comandos
 - Node.js >= 22.13 (usa `node:sqlite`, sem dependência nativa), Express 5, ESM.
-- Testes: Vitest + Supertest (`test/api.test.js`). Rodar sempre antes de commitar.
-- `npm install` · `npm run dev` · `npm test` · `npm run db:reset`
+- Testes: Vitest + Supertest (`test/*.test.js`). Rodar sempre antes de commitar.
+- `npm install` · `npm run dev` · `npm test` · `npm run db:reset` · `npm run plano`
 - Banco: `estudos.db` (SQLite, fora do Git). Dados iniciais em `src/db/seed.json`, exportados da planilha.
 
 ## Arquitetura
@@ -23,6 +23,8 @@
 - Datas de calendário via `src/datas.js` (fuso America/Sao_Paulo), nunca `toISOString().slice(0, 10)`.
 - Validação em `src/validators.js`; erros sempre no formato `{ erro, detalhes }`.
 - Regra de prioridade em `src/services/plano.js` (`pontuarSkill`, `proximasPrioridades`). Plano começa em 01/11/2026 = mês 1.
+- Trilha: `sincronizarTrilha` (em `src/db/trilha.js`) roda a cada abertura do banco; tópico = (módulo, ordem).
+  Status do módulo é derivado dos tópicos (`src/services/trilha.js`), nunca guardado.
 
 ## Convenções
 - Nomes de domínio em português (skills/courses/sessions nas rotas por enquanto; campos em português).
@@ -35,7 +37,8 @@
 - Curso.dev (Filipe Deschamps) é a base; projeto do curso no repo `clone-tabnews`. Acesso ao curso em recuperação.
 - Também fiz o curso de Lógica/Python da EV.G (repo `evg-logic-python`).
 - Exercício 1 do README concluído (out/2026): projeto no GitHub, fluxo com branches e PRs.
-- Próximo: módulos 1 e 2 do `PLANO.md` (Git e JavaScript moderno) a partir de 01/11/2026.
+- Próximo: módulos 1 e 2 do `PLANO.md` (Git e JavaScript moderno) a partir de 01/11/2026,
+  com o módulo 3 (HTML, CSS e acessibilidade) em paralelo até o mês 6.
   Mini-projetos de cada módulo ficam em repos próprios, não nesta API.
 - Inglês: fluente; só praticar conversação.
 - Graduação: decisão pendente (tecnólogo ADS EAD ou adiar). Provas presenciais são o ponto crítico,

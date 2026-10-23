@@ -1,0 +1,361 @@
+{
+  "intro": "Base condensada para estudar em paralelo ao Curso.dev. Início: 01/11/2026 = mês 1.\nCada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recursos** (gratuitos), **mini-projeto** (repo próprio, com PR) e **pronto quando** (critério para passar adiante).",
+  "fases": {
+    "1": "Fase 1 · Fundamentos (meses 1–6)",
+    "2": "Fase 2 · Portfólio (meses 7–12)"
+  },
+  "depois": "System design básico, um projeto com usuários reais e entrevistas técnicas. Detalhar quando chegar lá.",
+  "continuo": [
+    "**Inglês (conversação):** prática semanal de conversa; explicar em voz alta, em inglês, o mini-projeto do mês.",
+    "**Progresso:** tópicos, horas e autoavaliação registrados na API (`PATCH /topicos/:id`, `POST /sessions`, `PATCH /skills/:id`)."
+  ],
+  "modulos": [
+    {
+      "id": 1,
+      "nome": "Git e GitHub",
+      "fase": 1,
+      "mes_inicio": 1,
+      "mes_fim": 1,
+      "skill": "Git e GitHub (branches, PRs, issues, code review)",
+      "objetivo": "Versionar todo trabalho com branches e PRs, sem medo de errar.",
+      "topicos": [
+        { "nome": "Modelo do Git", "descricao": "Working tree, staging e repositório; o que é um commit (snapshot + pai) e o que é o HEAD." },
+        { "nome": "Commits bons", "descricao": "Commits pequenos e atômicos; mensagem que diz o quê e o porquê." },
+        { "nome": "Branches", "descricao": "Branch é só um ponteiro para um commit; criar, trocar (`git switch`) e apagar." },
+        { "nome": "Merge e rebase", "descricao": "Fast-forward x merge commit; rebase reescreve histórico, então nunca em branch compartilhada." },
+        { "nome": "Conflitos", "descricao": "Ler os marcadores `<<<<<<<`, decidir, testar e concluir o merge." },
+        { "nome": "Remotos", "descricao": "`origin`, `fetch` x `pull`, `push -u`, branches de rastreamento e `--prune`." },
+        { "nome": "Pull requests e code review", "descricao": "Descrição que explica o porquê; revisar código alheio com perguntas, não ordens." },
+        { "nome": "Desfazer coisas", "descricao": "`restore`, `revert` x `reset`, e `reflog` para recuperar o que parecia perdido." },
+        { "nome": ".gitignore e segredos", "descricao": "O que nunca vai para o repositório (.env, bancos, node_modules) e o que fazer se for." }
+      ],
+      "recursos": [
+        { "titulo": "Pro Git, capítulos 1–3", "url": "https://git-scm.com/book/pt-br/v2", "tipo": "livro" },
+        { "titulo": "Learn Git Branching", "url": "https://learngitbranching.js.org/?locale=pt_BR", "tipo": "exercícios" },
+        { "titulo": "GitHub Skills", "url": "https://skills.github.com/", "tipo": "curso" }
+      ],
+      "mini_projeto": "Repo de anotações de estudo: gere um conflito de propósito em duas branches e resolva via PR.",
+      "pronto_quando": "Você trabalha só com branches e PRs e recupera um commit \"perdido\" com o reflog sem consultar."
+    },
+    {
+      "id": 2,
+      "nome": "JavaScript moderno",
+      "fase": 1,
+      "mes_inicio": 1,
+      "mes_fim": 2,
+      "skill": "JavaScript moderno + TypeScript",
+      "objetivo": "Ler e escrever JavaScript moderno com segurança, inclusive código assíncrono.",
+      "topicos": [
+        { "nome": "Tipos e coerção", "descricao": "Primitivos x objetos, `===` x `==`, truthy/falsy, `typeof`, `null` x `undefined`." },
+        { "nome": "Escopo e closures", "descricao": "`let`/`const`, escopo de bloco, funções que lembram o ambiente onde nasceram." },
+        { "nome": "Funções", "descricao": "Arrow functions, parâmetros padrão, rest/spread, funções como valor." },
+        { "nome": "this e classes", "descricao": "Como `this` é definido, `class`, herança simples e quando preferir funções puras." },
+        { "nome": "Arrays", "descricao": "`map`, `filter`, `reduce`, `find`, `some`, `sort` com comparador, sem mutar o original." },
+        { "nome": "Objetos", "descricao": "Desestruturação, spread, `Object.entries`, cópia rasa x profunda, `structuredClone`." },
+        { "nome": "Módulos ESM", "descricao": "`import`/`export`, default x nomeado, por que este projeto usa `\"type\": \"module\"`." },
+        { "nome": "Promises e async/await", "descricao": "Estados de uma Promise, `await`, `Promise.all` x `Promise.allSettled`." },
+        { "nome": "Event loop", "descricao": "Pilha, fila de tarefas e microtarefas: por que `setTimeout(fn, 0)` não roda na hora." },
+        { "nome": "Erros", "descricao": "`try/catch` com `async`, classes de erro próprias, nunca engolir erro em silêncio." }
+      ],
+      "recursos": [
+        { "titulo": "javascript.info (partes 1 e 2)", "url": "https://javascript.info/", "tipo": "curso" },
+        { "titulo": "Event loop (javascript.info)", "url": "https://javascript.info/event-loop", "tipo": "artigo" },
+        { "titulo": "Guia de JavaScript (MDN)", "url": "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide", "tipo": "documentação" }
+      ],
+      "mini_projeto": "CLI que consulta uma API pública (ex.: clima) com `fetch`, trata erro de rede e de entrada e faz várias consultas em paralelo.",
+      "pronto_quando": "Você explica o event loop e escreve código assíncrono sem `.then` aninhado."
+    },
+    {
+      "id": 3,
+      "nome": "HTML, CSS e acessibilidade",
+      "fase": 1,
+      "mes_inicio": 1,
+      "mes_fim": 6,
+      "skill": "HTML semântico, CSS responsivo e acessibilidade básica",
+      "objetivo": "Construir páginas semânticas, responsivas e acessíveis sem depender de framework. Trilha paralela e leve: pratique nos freelas.",
+      "topicos": [
+        { "nome": "HTML semântico", "descricao": "`header`, `nav`, `main`, `article`, `section`, `footer`; títulos em ordem; por que nem tudo é `div`." },
+        { "nome": "Formulários", "descricao": "`label` ligado ao campo, tipos de `input`, validação nativa (`required`, `pattern`), `type` do botão." },
+        { "nome": "Box model", "descricao": "`margin`, `border`, `padding` e por que usar `box-sizing: border-box`." },
+        { "nome": "Seletores e cascata", "descricao": "Especificidade, herança e ordem; por que evitar `!important`." },
+        { "nome": "Flexbox", "descricao": "Eixo principal x cruzado, `justify-content`, `align-items`, `gap`." },
+        { "nome": "Grid", "descricao": "Linhas e colunas, unidade `fr`, `grid-template-areas`; quando usar Grid x Flexbox." },
+        { "nome": "Responsividade", "descricao": "Mobile first, `@media`, unidades relativas (`rem`, `%`, `vw`), imagens fluidas." },
+        { "nome": "Variáveis CSS", "descricao": "Custom properties (`--cor`), tema claro e escuro, nomes de classe consistentes." },
+        { "nome": "Acessibilidade", "descricao": "Texto alternativo, contraste, navegação por teclado, foco visível; ARIA só quando o HTML não basta." },
+        { "nome": "DevTools e Lighthouse", "descricao": "Inspecionar o layout no navegador e medir acessibilidade e performance." }
+      ],
+      "recursos": [
+        { "titulo": "Learn HTML (web.dev)", "url": "https://web.dev/learn/html", "tipo": "curso" },
+        { "titulo": "Learn CSS (web.dev)", "url": "https://web.dev/learn/css", "tipo": "curso" },
+        { "titulo": "Learn Accessibility (web.dev)", "url": "https://web.dev/learn/accessibility", "tipo": "curso" },
+        { "titulo": "Flexbox Froggy", "url": "https://flexboxfroggy.com/#pt-br", "tipo": "exercícios" },
+        { "titulo": "Grid Garden", "url": "https://cssgridgarden.com/#pt-br", "tipo": "exercícios" }
+      ],
+      "mini_projeto": "Página de portfólio pessoal sem framework: semântica, responsiva, com tema claro e escuro e nota 100 de acessibilidade no Lighthouse.",
+      "pronto_quando": "Você monta um layout responsivo com Grid e Flexbox sem consultar, e a página passa no Lighthouse de acessibilidade."
+    },
+    {
+      "id": 4,
+      "nome": "Node e APIs REST",
+      "fase": 1,
+      "mes_inicio": 2,
+      "mes_fim": 2,
+      "skill": "Node.js e APIs REST (HTTP, status codes, validação)",
+      "objetivo": "Construir uma API HTTP correta, validada e testada.",
+      "topicos": [
+        { "nome": "Runtime do Node", "descricao": "O que o Node é (V8 + libuv), `process`, variáveis de ambiente, `node --watch`." },
+        { "nome": "Módulos nativos", "descricao": "`fs/promises`, `path`, `URL`, `crypto`: o que já vem pronto sem instalar nada." },
+        { "nome": "npm", "descricao": "`package.json`, dependencies x devDependencies, `package-lock.json`, scripts, semver." },
+        { "nome": "HTTP", "descricao": "Métodos, status codes, headers, corpo, idempotência (GET/PUT/DELETE x POST)." },
+        { "nome": "Design REST", "descricao": "Recursos no plural, filtros por query string, aninhamento com moderação, versão na URL." },
+        { "nome": "Express", "descricao": "Rotas, `Router`, `req`/`res`, ordem dos middlewares e o middleware de erro." },
+        { "nome": "Validação", "descricao": "Nunca confiar no cliente: validar tipo, formato e campos extras; responder 400 com detalhes." },
+        { "nome": "Testes de API", "descricao": "Supertest + Vitest: subir o app sem porta, banco em memória, data congelada." }
+      ],
+      "recursos": [
+        { "titulo": "Learn Node.js", "url": "https://nodejs.org/en/learn", "tipo": "documentação" },
+        { "titulo": "HTTP (MDN)", "url": "https://developer.mozilla.org/pt-BR/docs/Web/HTTP", "tipo": "documentação" },
+        { "titulo": "Status codes (MDN)", "url": "https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status", "tipo": "documentação" },
+        { "titulo": "Guia do Express", "url": "https://expressjs.com/en/guide/routing.html", "tipo": "documentação" }
+      ],
+      "mini_projeto": "API de encurtador de links: criar, redirecionar (302) e contar acessos, com testes.",
+      "pronto_quando": "Você escolhe o status code certo sem consultar e cada rota tem teste de sucesso e de erro."
+    },
+    {
+      "id": 5,
+      "nome": "TypeScript",
+      "fase": 1,
+      "mes_inicio": 3,
+      "mes_fim": 3,
+      "skill": "JavaScript moderno + TypeScript",
+      "objetivo": "Usar o sistema de tipos para pegar erros antes de rodar o código.",
+      "topicos": [
+        { "nome": "Por que tipos", "descricao": "O que o TS verifica, o que não verifica (tipos somem no runtime) e o papel do `tsc`." },
+        { "nome": "Tipos básicos", "descricao": "Primitivos, arrays, tuplas, objetos, `unknown` x `any`, inferência." },
+        { "nome": "type x interface", "descricao": "Quando usar cada um; propriedades opcionais e `readonly`." },
+        { "nome": "Unions e narrowing", "descricao": "Uniões, estreitar com `typeof`/`in`/discriminante, `never` para checar exaustividade." },
+        { "nome": "Funções tipadas", "descricao": "Parâmetros, retorno, callbacks e funções que aceitam mais de um formato." },
+        { "nome": "Generics", "descricao": "Funções e tipos genéricos, restrições com `extends`." },
+        { "nome": "Utility types", "descricao": "`Partial`, `Pick`, `Omit`, `Record`, `ReturnType`." },
+        { "nome": "Configuração", "descricao": "`tsconfig.json`, `strict`, `tsc --noEmit` no CI, rodar com `tsx`." },
+        { "nome": "Dados de fora", "descricao": "Tipar `Request`/`Response` do Express; dado externo é `unknown` até ser validado." }
+      ],
+      "recursos": [
+        { "titulo": "TypeScript Handbook", "url": "https://www.typescriptlang.org/docs/handbook/intro.html", "tipo": "documentação" },
+        { "titulo": "TypeScript Playground", "url": "https://www.typescriptlang.org/play", "tipo": "ferramenta" },
+        { "titulo": "type-challenges", "url": "https://github.com/type-challenges/type-challenges", "tipo": "exercícios" }
+      ],
+      "mini_projeto": "Converter o encurtador para TypeScript com `strict` ligado.",
+      "pronto_quando": "`tsc --noEmit` passa sem nenhum `any` explícito."
+    },
+    {
+      "id": 6,
+      "nome": "SQL e PostgreSQL",
+      "fase": 1,
+      "mes_inicio": 4,
+      "mes_fim": 4,
+      "skill": "SQL / PostgreSQL (SELECT, JOIN, modelagem simples, migrations)",
+      "objetivo": "Modelar um banco e escrever consultas sem depender de ORM.",
+      "topicos": [
+        { "nome": "Modelo relacional", "descricao": "Tabela, linha, coluna, chave primária e chave estrangeira." },
+        { "nome": "Consultas básicas", "descricao": "`SELECT`, `WHERE`, `ORDER BY`, `LIMIT`, `DISTINCT`, e `NULL` com `IS NULL`." },
+        { "nome": "Agregação", "descricao": "`COUNT`, `SUM`, `AVG`, `GROUP BY` e `HAVING` (filtro depois do agrupamento)." },
+        { "nome": "JOINs", "descricao": "`INNER` x `LEFT JOIN`, juntar 3 tabelas, achar o que não tem par." },
+        { "nome": "Subqueries e CTEs", "descricao": "Consulta dentro de consulta e `WITH` para deixar legível." },
+        { "nome": "Escrita", "descricao": "`INSERT`, `UPDATE` e `DELETE` sempre com `WHERE`; `RETURNING` no PostgreSQL." },
+        { "nome": "Modelagem", "descricao": "1:N, N:N com tabela de ligação, normalização até a 3ª forma normal." },
+        { "nome": "Restrições", "descricao": "`NOT NULL`, `UNIQUE`, `CHECK`, `ON DELETE` (cascade x set null)." },
+        { "nome": "Índices", "descricao": "O que um índice acelera, quanto custa na escrita, `EXPLAIN` básico." },
+        { "nome": "Transações e migrações", "descricao": "`BEGIN`/`COMMIT`/`ROLLBACK` e versionar o schema (como este projeto faz)." }
+      ],
+      "recursos": [
+        { "titulo": "SQLBolt", "url": "https://sqlbolt.com/", "tipo": "exercícios" },
+        { "titulo": "PostgreSQL Exercises", "url": "https://pgexercises.com/", "tipo": "exercícios" },
+        { "titulo": "Tutorial do PostgreSQL", "url": "https://www.postgresql.org/docs/current/tutorial.html", "tipo": "documentação" }
+      ],
+      "mini_projeto": "Banco de uma biblioteca (livros, autores, leitores, empréstimos) com 20 consultas comentadas.",
+      "pronto_quando": "Você resolve um JOIN com agregação de cabeça e explica por que cada índice existe."
+    },
+    {
+      "id": 7,
+      "nome": "Fundamentos de computação",
+      "fase": 1,
+      "mes_inicio": 5,
+      "mes_fim": 5,
+      "skill": "Lógica, estruturas de dados básicas (arrays, mapas, filas) e noção de complexidade",
+      "objetivo": "Entender o que acontece por baixo e analisar a eficiência do próprio código.",
+      "topicos": [
+        { "nome": "Big O", "descricao": "Contar operações: O(1), O(log n), O(n), O(n log n), O(n²), com exemplos do dia a dia." },
+        { "nome": "Busca", "descricao": "Linear x binária; por que a binária exige dados ordenados." },
+        { "nome": "Ordenação", "descricao": "Selection, bubble e merge sort; por que o `sort` da linguagem é O(n log n)." },
+        { "nome": "Recursão", "descricao": "Caso base, pilha de chamadas, quando trocar por laço." },
+        { "nome": "Memória", "descricao": "Pilha x heap, ponteiros (em C), por que objetos em JS são passados por referência." },
+        { "nome": "Estruturas de dados", "descricao": "Array, lista ligada, pilha, fila, hash table e árvore: custo de cada operação." },
+        { "nome": "Hash tables na prática", "descricao": "`Map`/`Set` em JavaScript e quando usar no lugar de array." }
+      ],
+      "recursos": [
+        { "titulo": "CS50x (semanas 0–5)", "url": "https://cs50.harvard.edu/x/", "tipo": "curso" },
+        { "titulo": "VisuAlgo", "url": "https://visualgo.net/en", "tipo": "ferramenta" }
+      ],
+      "mini_projeto": "Problem sets do CS50 (semanas 0–5) num repo, cada um com README explicando a solução e a complexidade.",
+      "pronto_quando": "Você explica a complexidade das próprias soluções e escolhe a estrutura de dados certa."
+    },
+    {
+      "id": 8,
+      "nome": "Autenticação e segurança básica",
+      "fase": 1,
+      "mes_inicio": 6,
+      "mes_fim": 6,
+      "skill": "Autenticação básica (sessão/JWT, senhas com hash)",
+      "objetivo": "Proteger uma aplicação com login seguro e evitar as falhas mais comuns.",
+      "topicos": [
+        { "nome": "Autenticação x autorização", "descricao": "Quem é você x o que você pode fazer; 401 x 403." },
+        { "nome": "Senhas", "descricao": "Hash lento com sal (bcrypt/argon2); nunca criptografia reversível nem MD5/SHA puro." },
+        { "nome": "Sessão com cookie", "descricao": "Id de sessão guardado no servidor; cookies `HttpOnly`, `Secure` e `SameSite`." },
+        { "nome": "JWT", "descricao": "Estrutura, assinatura, expiração; por que revogar é difícil." },
+        { "nome": "Sessão x JWT", "descricao": "Critérios de escolha para um app web próprio x uma API pública." },
+        { "nome": "CORS e CSRF", "descricao": "O que o navegador bloqueia, o que não bloqueia e como `SameSite` ajuda." },
+        { "nome": "Injeção", "descricao": "SQL injection e por que consultas parametrizadas (`?`) resolvem." },
+        { "nome": "Segredos", "descricao": "Variáveis de ambiente, `.env` fora do Git, trocar o segredo quando vazar." },
+        { "nome": "OWASP Top 10", "descricao": "Ler a lista e reconhecer cada item no próprio código." }
+      ],
+      "recursos": [
+        { "titulo": "OWASP Top 10", "url": "https://owasp.org/www-project-top-ten/", "tipo": "documentação" },
+        { "titulo": "Password Storage Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html", "tipo": "documentação" },
+        { "titulo": "Session Management Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html", "tipo": "documentação" }
+      ],
+      "mini_projeto": "Contas de usuário no encurtador: cada pessoa vê e apaga só os próprios links.",
+      "pronto_quando": "Você justifica a escolha entre sessão e JWT e mostra onde seu código impede SQL injection."
+    },
+    {
+      "id": 9,
+      "nome": "React e Next.js",
+      "fase": 2,
+      "mes_inicio": 7,
+      "mes_fim": 7,
+      "skill": "React / Next.js (componentes, estado, rotas, SSR)",
+      "objetivo": "Construir interfaces com React e publicá-las com Next.js.",
+      "topicos": [
+        { "nome": "Componentes e JSX", "descricao": "Componente é uma função que retorna UI; JSX, props e composição." },
+        { "nome": "Estado", "descricao": "`useState`, estado mínimo, derivar em vez de duplicar, elevar estado." },
+        { "nome": "Eventos e formulários", "descricao": "Inputs controlados, `onSubmit`, validação no cliente." },
+        { "nome": "Listas e chaves", "descricao": "`map` para renderizar listas e por que a `key` precisa ser estável." },
+        { "nome": "Efeitos", "descricao": "`useEffect` só para sincronizar com algo fora do React; quando não usar." },
+        { "nome": "App Router", "descricao": "Pastas viram rotas; `layout`, `page`, rotas dinâmicas, `loading` e `error`." },
+        { "nome": "Server x Client Components", "descricao": "O que roda no servidor, quando usar `\"use client\"`, buscar dados no servidor." },
+        { "nome": "Renderização", "descricao": "SSR, SSG e revalidação: o problema que cada uma resolve." },
+        { "nome": "Acessibilidade em componentes", "descricao": "Levar o foco ao abrir um modal, `aria-live` para mensagens, testar tudo só com o teclado." }
+      ],
+      "recursos": [
+        { "titulo": "react.dev (Learn)", "url": "https://react.dev/learn", "tipo": "documentação" },
+        { "titulo": "Next.js Learn", "url": "https://nextjs.org/learn", "tipo": "curso" }
+      ],
+      "mini_projeto": "Front do encurtador: login, lista de links e estatísticas de acesso.",
+      "pronto_quando": "Você explica quando um componente precisa de `\"use client\"` e busca dados sem `useEffect`."
+    },
+    {
+      "id": 10,
+      "nome": "Testes",
+      "fase": 2,
+      "mes_inicio": 8,
+      "mes_fim": 8,
+      "skill": "Testes automatizados (unitários e integração)",
+      "objetivo": "Testar com estratégia: rápido, confiável e no nível certo.",
+      "topicos": [
+        { "nome": "Por que testar", "descricao": "Teste como rede de segurança para refatorar; o que vale e o que não vale testar." },
+        { "nome": "Pirâmide de testes", "descricao": "Muitos unitários, alguns de integração, poucos e2e; custo x confiança." },
+        { "nome": "Vitest", "descricao": "`describe`/`it`/`expect`, `beforeEach`, testes isolados e determinísticos." },
+        { "nome": "Dublês", "descricao": "Mock, stub e fake; congelar a data (como o `opcoes.agora` deste projeto)." },
+        { "nome": "Testes de integração", "descricao": "API + banco real em memória; preparar e limpar dados entre testes." },
+        { "nome": "Testing Library", "descricao": "Testar componentes como o usuário usa: por texto e papel, não por classe CSS." },
+        { "nome": "Playwright", "descricao": "E2E no navegador: fluxo completo, seletores estáveis, rodar no CI." },
+        { "nome": "TDD na prática", "descricao": "Vermelho, verde, refatorar, aplicado a um bug real." },
+        { "nome": "Cobertura", "descricao": "Ler o relatório e entender por que 100% não é a meta." }
+      ],
+      "recursos": [
+        { "titulo": "Guia do Vitest", "url": "https://vitest.dev/guide/", "tipo": "documentação" },
+        { "titulo": "Testing Library", "url": "https://testing-library.com/docs/", "tipo": "documentação" },
+        { "titulo": "Playwright", "url": "https://playwright.dev/docs/intro", "tipo": "documentação" }
+      ],
+      "mini_projeto": "E2E do fluxo principal do encurtador: login, criar link, acessar e ver a contagem.",
+      "pronto_quando": "Você escreve o teste antes de corrigir um bug, e o CI roda os unitários e os e2e."
+    },
+    {
+      "id": 11,
+      "nome": "Docker e deploy",
+      "fase": 2,
+      "mes_inicio": 9,
+      "mes_fim": 9,
+      "skill": "Deploy, variáveis de ambiente, Docker básico",
+      "objetivo": "Empacotar a aplicação e colocá-la no ar de forma reproduzível.",
+      "topicos": [
+        { "nome": "Containers", "descricao": "Imagem x container, e por que \"funciona na minha máquina\" deixa de ser problema." },
+        { "nome": "Dockerfile", "descricao": "`FROM`, `COPY`, `RUN`, `CMD`, cache de camadas e `.dockerignore`." },
+        { "nome": "Imagens enxutas", "descricao": "Multi-stage build, imagem `node:22-slim`, rodar sem root." },
+        { "nome": "Docker Compose", "descricao": "App + PostgreSQL juntos, rede entre serviços, volumes para não perder dados." },
+        { "nome": "Configuração", "descricao": "Variáveis de ambiente (12-factor) e segredos fora da imagem." },
+        { "nome": "Migrações no deploy", "descricao": "Rodar as migrações antes de subir a nova versão." },
+        { "nome": "Deploy gerenciado", "descricao": "Render, Fly.io ou Railway: build, variáveis, logs e domínio." },
+        { "nome": "Healthcheck", "descricao": "Rota `/status` e o que a plataforma faz quando ela falha." }
+      ],
+      "recursos": [
+        { "titulo": "Docker: Get started", "url": "https://docs.docker.com/get-started/", "tipo": "documentação" },
+        { "titulo": "Docker Compose", "url": "https://docs.docker.com/compose/", "tipo": "documentação" },
+        { "titulo": "The Twelve-Factor App: Config", "url": "https://12factor.net/pt_br/config", "tipo": "artigo" }
+      ],
+      "mini_projeto": "Encurtador + PostgreSQL no Docker Compose, publicado, com o link no README.",
+      "pronto_quando": "Qualquer pessoa sobe o projeto com `docker compose up`, e o app está no ar."
+    },
+    {
+      "id": 12,
+      "nome": "CI/CD",
+      "fase": 2,
+      "mes_inicio": 10,
+      "mes_fim": 10,
+      "skill": "Deploy, variáveis de ambiente, Docker básico",
+      "objetivo": "Automatizar teste e deploy a cada mudança.",
+      "topicos": [
+        { "nome": "CI x CD", "descricao": "Integração contínua (testar cada mudança) x entrega e implantação contínuas." },
+        { "nome": "GitHub Actions", "descricao": "Workflow, evento (`on`), job, step e runner; ler o `ci.yml` deste projeto." },
+        { "nome": "Cache e matriz", "descricao": "Cache do npm e testar em mais de uma versão do Node." },
+        { "nome": "Serviços no CI", "descricao": "Subir PostgreSQL como serviço para os testes de integração." },
+        { "nome": "Segredos no CI", "descricao": "GitHub Secrets e variáveis por ambiente; nunca imprimir segredo no log." },
+        { "nome": "Proteção de branch", "descricao": "Exigir CI verde e revisão antes do merge na `main`." },
+        { "nome": "Deploy automático", "descricao": "Deploy a cada merge na `main` e como voltar atrás quando der errado." },
+        { "nome": "Versões", "descricao": "Tags, releases e changelog." }
+      ],
+      "recursos": [
+        { "titulo": "Documentação do GitHub Actions", "url": "https://docs.github.com/pt/actions", "tipo": "documentação" },
+        { "titulo": "Continuous Integration (Martin Fowler)", "url": "https://martinfowler.com/articles/continuousIntegration.html", "tipo": "artigo" }
+      ],
+      "mini_projeto": "Pipeline completo do encurtador: testes e e2e em cada PR, deploy a cada merge.",
+      "pronto_quando": "Um merge na `main` chega à produção sem nenhum passo manual."
+    },
+    {
+      "id": 13,
+      "nome": "AWS Cloud Practitioner",
+      "fase": 2,
+      "mes_inicio": 11,
+      "mes_fim": 12,
+      "skill": "Fundamentos de cloud (AWS)",
+      "objetivo": "Entender os fundamentos de cloud e conquistar a primeira certificação.",
+      "topicos": [
+        { "nome": "Conceitos de cloud", "descricao": "IaaS, PaaS e SaaS; regiões e zonas; modelo de responsabilidade compartilhada." },
+        { "nome": "Computação", "descricao": "EC2, Lambda e contêineres (ECS/Fargate): quando usar cada um." },
+        { "nome": "Armazenamento", "descricao": "S3, EBS e classes de armazenamento." },
+        { "nome": "Bancos de dados", "descricao": "RDS x DynamoDB: quando escolher relacional ou chave-valor." },
+        { "nome": "Redes", "descricao": "VPC, sub-redes, security groups e CloudFront." },
+        { "nome": "Segurança e IAM", "descricao": "Usuários, papéis, políticas, MFA e menor privilégio." },
+        { "nome": "Custos", "descricao": "Modelos de preço, Free Tier, Budgets e Cost Explorer." },
+        { "nome": "Prova", "descricao": "Formato da prova, simulado oficial e revisão dos pontos fracos." }
+      ],
+      "recursos": [
+        { "titulo": "AWS Skill Builder", "url": "https://skillbuilder.aws/", "tipo": "curso" },
+        { "titulo": "Certificação AWS Cloud Practitioner", "url": "https://aws.amazon.com/certification/certified-cloud-practitioner/", "tipo": "documentação" }
+      ],
+      "mini_projeto": "Publicar o front do encurtador como site estático no S3 + CloudFront, dentro do Free Tier.",
+      "pronto_quando": "Certificação AWS Cloud Practitioner aprovada."
+    }
+  ]
+}

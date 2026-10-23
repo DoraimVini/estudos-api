@@ -1,17 +1,22 @@
 import { DatabaseSync } from "node:sqlite";
 import { readFileSync } from "node:fs";
 import { migrar } from "./migrate.js";
+import { sincronizarTrilha } from "./trilha.js";
 
 const seed = JSON.parse(
   readFileSync(new URL("./seed.json", import.meta.url), "utf8"),
 );
 
-/** Abre (ou cria) o banco, aplica as migrações pendentes e carrega os dados da planilha se estiver vazio. */
+/**
+ * Abre (ou cria) o banco, aplica as migrações pendentes, carrega os dados da planilha
+ * se estiver vazio e sincroniza a trilha com o trilha.json.
+ */
 export function openDatabase(path = process.env.DB_PATH ?? "estudos.db") {
   const db = new DatabaseSync(path);
   db.exec("PRAGMA foreign_keys = ON;");
   migrar(db);
   seedIfEmpty(db);
+  sincronizarTrilha(db);
   return db;
 }
 

@@ -1,10 +1,12 @@
 import { Router } from "express";
 import { NIVEIS } from "../constantes.js";
 import { mesDoPlano, proximasPrioridades } from "../services/plano.js";
+import { modulosEmFoco } from "../services/trilha.js";
 import { hojeISO, somarDias } from "../datas.js";
 import { badRequest } from "../errors.js";
 
-function lerMes(repos, query, agora) {
+/** Mês do plano: o informado em ?mes= ou o mês atual. */
+export function lerMes(repos, query, agora) {
   if (query.mes === undefined) return mesDoPlano(repos.config.planoInicio(), agora());
   const mes = Number(query.mes);
   if (!Number.isInteger(mes) || mes < 1) throw badRequest("mes deve ser um inteiro >= 1.");
@@ -14,14 +16,17 @@ function lerMes(repos, query, agora) {
 export function planoRouter(repos, { agora = () => new Date() } = {}) {
   const router = Router();
 
-  // GET /proximo?limite=3&mes=7  -> o que estudar agora, em ordem de prioridade
+  // GET /proximo?limite=3&mes=7  -> o que estudar agora: módulos da trilha, habilidades e cursos
   router.get("/proximo", (req, res) => {
     const mes = lerMes(repos, req.query, agora);
     const limite = req.query.limite === undefined ? 3 : Number(req.query.limite);
     if (!Number.isInteger(limite) || limite < 1 || limite > 20) {
       throw badRequest("limite deve ser um inteiro de 1 a 20.");
     }
-    res.json(proximasPrioridades(repos.skills.listar(), repos.courses.listar(), mes, limite));
+    const { habilidades, cursos_do_mes } =
+      proximasPrioridades(repos.skills.listar(), repos.courses.listar(), mes, limite);
+    const modulos = modulosEmFoco(repos.trilha.listarModulos(), repos.trilha.topicosPorModulo(), mes, limite);
+    res.json({ mes_do_plano: mes, modulos, habilidades, cursos_do_mes });
   });
 
   // GET /progresso -> resumo por nível e horas estudadas
@@ -34,6 +39,7 @@ export function planoRouter(repos, { agora = () => new Date() } = {}) {
 
     res.json({
       mes_do_plano: mes,
+      trilha: repos.trilha.resumo(),
       por_nivel: porNivel,
       minutos_ultimos_7_dias: minutos,
       horas_ultimos_7_dias: Math.round((minutos / 60) * 10) / 10,

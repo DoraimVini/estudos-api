@@ -24,15 +24,19 @@ O banco fica no arquivo `estudos.db` (fora do Git). Para outro caminho: `DB_PATH
 | Método | Rota | O que faz |
 |---|---|---|
 | GET | `/status` | Saúde da API |
-| GET | `/proximo?limite=3&mes=4` | **O que estudar agora**: habilidades por prioridade + cursos do mês |
-| GET | `/progresso` | Resumo por nível e horas estudadas nos últimos 7 dias |
+| GET | `/proximo?limite=3&mes=4` | **O que estudar agora**: módulos do mês (atrasados primeiro) com os próximos tópicos, habilidades por prioridade e cursos do mês |
+| GET | `/progresso` | Tópicos concluídos, resumo por nível e horas dos últimos 7 dias |
+| GET | `/modulos?fase=1` | Módulos da trilha com status e progresso calculados |
+| GET | `/modulos/:id` | Um módulo com tópicos, recursos e a habilidade ligada |
+| GET | `/topicos/:id` | Um tópico |
+| PATCH | `/topicos/:id` | Atualiza `status` (`Não iniciado`, `Em andamento`, `Concluído`) |
 | GET | `/skills?nivel=Júnior&status=Em andamento&area=Backend` | Lista habilidades |
 | GET | `/skills/:id` | Uma habilidade |
 | PATCH | `/skills/:id` | Atualiza `hoje` (1–5 ou null), `meta` (1–5), `status` |
 | GET | `/courses?prioridade=Alta&status=Não iniciado` | Lista cursos |
 | PATCH | `/courses/:id` | Atualiza `status`, `prioridade` |
 | GET | `/sessions?de=2026-11-01&ate=2026-11-30` | Sessões de estudo no período |
-| POST | `/sessions` | Registra uma sessão: `{ skill_id?, course_id?, minutos, data?, notas? }` |
+| POST | `/sessions` | Registra uma sessão: `{ topico_id?, skill_id?, course_id?, minutos, data?, notas? }` |
 | DELETE | `/sessions/:id` | Apaga uma sessão |
 
 Status válidos: `Não iniciado`, `Em andamento`, `Concluído`, `Atrasado`, `N/A`.
@@ -44,14 +48,18 @@ Status válidos: `Não iniciado`, `Em andamento`, `Concluído`, `Atrasado`, `N/A
 curl -X PATCH localhost:3000/api/v1/skills/3 -H "Content-Type: application/json" \
   -d '{"hoje": 2, "status": "Em andamento"}'
 
-# 2. Pergunte o que estudar
+# 2. Pergunte o que estudar (cada tópico sugerido vem com o id)
 curl localhost:3000/api/v1/proximo
 
-# 3. Registre o que estudou
+# 3. Registre o que estudou (a sessão conta para a habilidade do módulo)
 curl -X POST localhost:3000/api/v1/sessions -H "Content-Type: application/json" \
-  -d '{"skill_id": 3, "minutos": 50, "notas": "Generics no TypeScript"}'
+  -d '{"topico_id": 12, "minutos": 50, "notas": "Closures com exemplos"}'
 
-# 4. Veja o progresso
+# 4. Marque o tópico como concluído
+curl -X PATCH localhost:3000/api/v1/topicos/12 -H "Content-Type: application/json" \
+  -d '{"status": "Concluído"}'
+
+# 5. Veja o progresso
 curl localhost:3000/api/v1/progresso
 ```
 
@@ -75,11 +83,14 @@ src/
   app.js              monta o Express (sem abrir porta; usado pelos testes)
   server.js           abre a porta
   routes/             HTTP: lê a requisição, valida e responde
-  services/plano.js   regras de prioridade (funções puras)
+  services/           regras puras: prioridade (plano.js), trilha (trilha.js), PLANO.md (markdown.js)
   repositories/       SQL: o único lugar que fala com o banco
-  db/database.js      abre o banco, migra e carrega o seed.json
+  db/database.js      abre o banco, migra, carrega o seed.json e sincroniza a trilha
   db/migrate.js       aplica db/migrations/NNN_nome.sql em ordem (PRAGMA user_version)
   db/seed.json        habilidades e cursos exportados da planilha
+  db/trilha.json      fonte da trilha: módulos, tópicos e recursos
+  db/trilha.js        sincroniza o trilha.json com o banco sem perder o progresso
+  scripts/            npm run plano (gera o PLANO.md)
   datas.js            datas no fuso de São Paulo
   constantes.js       níveis, status e prioridades válidos
   errors.js           formato único de erro { erro, detalhes }
@@ -89,6 +100,8 @@ test/                 testes de integração e unidade (Vitest + Supertest)
 ```
 
 Mudou o schema? Crie `src/db/migrations/NNN_descricao.sql` com o próximo número. Nunca edite uma migração que já foi para a `develop`.
+
+Mudou a trilha? Edite `src/db/trilha.json` e rode `npm run plano`. O banco se atualiza sozinho ao abrir, mantendo o status dos tópicos (identificados por módulo + posição). Um teste falha se o `PLANO.md` ficar desatualizado.
 
 ## Fluxo de branches
 
@@ -105,7 +118,7 @@ main ← develop ← feat/<nome>   (funcionalidade nova, ex.: feat/post-skills)
 
 ## Trilha, roadmap e exercícios
 
-- [`PLANO.md`](PLANO.md): o que estudar em cada mês (12 módulos).
+- [`PLANO.md`](PLANO.md): o que estudar em cada mês (13 módulos).
 - [`ROADMAP.md`](ROADMAP.md): como a API evolui até a v1.0.
 - `exercicios/` (a partir da v0.4): exercícios de Node e SQL com testes automáticos.
 

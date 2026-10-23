@@ -4,6 +4,7 @@ import { skillsRouter } from "./routes/skills.js";
 import { coursesRouter } from "./routes/courses.js";
 import { sessionsRouter } from "./routes/sessions.js";
 import { planoRouter } from "./routes/plano.js";
+import { trilhaRouter } from "./routes/trilha.js";
 import { errorHandler } from "./errors.js";
 
 /**
@@ -25,6 +26,7 @@ export function createApp(db, opcoes = {}) {
   v1.use("/courses", coursesRouter(repos));
   v1.use("/sessions", sessionsRouter(repos, opcoes));
   v1.use("/", planoRouter(repos, opcoes));
+  v1.use("/", trilhaRouter(repos, opcoes));
 
   app.use("/api/v1", v1);
   app.use((req, res) => res.status(404).json({ erro: "Rota não encontrada." }));
