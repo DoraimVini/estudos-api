@@ -29,6 +29,10 @@
   Status do módulo é derivado dos tópicos (`src/services/trilha.js`), nunca guardado.
 - Exercícios: catálogo em `exercicios/catalogo.json`, sincronizado por slug (`src/db/exercicios.js`).
   Só `npm run exercicio` marca como Resolvido (não há PATCH de propósito).
+- Painel web em `public/` (HTML/CSS/JS puros, sem build), servido pelo Express na raiz. Roteamento por hash;
+  cada página em `public/js/paginas/` exporta `{ titulo, render(param), acoes }`. Todo texto vindo da API passa por `esc()`.
+- Meu `estudos.db` tem dados reais: para testar no navegador, usar `DB_PATH=demo.db` em outra porta (`.claude/launch.json`).
+- Windows: PowerShell bloqueia `npm.ps1`; uso `npm.cmd` ou o `iniciar.cmd`.
 
 ## Convenções
 - Nomes de domínio em português (skills/courses/sessions nas rotas por enquanto; campos em português).

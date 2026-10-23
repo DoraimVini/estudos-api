@@ -8,11 +8,26 @@ e responde **o que estudar agora**, em ordem de prioridade, com o motivo de cada
 
 - Node.js **22.13 ou mais novo** (usa o SQLite que já vem no Node, `node:sqlite`: nada para compilar).
 
+## Como estudar com ela
+
+Dê dois cliques em **`iniciar.cmd`**: ele sobe a API e abre o painel em http://localhost:3000.
+
+| Página | Para quê |
+|---|---|
+| **Agora** | Módulos do mês com os próximos tópicos, exercícios e habilidades prioritárias. **Estudar** escolhe o tópico do Pomodoro |
+| **Trilha** | Os 13 módulos; cada um com tópicos, recursos, mini-projeto e exercícios (com o enunciado) |
+| **Progresso** | Tópicos, exercícios e horas; sessões dos últimos 14 dias (dá para apagar) |
+| **Habilidades** | Autoavaliação (1–5), meta e status; salva a cada mudança |
+
+O **Pomodoro** fica ao lado de todas as páginas: escolha o tópico, inicie e, no fim, registre a sessão. O tópico passa para "Em andamento" sozinho.
+
+No PowerShell, se `npm` der erro de "execução de scripts", use `npm.cmd` (ex.: `npm.cmd run dev`) ou libere com `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
+
 ## Como rodar
 
 ```bash
 npm install
-npm run dev        # sobe em http://localhost:3000 e reinicia ao salvar arquivos
+npm run dev        # painel em http://localhost:3000, API em /api/v1; reinicia ao salvar arquivos
 npm test           # roda os testes da API (Vitest + Supertest)
 npm run db:reset   # apaga o banco local e recarrega os dados da planilha
 npm run plano      # gera o PLANO.md a partir de src/db/trilha.json
@@ -102,6 +117,10 @@ src/
   validators.js       validação de entrada
 test/                 testes de integração e unidade (Vitest + Supertest)
 exercicios/           exercícios de JS, Node e SQL com testes próprios (fora do npm test)
+public/               painel web: HTML, CSS e módulos JS puros, servidos pela própria API
+  js/app.js           roteamento por hash (#/agora, #/trilha/5) e despacho das ações (data-acao)
+  js/paginas/         uma página por arquivo: agora, trilha, progresso, habilidades
+iniciar.cmd           dois cliques: sobe a API e abre o painel
 .github/workflows/    CI: npm test em cada PR
 ```
 
