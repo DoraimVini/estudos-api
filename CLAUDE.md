@@ -18,7 +18,10 @@
 
 ## Arquitetura
 - `src/app.js` monta o app sem abrir porta (os testes usam banco `:memory:` e data congelada via `opcoes.agora`).
-- Rotas em `src/routes/`; validação em `src/validators.js`; erros sempre no formato `{ erro, detalhes }`.
+- Camadas: `routes/` (HTTP, validação) → `services/` (regras puras) → `repositories/` (todo o SQL). Rotas recebem `repos`, nunca o `db`.
+- Schema só muda por migração nova em `src/db/migrations/` (`PRAGMA user_version`); nunca editar migração já mergeada.
+- Datas de calendário via `src/datas.js` (fuso America/Sao_Paulo), nunca `toISOString().slice(0, 10)`.
+- Validação em `src/validators.js`; erros sempre no formato `{ erro, detalhes }`.
 - Regra de prioridade em `src/services/plano.js` (`pontuarSkill`, `proximasPrioridades`). Plano começa em 01/11/2026 = mês 1.
 
 ## Convenções
