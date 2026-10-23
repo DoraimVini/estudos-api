@@ -86,13 +86,14 @@ test/api.test.js      18 testes de integração e unidade
 ## Fluxo de branches
 
 ```
-main ← develop ← feat   (funcionalidades novas)
-               ← mod    (modificações em algo que já existe)
+main ← develop ← feat/<nome>   (funcionalidade nova, ex.: feat/post-skills)
+               ← mod/<nome>    (modificação no que já existe, ex.: mod/readme-fluxo-branches)
 ```
 
 - `main`: só recebe o que já foi testado em `develop`.
-- `develop`: integração. `feat` e `mod` saem dela e voltam para ela por PR.
-- Antes de começar um trabalho, atualize a branch com a `develop` (`git switch feat` e `git merge develop`).
+- `develop`: integração. Cada tarefa ganha uma branch curta que sai dela e volta por PR.
+- Começar uma tarefa: `git switch develop`, `git pull` e `git switch -c feat/<nome>`.
+- Depois do merge, apague a branch (`git branch -d feat/<nome>`); a próxima tarefa ganha outra.
 - Rode `npm test` antes de cada commit; o PR só é aceito com os testes passando.
 
 ## Exercícios para evoluir (na ordem do plano)
