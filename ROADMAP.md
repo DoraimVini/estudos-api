@@ -30,10 +30,11 @@ Cada versão é uma branch `feat/` com PR para `develop`. A `v1.0` vai para a `m
 - `npm run plano` gera o `PLANO.md`.
 - `courses` reduzida a cursos externos (migração 003).
 
-### v0.4 · Exercícios (antes de 01/11)
-- `exercicios/node/` (módulos 2 e 4) e `exercicios/sql/` (módulo 6), cada um com `README.md`, arquivo para completar e testes.
-- `npm run exercicio node/01` roda os testes daquele exercício e, se passarem, marca como resolvido.
-- `GET /exercicios?modulo=6&status=pendente`; `/proximo` sugere o próximo exercício.
+### v0.4 · Exercícios (antes de 01/11) ✅
+- 18 exercícios: `exercicios/js/` (módulo 2), `exercicios/node/` (módulo 4) e `exercicios/sql/` (módulo 6, banco de uma loja), cada um com `README.md`, esqueleto e testes.
+- `exercicios/catalogo.json` é a lista oficial; migração 004 e sincronização como na trilha.
+- `npm run exercicio js/01` roda os testes daquele exercício e, se passarem, marca como `Resolvido`.
+- `GET /exercicios?modulo=6&status=Pendente`, `GET /exercicios/:id` (com enunciado); `/proximo` sugere os próximos.
 - Testes dos exercícios ficam fora do `npm test` (senão o CI falharia até você resolver).
 
 ### v0.5 · TypeScript

@@ -13,8 +13,10 @@ e responde **o que estudar agora**, em ordem de prioridade, com o motivo de cada
 ```bash
 npm install
 npm run dev        # sobe em http://localhost:3000 e reinicia ao salvar arquivos
-npm test           # roda os testes (Vitest + Supertest)
+npm test           # roda os testes da API (Vitest + Supertest)
 npm run db:reset   # apaga o banco local e recarrega os dados da planilha
+npm run plano      # gera o PLANO.md a partir de src/db/trilha.json
+npm run exercicio  # lista os exercícios; npm run exercicio js/01 roda um deles
 ```
 
 O banco fica no arquivo `estudos.db` (fora do Git). Para outro caminho: `DB_PATH=meu.db npm start`.
@@ -24,10 +26,12 @@ O banco fica no arquivo `estudos.db` (fora do Git). Para outro caminho: `DB_PATH
 | Método | Rota | O que faz |
 |---|---|---|
 | GET | `/status` | Saúde da API |
-| GET | `/proximo?limite=3&mes=4` | **O que estudar agora**: módulos do mês (atrasados primeiro) com os próximos tópicos, habilidades por prioridade e cursos do mês |
-| GET | `/progresso` | Tópicos concluídos, resumo por nível e horas dos últimos 7 dias |
+| GET | `/proximo?limite=3&mes=4` | **O que estudar agora**: módulos do mês (atrasados primeiro) com os próximos tópicos, exercícios pendentes, habilidades por prioridade e cursos do mês |
+| GET | `/progresso` | Tópicos concluídos, exercícios resolvidos, resumo por nível e horas dos últimos 7 dias |
 | GET | `/modulos?fase=1` | Módulos da trilha com status e progresso calculados |
-| GET | `/modulos/:id` | Um módulo com tópicos, recursos e a habilidade ligada |
+| GET | `/modulos/:id` | Um módulo com tópicos, recursos, exercícios e a habilidade ligada |
+| GET | `/exercicios?modulo=6&status=Pendente` | Exercícios (`Pendente` ou `Resolvido`) |
+| GET | `/exercicios/:id` | Um exercício com o enunciado e o comando para rodar os testes |
 | GET | `/topicos/:id` | Um tópico |
 | PATCH | `/topicos/:id` | Atualiza `status` (`Não iniciado`, `Em andamento`, `Concluído`) |
 | GET | `/skills?nivel=Júnior&status=Em andamento&area=Backend` | Lista habilidades |
@@ -90,12 +94,14 @@ src/
   db/seed.json        habilidades e cursos exportados da planilha
   db/trilha.json      fonte da trilha: módulos, tópicos e recursos
   db/trilha.js        sincroniza o trilha.json com o banco sem perder o progresso
-  scripts/            npm run plano (gera o PLANO.md)
+  db/exercicios.js    sincroniza exercicios/catalogo.json com o banco e lê os enunciados
+  scripts/            npm run plano (gera o PLANO.md) e npm run exercicio (roda e registra)
   datas.js            datas no fuso de São Paulo
   constantes.js       níveis, status e prioridades válidos
   errors.js           formato único de erro { erro, detalhes }
   validators.js       validação de entrada
 test/                 testes de integração e unidade (Vitest + Supertest)
+exercicios/           exercícios de JS, Node e SQL com testes próprios (fora do npm test)
 .github/workflows/    CI: npm test em cada PR
 ```
 
@@ -120,6 +126,6 @@ main ← develop ← feat/<nome>   (funcionalidade nova, ex.: feat/post-skills)
 
 - [`PLANO.md`](PLANO.md): o que estudar em cada mês (13 módulos).
 - [`ROADMAP.md`](ROADMAP.md): como a API evolui até a v1.0.
-- `exercicios/` (a partir da v0.4): exercícios de Node e SQL com testes automáticos.
+- [`exercicios/`](exercicios/README.md): 18 exercícios de JavaScript, Node e SQL com correção automática.
 
 Dica: não peça para a IA resolver o exercício. Use-a para tirar dúvidas e revisar, e garanta que você consegue explicar cada linha.
