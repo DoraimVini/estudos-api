@@ -11,7 +11,7 @@ function cardModulo(m) {
         <div class="titulo"><strong>${esc(t.nome)}</strong></div>
         <p>${md(t.descricao)}</p>
       </div>
-      ${acoesDoTopico(t, m.nome)}
+      ${acoesDoTopico(t)}
     </li>`).join("");
 
   return `<article class="card">
@@ -59,7 +59,7 @@ export default {
       : "";
 
     return `<h1>Agora</h1>
-      <p class="sub">Mês ${p.mes_do_plano} do plano. Clique em <strong>Estudar</strong> num tópico e inicie o Pomodoro.</p>
+      <p class="sub">Mês ${p.mes_do_plano} do plano. <strong>Estudar</strong> abre o conteúdo do tópico; lá você liga o Pomodoro.</p>
       <h2>Módulos em foco</h2>
       ${modulos}
       ${secaoExercicios(p.exercicios)}

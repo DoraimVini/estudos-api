@@ -96,17 +96,26 @@ function tocarAlarme() {
   }
 }
 
-/** Chamado pelos botões "Estudar" das páginas. */
-export function escolherTopico(novo) {
+export const temTopico = () => topico !== null;
+
+/**
+ * Liga o Pomodoro a um tópico. Pelo botão "Cronometrar": avisa e leva o foco ao Iniciar.
+ * Ao abrir a página de um tópico com o Pomodoro livre: escolhe em silêncio.
+ */
+export function escolherTopico(novo, { silencioso = false } = {}) {
+  if (rodando() && topico && topico.id !== novo.id) {
+    return avisar("O Pomodoro está rodando em outro tópico. Pause ou registre antes de trocar.", "erro");
+  }
   topico = novo;
   $("pomo-topico").innerHTML = `Estudando: <strong>${esc(novo.nome)}</strong><br><small>${esc(novo.modulo)}</small>`;
+  if (silencioso) return;
   $("pomo-iniciar").focus();
-  avisar(`Tópico escolhido: ${novo.nome}. Clique em Iniciar.`);
+  avisar(`Pomodoro ligado a ${novo.nome}. Clique em Iniciar.`);
 }
 
 async function registrar(evento) {
   evento.preventDefault();
-  if (!topico) return avisar("Escolha um tópico com o botão Estudar antes de registrar.", "erro");
+  if (!topico) return avisar("Abra um tópico (botão Estudar) antes de registrar.", "erro");
   const minutos = Number($("pomo-minutos").value);
   const notas = $("pomo-notas").value.trim();
   try {

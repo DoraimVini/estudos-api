@@ -14,10 +14,12 @@
     "test:watch": "vitest",
     "db:reset": "node --no-warnings=ExperimentalWarning src/db/reset.js",
     "plano": "node src/scripts/gerar-plano.js",
-    "exercicio": "node --no-warnings=ExperimentalWarning src/scripts/exercicio.js"
+    "exercicio": "node --no-warnings=ExperimentalWarning src/scripts/exercicio.js",
+    "links": "node src/scripts/verificar-links.js"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "marked": "18.0.14"
   },
   "devDependencies": {
     "supertest": "^7.1.0",

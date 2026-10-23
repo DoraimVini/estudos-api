@@ -32,6 +32,7 @@ npm test           # roda os testes da API (Vitest + Supertest)
 npm run db:reset   # apaga o banco local e recarrega os dados da planilha
 npm run plano      # gera o PLANO.md a partir de src/db/trilha.json
 npm run exercicio  # lista os exercícios; npm run exercicio js/01 roda um deles
+npm run links      # confere se os links da trilha e do conteúdo continuam no ar (precisa de internet)
 ```
 
 O banco fica no arquivo `estudos.db` (fora do Git). Para outro caminho: `DB_PATH=meu.db npm start`.
@@ -116,6 +117,7 @@ src/
   errors.js           formato único de erro { erro, detalhes }
   validators.js       validação de entrada
 test/                 testes de integração e unidade (Vitest + Supertest)
+conteudo/             conteúdo de estudo de cada tópico (Markdown), baseado na documentação oficial
 exercicios/           exercícios de JS, Node e SQL com testes próprios (fora do npm test)
 public/               painel web: HTML, CSS e módulos JS puros, servidos pela própria API
   js/app.js           roteamento por hash (#/agora, #/trilha/5) e despacho das ações (data-acao)

@@ -31,6 +31,11 @@
   Só `npm run exercicio` marca como Resolvido (não há PATCH de propósito).
 - Painel web em `public/` (HTML/CSS/JS puros, sem build), servido pelo Express na raiz. Roteamento por hash;
   cada página em `public/js/paginas/` exporta `{ titulo, render(param), acoes }`. Todo texto vindo da API passa por `esc()`.
+- Conteúdo de estudo em `conteudo/<módulo>-<nome>/<ordem>-<nome>.md`, servido por `GET /topicos/:id` e aberto pelo
+  botão Estudar. Regras: ler a página oficial ANTES de escrever (nunca de memória); texto próprio, sem copiar a
+  documentação; links para a seção exata; preferir pt-BR, mas usar en-US quando a tradução estiver desatualizada (e avisar);
+  seções obrigatórias "Em poucas palavras", "Leia na documentação oficial" (2+ links) e "Confira se entendeu";
+  comandos que funcionem no PowerShell; não entregar a solução dos exercícios. Rodar `npm run links` antes de commitar.
 - Meu `estudos.db` tem dados reais: para testar no navegador, usar `DB_PATH=demo.db` em outra porta (`.claude/launch.json`).
 - Windows: PowerShell bloqueia `npm.ps1`; uso `npm.cmd` ou o `iniciar.cmd`.
 

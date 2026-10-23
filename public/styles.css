@@ -147,6 +147,32 @@ button.perigo:hover { border-color: var(--alerta); color: var(--alerta); }
 .segmentado button:first-child { border-radius: 8px 0 0 8px; margin-left: 0; }
 .segmentado button:last-child { border-radius: 0 8px 8px 0; }
 
+/* Link com cara de botão */
+a.botao {
+  display: inline-block; font-size: 0.9rem; text-decoration: none;
+  padding: 0.4rem 0.8rem; border-radius: 8px;
+  border: 1px solid var(--borda); background: var(--superficie); color: var(--texto);
+}
+a.botao:hover { border-color: var(--destaque); }
+a.botao.primario { background: var(--destaque); color: var(--destaque-texto); border-color: var(--destaque); font-weight: 600; }
+
+/* Página do tópico */
+.caminho { font-size: 0.9rem; color: var(--texto-suave); margin-bottom: 0.75rem; }
+.acoes-topico { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; margin: 1rem 0 1.5rem; }
+.conteudo {
+  background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio);
+  padding: 0.5rem 1.5rem 1.25rem; line-height: 1.65; max-width: 75ch;
+}
+.conteudo h2 { margin-top: 1.75rem; padding-top: 0.5rem; border-top: 1px solid var(--borda); }
+.conteudo h2:first-child { border-top: none; }
+.conteudo pre { overflow-x: auto; white-space: pre; }
+.conteudo pre code { background: none; padding: 0; }
+.conteudo blockquote { margin: 1rem 0; padding: 0.5rem 1rem; border-left: 4px solid var(--destaque); background: var(--fundo); }
+.conteudo details { margin: 0.5rem 0; padding: 0.5rem 0.75rem; border: 1px solid var(--borda); border-radius: 8px; }
+.conteudo summary { cursor: pointer; font-weight: 600; }
+.conteudo li { margin: 0.25rem 0; }
+.vizinhos { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+
 /* Formulários */
 label { display: block; font-size: 0.85rem; color: var(--texto-suave); margin-top: 0.75rem; }
 input, select, textarea {

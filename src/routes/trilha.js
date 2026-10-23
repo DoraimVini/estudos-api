@@ -4,6 +4,7 @@ import { parseId, validarStatusTopico, somenteCampos } from "../validators.js";
 import { resumirModulo } from "../services/trilha.js";
 import { hojeISO } from "../datas.js";
 import { lerMes } from "./plano.js";
+import { lerConteudo, ordensComConteudo } from "../db/conteudo.js";
 
 export function trilhaRouter(repos, { agora = () => new Date() } = {}) {
   const router = Router();
@@ -21,18 +22,30 @@ export function trilhaRouter(repos, { agora = () => new Date() } = {}) {
     const id = parseId(req.params.id);
     const modulo = repos.trilha.buscarModulo(id);
     if (!modulo) throw notFound("Módulo");
+    const comConteudo = ordensComConteudo(id);
     res.json({
       ...resumirModulo(modulo, lerMes(repos, req.query, agora)),
-      topicos: repos.trilha.topicosDoModulo(id),
+      topicos: repos.trilha.topicosDoModulo(id).map((t) => ({ ...t, tem_conteudo: comConteudo.has(t.ordem) })),
       recursos: repos.trilha.recursosDoModulo(id),
       exercicios: repos.exercicios.listar({ modulo: id }),
     });
   });
 
+  // GET /topicos/:id  -> tópico com o conteúdo de estudo (Markdown) e os vizinhos no módulo
   router.get("/topicos/:id", (req, res) => {
     const topico = repos.trilha.buscarTopico(parseId(req.params.id));
     if (!topico) throw notFound("Tópico");
-    res.json(topico);
+    const irmaos = repos.trilha.topicosDoModulo(topico.modulo_id);
+    const vizinho = (ordem) => {
+      const t = irmaos.find((x) => x.ordem === ordem);
+      return t ? { id: t.id, nome: t.nome } : null;
+    };
+    res.json({
+      ...topico,
+      conteudo: lerConteudo(topico.modulo_id, topico.ordem),
+      anterior: vizinho(topico.ordem - 1),
+      proximo: vizinho(topico.ordem + 1),
+    });
   });
 
   // PATCH /topicos/:id  { "status": "Concluído" }  -> concluido_em é preenchido com a data de hoje
