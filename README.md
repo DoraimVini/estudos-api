@@ -30,7 +30,7 @@ O banco fica no arquivo `estudos.db` (fora do Git). Para outro caminho: `DB_PATH
 | GET | `/progresso` | Tópicos concluídos, exercícios resolvidos, resumo por nível e horas dos últimos 7 dias |
 | GET | `/modulos?fase=1` | Módulos da trilha com status e progresso calculados |
 | GET | `/modulos/:id` | Um módulo com tópicos, recursos, exercícios e a habilidade ligada |
-| GET | `/exercicios?modulo=6&status=Pendente` | Exercícios (`Pendente` ou `Resolvido`) |
+| GET | `/exercicios?modulo=5&status=Pendente` | Exercícios (`Pendente` ou `Resolvido`) |
 | GET | `/exercicios/:id` | Um exercício com o enunciado e o comando para rodar os testes |
 | GET | `/topicos/:id` | Um tópico |
 | PATCH | `/topicos/:id` | Atualiza `status` (`Não iniciado`, `Em andamento`, `Concluído`) |
