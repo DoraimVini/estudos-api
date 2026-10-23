@@ -2,6 +2,7 @@ import { DatabaseSync } from "node:sqlite";
 import { readFileSync } from "node:fs";
 import { migrar } from "./migrate.js";
 import { sincronizarTrilha } from "./trilha.js";
+import { sincronizarExercicios } from "./exercicios.js";
 
 const seed = JSON.parse(
   readFileSync(new URL("./seed.json", import.meta.url), "utf8"),
@@ -9,7 +10,7 @@ const seed = JSON.parse(
 
 /**
  * Abre (ou cria) o banco, aplica as migrações pendentes, carrega os dados da planilha
- * se estiver vazio e sincroniza a trilha com o trilha.json.
+ * se estiver vazio e sincroniza a trilha (trilha.json) e os exercícios (catalogo.json).
  */
 export function openDatabase(path = process.env.DB_PATH ?? "estudos.db") {
   const db = new DatabaseSync(path);
@@ -17,6 +18,7 @@ export function openDatabase(path = process.env.DB_PATH ?? "estudos.db") {
   migrar(db);
   seedIfEmpty(db);
   sincronizarTrilha(db);
+  sincronizarExercicios(db);
   return db;
 }
 
