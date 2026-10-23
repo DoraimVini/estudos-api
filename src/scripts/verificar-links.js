@@ -35,7 +35,10 @@ async function verificar(url) {
     const ancora = hash.slice(1);
     if (ancora && !ANCORA_DE_APLICATIVO.includes(hostname)) {
       const html = await resposta.text();
-      if (!html.includes(`id="${ancora}"`) && !html.includes(`name="${ancora}"`)) return `âncora #${ancora} não encontrada`;
+      // id="x", id='x' ou id=x (HTML permite atributo sem aspas, como na documentação do Node)
+      const escapada = ancora.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const existe = new RegExp(`(?:id|name)=(["']?)${escapada}\\1(?=[\\s>"'])`).test(html);
+      if (!existe) return `âncora #${ancora} não encontrada`;
     }
     return null;
   } catch (erro) {
