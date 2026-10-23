@@ -1,6 +1,6 @@
 # Acima da média da categoria
 
-**Módulo 6 · SQL e PostgreSQL · tópico: Subqueries e CTEs** · banco: [a loja](../README.md)
+**Módulo 5 · SQL e PostgreSQL · tópico: Subqueries e CTEs** · banco: [a loja](../README.md)
 
 ## O que fazer
 

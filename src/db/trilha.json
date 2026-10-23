@@ -124,37 +124,10 @@
     },
     {
       "id": 5,
-      "nome": "TypeScript",
+      "nome": "SQL e PostgreSQL",
       "fase": 1,
       "mes_inicio": 3,
       "mes_fim": 3,
-      "skill": "JavaScript moderno + TypeScript",
-      "objetivo": "Usar o sistema de tipos para pegar erros antes de rodar o código.",
-      "topicos": [
-        { "nome": "Por que tipos", "descricao": "O que o TS verifica, o que não verifica (tipos somem no runtime) e o papel do `tsc`." },
-        { "nome": "Tipos básicos", "descricao": "Primitivos, arrays, tuplas, objetos, `unknown` x `any`, inferência." },
-        { "nome": "type x interface", "descricao": "Quando usar cada um; propriedades opcionais e `readonly`." },
-        { "nome": "Unions e narrowing", "descricao": "Uniões, estreitar com `typeof`/`in`/discriminante, `never` para checar exaustividade." },
-        { "nome": "Funções tipadas", "descricao": "Parâmetros, retorno, callbacks e funções que aceitam mais de um formato." },
-        { "nome": "Generics", "descricao": "Funções e tipos genéricos, restrições com `extends`." },
-        { "nome": "Utility types", "descricao": "`Partial`, `Pick`, `Omit`, `Record`, `ReturnType`." },
-        { "nome": "Configuração", "descricao": "`tsconfig.json`, `strict`, `tsc --noEmit` no CI, rodar com `tsx`." },
-        { "nome": "Dados de fora", "descricao": "Tipar `Request`/`Response` do Express; dado externo é `unknown` até ser validado." }
-      ],
-      "recursos": [
-        { "titulo": "TypeScript Handbook", "url": "https://www.typescriptlang.org/docs/handbook/intro.html", "tipo": "documentação" },
-        { "titulo": "TypeScript Playground", "url": "https://www.typescriptlang.org/play", "tipo": "ferramenta" },
-        { "titulo": "type-challenges", "url": "https://github.com/type-challenges/type-challenges", "tipo": "exercícios" }
-      ],
-      "mini_projeto": "Converter o encurtador para TypeScript com `strict` ligado.",
-      "pronto_quando": "`tsc --noEmit` passa sem nenhum `any` explícito."
-    },
-    {
-      "id": 6,
-      "nome": "SQL e PostgreSQL",
-      "fase": 1,
-      "mes_inicio": 4,
-      "mes_fim": 4,
       "skill": "SQL / PostgreSQL (SELECT, JOIN, modelagem simples, migrations)",
       "objetivo": "Modelar um banco e escrever consultas sem depender de ORM.",
       "topicos": [
@@ -174,8 +147,35 @@
         { "titulo": "PostgreSQL Exercises", "url": "https://pgexercises.com/", "tipo": "exercícios" },
         { "titulo": "Tutorial do PostgreSQL", "url": "https://www.postgresql.org/docs/current/tutorial.html", "tipo": "documentação" }
       ],
-      "mini_projeto": "Banco de uma biblioteca (livros, autores, leitores, empréstimos) com 20 consultas comentadas.",
+      "mini_projeto": "Dar banco ao encurtador: trocar a memória por SQLite com migrações (links e acessos) e escrever 10 consultas de estatística comentadas.",
       "pronto_quando": "Você resolve um JOIN com agregação de cabeça e explica por que cada índice existe."
+    },
+    {
+      "id": 6,
+      "nome": "TypeScript",
+      "fase": 1,
+      "mes_inicio": 4,
+      "mes_fim": 4,
+      "skill": "JavaScript moderno + TypeScript",
+      "objetivo": "Usar o sistema de tipos para pegar erros antes de rodar o código.",
+      "topicos": [
+        { "nome": "Por que tipos", "descricao": "O que o TS verifica, o que não verifica (tipos somem no runtime) e o papel do `tsc`." },
+        { "nome": "Tipos básicos", "descricao": "Primitivos, arrays, tuplas, objetos, `unknown` x `any`, inferência." },
+        { "nome": "type x interface", "descricao": "Quando usar cada um; propriedades opcionais e `readonly`." },
+        { "nome": "Unions e narrowing", "descricao": "Uniões, estreitar com `typeof`/`in`/discriminante, `never` para checar exaustividade." },
+        { "nome": "Funções tipadas", "descricao": "Parâmetros, retorno, callbacks e funções que aceitam mais de um formato." },
+        { "nome": "Generics", "descricao": "Funções e tipos genéricos, restrições com `extends`." },
+        { "nome": "Utility types", "descricao": "`Partial`, `Pick`, `Omit`, `Record`, `ReturnType`." },
+        { "nome": "Configuração", "descricao": "`tsconfig.json`, `strict`, `tsc --noEmit` no CI, rodar com `tsx`." },
+        { "nome": "Dados de fora", "descricao": "Tipar `Request`/`Response` do Express e linhas do banco; dado externo é `unknown` até ser validado." }
+      ],
+      "recursos": [
+        { "titulo": "TypeScript Handbook", "url": "https://www.typescriptlang.org/docs/handbook/intro.html", "tipo": "documentação" },
+        { "titulo": "TypeScript Playground", "url": "https://www.typescriptlang.org/play", "tipo": "ferramenta" },
+        { "titulo": "type-challenges", "url": "https://github.com/type-challenges/type-challenges", "tipo": "exercícios" }
+      ],
+      "mini_projeto": "Converter o encurtador (já com banco) para TypeScript com `strict` ligado.",
+      "pronto_quando": "`tsc --noEmit` passa sem nenhum `any` explícito."
     },
     {
       "id": 7,
@@ -256,14 +256,14 @@
     },
     {
       "id": 10,
-      "nome": "Testes",
+      "nome": "Testes avançados: estratégia e e2e",
       "fase": 2,
       "mes_inicio": 8,
       "mes_fim": 8,
       "skill": "Testes automatizados (unitários e integração)",
-      "objetivo": "Testar com estratégia: rápido, confiável e no nível certo.",
+      "objetivo": "Ir além dos testes de API que você escreve desde o módulo 4: estratégia, componentes e e2e.",
       "topicos": [
-        { "nome": "Por que testar", "descricao": "Teste como rede de segurança para refatorar; o que vale e o que não vale testar." },
+        { "nome": "O que testar", "descricao": "Teste como rede de segurança para refatorar; o que vale e o que não vale testar." },
         { "nome": "Pirâmide de testes", "descricao": "Muitos unitários, alguns de integração, poucos e2e; custo x confiança." },
         { "nome": "Vitest", "descricao": "`describe`/`it`/`expect`, `beforeEach`, testes isolados e determinísticos." },
         { "nome": "Dublês", "descricao": "Mock, stub e fake; congelar a data (como o `opcoes.agora` deste projeto)." },

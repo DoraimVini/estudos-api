@@ -6,7 +6,7 @@ Exercícios com correção automática para praticar os módulos da trilha:
 |---|---|---|
 | `js/` | 2 · JavaScript moderno | closures, arrays, objetos, promises, event loop |
 | `node/` | 4 · Node e APIs REST | arquivos, HTTP puro, middlewares, validação, API REST |
-| `sql/` | 6 · SQL e PostgreSQL | do `SELECT` à modelagem, sobre [o banco de uma loja](sql/README.md) |
+| `sql/` | 5 · SQL e PostgreSQL | do `SELECT` à modelagem, sobre [o banco de uma loja](sql/README.md) |
 
 ## Como funciona
 

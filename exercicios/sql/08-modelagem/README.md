@@ -1,6 +1,6 @@
 # Modelar avaliações com restrições
 
-**Módulo 6 · SQL e PostgreSQL · tópico: Restrições** · banco: [a loja](../README.md)
+**Módulo 5 · SQL e PostgreSQL · tópico: Restrições** · banco: [a loja](../README.md)
 
 A loja quer que clientes avaliem produtos. Uma boa modelagem faz o **banco** recusar dados errados, mesmo que a API tenha um bug.
 

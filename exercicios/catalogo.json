@@ -12,13 +12,13 @@
     { "slug": "node/04-validacao", "modulo": 4, "topico": 7, "titulo": "Validar o corpo de uma requisição" },
     { "slug": "node/05-api-rest", "modulo": 4, "topico": 5, "titulo": "API REST de tarefas" },
 
-    { "slug": "sql/01-select", "modulo": 6, "topico": 2, "titulo": "SELECT com filtro e ordenação" },
-    { "slug": "sql/02-agregacao", "modulo": 6, "topico": 3, "titulo": "Agregação por categoria" },
-    { "slug": "sql/03-join", "modulo": 6, "topico": 4, "titulo": "Pedidos com o nome do cliente" },
-    { "slug": "sql/04-sem-pedidos", "modulo": 6, "topico": 4, "titulo": "Clientes que nunca compraram" },
-    { "slug": "sql/05-having", "modulo": 6, "topico": 3, "titulo": "Quem gastou mais (GROUP BY + HAVING)" },
-    { "slug": "sql/06-cte", "modulo": 6, "topico": 5, "titulo": "Acima da média da categoria" },
-    { "slug": "sql/07-atualizacao", "modulo": 6, "topico": 6, "titulo": "Reajuste de preços com UPDATE" },
-    { "slug": "sql/08-modelagem", "modulo": 6, "topico": 8, "titulo": "Modelar avaliações com restrições" }
+    { "slug": "sql/01-select", "modulo": 5, "topico": 2, "titulo": "SELECT com filtro e ordenação" },
+    { "slug": "sql/02-agregacao", "modulo": 5, "topico": 3, "titulo": "Agregação por categoria" },
+    { "slug": "sql/03-join", "modulo": 5, "topico": 4, "titulo": "Pedidos com o nome do cliente" },
+    { "slug": "sql/04-sem-pedidos", "modulo": 5, "topico": 4, "titulo": "Clientes que nunca compraram" },
+    { "slug": "sql/05-having", "modulo": 5, "topico": 3, "titulo": "Quem gastou mais (GROUP BY + HAVING)" },
+    { "slug": "sql/06-cte", "modulo": 5, "topico": 5, "titulo": "Acima da média da categoria" },
+    { "slug": "sql/07-atualizacao", "modulo": 5, "topico": 6, "titulo": "Reajuste de preços com UPDATE" },
+    { "slug": "sql/08-modelagem", "modulo": 5, "topico": 8, "titulo": "Modelar avaliações com restrições" }
   ]
 }

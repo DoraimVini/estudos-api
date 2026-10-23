@@ -1,6 +1,6 @@
 # Quem gastou mais (GROUP BY + HAVING)
 
-**Módulo 6 · SQL e PostgreSQL · tópico: Agregação** · banco: [a loja](../README.md)
+**Módulo 5 · SQL e PostgreSQL · tópico: Agregação** · banco: [a loja](../README.md)
 
 ## O que fazer
 

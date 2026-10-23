@@ -1,6 +1,6 @@
 # Clientes que nunca compraram
 
-**Módulo 6 · SQL e PostgreSQL · tópico: JOINs** · banco: [a loja](../README.md)
+**Módulo 5 · SQL e PostgreSQL · tópico: JOINs** · banco: [a loja](../README.md)
 
 ## O que fazer
 

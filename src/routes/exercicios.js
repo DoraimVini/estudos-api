@@ -6,7 +6,7 @@ import { lerEnunciado } from "../db/exercicios.js";
 export function exerciciosRouter(repos) {
   const router = Router();
 
-  // GET /exercicios?modulo=6&status=Pendente
+  // GET /exercicios?modulo=5&status=Pendente
   router.get("/", (req, res) => {
     const { status } = req.query;
     const modulo = req.query.modulo === undefined ? undefined : Number(req.query.modulo);

@@ -1,6 +1,6 @@
 # SELECT com filtro e ordenação
 
-**Módulo 6 · SQL e PostgreSQL · tópico: Consultas básicas** · banco: [a loja](../README.md)
+**Módulo 5 · SQL e PostgreSQL · tópico: Consultas básicas** · banco: [a loja](../README.md)
 
 ## O que fazer
 

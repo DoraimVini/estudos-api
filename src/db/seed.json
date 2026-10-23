@@ -32,7 +32,7 @@
       "evidencia": "Projetos tipados no GitHub",
       "onde_estudar": "Curso.dev; docs do TypeScript",
       "mes_inicio": 1,
-      "mes_fim": 3,
+      "mes_fim": 4,
       "hoje": null,
       "meta": 4,
       "status": "Não iniciado"
@@ -79,8 +79,8 @@
       "nome": "SQL / PostgreSQL (SELECT, JOIN, modelagem simples, migrations)",
       "evidencia": "Banco modelado e migrations versionadas",
       "onde_estudar": "Curso.dev; docs do PostgreSQL",
-      "mes_inicio": 4,
-      "mes_fim": 4,
+      "mes_inicio": 3,
+      "mes_fim": 3,
       "hoje": null,
       "meta": 4,
       "status": "Não iniciado"
@@ -116,7 +116,7 @@
       "evidencia": "App em produção com link no README",
       "onde_estudar": "Docs do Docker",
       "mes_inicio": 9,
-      "mes_fim": 9,
+      "mes_fim": 10,
       "hoje": null,
       "meta": 4,
       "status": "Não iniciado"

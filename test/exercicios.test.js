@@ -78,9 +78,9 @@ describe("GET /exercicios", () => {
   });
 
   it("filtra por módulo e status, e valida os filtros", async () => {
-    const sql = await request(app).get("/api/v1/exercicios").query({ modulo: 6 });
+    const sql = await request(app).get("/api/v1/exercicios").query({ modulo: 5 });
     expect(sql.body.every((e) => e.slug.startsWith("sql/"))).toBe(true);
-    expect(sql.body).toHaveLength(CATALOGO.filter((e) => e.modulo === 6).length);
+    expect(sql.body).toHaveLength(CATALOGO.filter((e) => e.modulo === 5).length);
 
     expect((await request(app).get("/api/v1/exercicios").query({ status: "Resolvido" })).body).toEqual([]);
     expect((await request(app).get("/api/v1/exercicios").query({ status: "feito" })).status).toBe(400);
