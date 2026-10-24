@@ -33,9 +33,28 @@ npm run db:reset   # apaga o banco local e recria a partir dos arquivos JSON
 npm run plano      # gera o PLANO.md a partir de src/db/trilha.json
 npm run exercicio  # lista os exercícios; npm run exercicio js/01 roda um deles
 npm run links      # confere se os links da trilha e do conteúdo continuam no ar (precisa de internet)
+npm run planilha   # mostra o que mudaria na planilha do plano; npm run planilha -- --gravar aplica
 ```
 
 O banco fica no arquivo `estudos.db` (fora do Git). Para outro caminho: `DB_PATH=meu.db npm start`.
+
+### Planilha do plano (`npm run planilha`)
+
+A planilha `..\Plano_3_anos_Vini.xlsx` continua sendo o plano mestre (visto, orçamento, candidaturas, riscos).
+A API é dona dos estudos e escreve só nestas células:
+
+| Aba | Células | De onde vem |
+|---|---|---|
+| Cronograma | "Estudos" (D) dos meses da trilha | Curso.dev + módulos do mês |
+| Habilidades | A–H, J e o id em K (a fórmula "Falta" fica) | `habilidades.json` + autoavaliação do painel |
+| Cursos | meses, prioridade e status (E, F, G, M) e o id em O | `cursos.json` e o painel; temas que viraram módulo usam meses e status do módulo |
+
+- Simula por padrão; `-- --gravar` grava. Outro arquivo: `PLANILHA_PATH=...`.
+- Recusa gravar com a planilha aberta no Excel, com outra data de início (Premissas!B3), com cabeçalho mudado
+  ou com linha que não existe na API. Nunca sobrescreve fórmula.
+- Antes de gravar, faz backup em `..\backups-planilha\` (guarda os 10 últimos) e confere que só as células pedidas mudaram.
+- A autoavaliação passa a ser feita no painel (página Habilidades): o que for digitado nessas colunas da planilha é
+  sobrescrito, e a simulação avisa antes.
 
 ## Endpoints (`/api/v1`)
 
@@ -113,7 +132,8 @@ src/
   db/trilha.json      fonte da trilha: data de início, módulos, tópicos e recursos
   db/trilha.js        sincroniza o trilha.json com o banco sem perder o progresso
   db/exercicios.js    sincroniza exercicios/catalogo.json com o banco e lê os enunciados
-  scripts/            npm run plano (gera o PLANO.md) e npm run exercicio (roda e registra)
+  planilha/           API -> planilha: xlsx.js (edição cirúrgica do .xlsx), alteracoes.js (regra), atualizar.js (backup e gravação)
+  scripts/            npm run plano (gera o PLANO.md), npm run exercicio (roda e registra) e npm run planilha
   datas.js            datas no fuso de São Paulo
   constantes.js       níveis, status e prioridades válidos
   errors.js           formato único de erro { erro, detalhes }
