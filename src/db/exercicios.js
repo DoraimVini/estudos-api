@@ -19,10 +19,11 @@ export function lerEnunciado(slug) {
 
 /**
  * Deixa a tabela exercicios igual ao catálogo, sem perder status e tentativas.
- * Exercício é identificado pelo slug. Roda depois da trilha (precisa de modulos e topicos).
+ * Exercício é identificado pelo slug e aponta para o slug do tópico; o módulo vem do tópico.
+ * Roda depois da trilha (precisa de modulos e topicos).
  */
 export function sincronizarExercicios(db, catalogo = CATALOGO) {
-  const topicoId = db.prepare("SELECT id FROM topicos WHERE modulo_id = ? AND ordem = ?");
+  const topicoPorSlug = db.prepare("SELECT id, modulo_id FROM topicos WHERE slug = ?");
   const upsert = db.prepare(`
     INSERT INTO exercicios (slug, modulo_id, topico_id, ordem, titulo) VALUES (?, ?, ?, ?, ?)
     ON CONFLICT (slug) DO UPDATE SET
@@ -32,11 +33,9 @@ export function sincronizarExercicios(db, catalogo = CATALOGO) {
   db.exec("BEGIN");
   try {
     catalogo.forEach((e, i) => {
-      const topico = e.topico === undefined ? undefined : topicoId.get(e.modulo, e.topico);
-      if (e.topico !== undefined && !topico) {
-        throw new Error(`Exercício ${e.slug}: tópico ${e.topico} não existe no módulo ${e.modulo}.`);
-      }
-      upsert.run(e.slug, e.modulo, topico?.id ?? null, i + 1, e.titulo);
+      const topico = topicoPorSlug.get(e.topico);
+      if (!topico) throw new Error(`Exercício ${e.slug}: tópico "${e.topico}" não existe na trilha.`);
+      upsert.run(e.slug, topico.modulo_id, topico.id, i + 1, e.titulo);
     });
     const slugs = catalogo.map((e) => e.slug);
     db.prepare(`DELETE FROM exercicios WHERE slug NOT IN (${slugs.map(() => "?").join(", ")})`).run(...slugs);

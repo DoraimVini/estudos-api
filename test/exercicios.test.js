@@ -4,7 +4,7 @@ import request from "supertest";
 import { createApp } from "../src/app.js";
 import { openDatabase } from "../src/db/database.js";
 import { CATALOGO, pastaDoExercicio, sincronizarExercicios } from "../src/db/exercicios.js";
-import { TRILHA } from "../src/db/trilha.js";
+import { TRILHA, sincronizarTrilha } from "../src/db/trilha.js";
 import { criarRepositorios } from "../src/repositories/index.js";
 
 // Mesma data dos outros testes: 15/02/2027 = mês 4 do plano.
@@ -21,6 +21,9 @@ beforeEach(() => {
 
 const arquivo = (slug, nome) => new URL(nome, pastaDoExercicio(slug));
 const idDe = (slug) => repos.exercicios.buscarPorSlug(slug).id;
+// O catálogo aponta para o slug do tópico; o módulo vem da trilha.
+const moduloDoTopico = new Map(TRILHA.modulos.flatMap((m) => m.topicos.map((t) => [t.slug, m.id])));
+const doModulo = (id) => CATALOGO.filter((e) => moduloDoTopico.get(e.topico) === id);
 
 describe("catálogo de exercícios (consistência)", () => {
   it("slugs são únicos", () => {
@@ -28,12 +31,8 @@ describe("catálogo de exercícios (consistência)", () => {
     expect(new Set(slugs).size).toBe(slugs.length);
   });
 
-  it("toda entrada aponta para módulo e tópico que existem na trilha", () => {
-    for (const e of CATALOGO) {
-      const modulo = TRILHA.modulos.find((m) => m.id === e.modulo);
-      expect(modulo, e.slug).toBeDefined();
-      expect(e.topico, e.slug).toBeLessThanOrEqual(modulo.topicos.length);
-    }
+  it("toda entrada aponta para um tópico que existe na trilha", () => {
+    for (const e of CATALOGO) expect(moduloDoTopico.has(e.topico), `${e.slug} -> ${e.topico}`).toBe(true);
   });
 
   it("toda entrada tem README, esqueleto e teste", () => {
@@ -80,7 +79,7 @@ describe("GET /exercicios", () => {
   it("filtra por módulo e status, e valida os filtros", async () => {
     const sql = await request(app).get("/api/v1/exercicios").query({ modulo: 5 });
     expect(sql.body.every((e) => e.slug.startsWith("sql/"))).toBe(true);
-    expect(sql.body).toHaveLength(CATALOGO.filter((e) => e.modulo === 5).length);
+    expect(sql.body).toHaveLength(doModulo(5).length);
 
     expect((await request(app).get("/api/v1/exercicios").query({ status: "Resolvido" })).body).toEqual([]);
     expect((await request(app).get("/api/v1/exercicios").query({ status: "feito" })).status).toBe(400);
@@ -100,8 +99,7 @@ describe("GET /exercicios", () => {
 
   it("GET /modulos/:id lista os exercícios do módulo", async () => {
     const res = await request(app).get("/api/v1/modulos/4");
-    expect(res.body.exercicios.map((e) => e.slug)).toEqual(
-      CATALOGO.filter((e) => e.modulo === 4).map((e) => e.slug));
+    expect(res.body.exercicios.map((e) => e.slug)).toEqual(doModulo(4).map((e) => e.slug));
   });
 });
 
@@ -150,6 +148,14 @@ describe("sincronizarExercicios", () => {
       .toMatchObject({ titulo: "Novo título", status: "Resolvido", resolvido_em: "2027-02-11" });
   });
 
+  it("segue o tópico quando ele muda de lugar na trilha", () => {
+    const trilha = structuredClone(TRILHA);
+    trilha.modulos[1].topicos.reverse(); // escopo-e-closures sai da posição 2
+    sincronizarTrilha(db, trilha);
+    sincronizarExercicios(db);
+    expect(repos.exercicios.buscarPorSlug("js/01-closures").topico_nome).toBe("Escopo e closures");
+  });
+
   it("apaga o que saiu do catálogo", () => {
     sincronizarExercicios(db, CATALOGO.filter((e) => e.slug !== "sql/08-modelagem"));
     expect(repos.exercicios.buscarPorSlug("sql/08-modelagem")).toBeUndefined();
@@ -157,9 +163,9 @@ describe("sincronizarExercicios", () => {
 
   it("recusa tópico inexistente e não altera nada", () => {
     const catalogo = structuredClone(CATALOGO);
-    catalogo[0].topico = 99;
+    catalogo[0].topico = "nao-existe";
     catalogo[1].titulo = "Não deveria mudar";
-    expect(() => sincronizarExercicios(db, catalogo)).toThrow(/tópico 99/);
+    expect(() => sincronizarExercicios(db, catalogo)).toThrow(/"nao-existe" não existe na trilha/);
     expect(repos.exercicios.buscarPorSlug(catalogo[1].slug).titulo).toBe(CATALOGO[1].titulo);
   });
 });
