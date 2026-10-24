@@ -117,7 +117,7 @@ src/
   errors.js           formato único de erro { erro, detalhes }
   validators.js       validação de entrada
 test/                 testes de integração e unidade (Vitest + Supertest)
-conteudo/             conteúdo de estudo de cada tópico (Markdown), baseado na documentação oficial
+conteudo/             conteúdo de estudo de cada tópico (<módulo>/<tópico>.md, pelos slugs da trilha)
 exercicios/           exercícios de JS, Node e SQL com testes próprios (fora do npm test)
 public/               painel web: HTML, CSS e módulos JS puros, servidos pela própria API
   js/app.js           roteamento por hash (#/agora, #/trilha/5) e despacho das ações (data-acao)
