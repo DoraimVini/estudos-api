@@ -16,7 +16,7 @@ function coletarLinks() {
   }
   for (const c of listarConteudos()) {
     for (const [, url] of readFileSync(c.caminho, "utf8").matchAll(LINK_MARKDOWN)) {
-      anotar(url, `conteúdo ${c.modulo}.${c.ordem}`);
+      anotar(url, `conteúdo ${c.modulo}/${c.topico}`);
     }
   }
   return links;

@@ -1,7 +1,7 @@
 /** Acesso a modulos, topicos e recursos. */
 export function trilhaRepository(db) {
   const topicoPorId = db.prepare(`
-    SELECT t.*, m.nome AS modulo_nome, m.skill_id
+    SELECT t.*, m.nome AS modulo_nome, m.slug AS modulo_slug, m.skill_id
     FROM topicos t JOIN modulos m ON m.id = t.modulo_id
     WHERE t.id = ?`);
 
