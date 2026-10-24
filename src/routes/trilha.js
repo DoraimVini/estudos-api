@@ -4,7 +4,7 @@ import { parseId, validarStatusTopico, somenteCampos } from "../validators.js";
 import { resumirModulo } from "../services/trilha.js";
 import { hojeISO } from "../datas.js";
 import { lerMes } from "./plano.js";
-import { lerConteudo, ordensComConteudo } from "../db/conteudo.js";
+import { lerConteudo, slugsComConteudo } from "../db/conteudo.js";
 
 export function trilhaRouter(repos, { agora = () => new Date() } = {}) {
   const router = Router();
@@ -22,10 +22,10 @@ export function trilhaRouter(repos, { agora = () => new Date() } = {}) {
     const id = parseId(req.params.id);
     const modulo = repos.trilha.buscarModulo(id);
     if (!modulo) throw notFound("Módulo");
-    const comConteudo = ordensComConteudo(id);
+    const comConteudo = slugsComConteudo(modulo.slug);
     res.json({
       ...resumirModulo(modulo, lerMes(repos, req.query, agora)),
-      topicos: repos.trilha.topicosDoModulo(id).map((t) => ({ ...t, tem_conteudo: comConteudo.has(t.ordem) })),
+      topicos: repos.trilha.topicosDoModulo(id).map((t) => ({ ...t, tem_conteudo: comConteudo.has(t.slug) })),
       recursos: repos.trilha.recursosDoModulo(id),
       exercicios: repos.exercicios.listar({ modulo: id }),
     });
@@ -42,7 +42,7 @@ export function trilhaRouter(repos, { agora = () => new Date() } = {}) {
     };
     res.json({
       ...topico,
-      conteudo: lerConteudo(topico.modulo_id, topico.ordem),
+      conteudo: lerConteudo(topico.modulo_slug, topico.slug),
       anterior: vizinho(topico.ordem - 1),
       proximo: vizinho(topico.ordem + 1),
     });

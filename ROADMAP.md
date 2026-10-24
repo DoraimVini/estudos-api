@@ -45,6 +45,10 @@ Cada versão é uma branch `feat/` com PR para `develop`. A `v1.0` vai para a `m
 - **Conteúdo de estudo por tópico** (`conteudo/`), escrito a partir da documentação oficial, com a página do tópico no painel e `npm run links`.
   Meses 1 e 2 completos (módulos 1–4, 37 tópicos). Os outros 77 tópicos entram antes do mês em que cada módulo começa.
 
+### v0.5.x · Base para crescer (antes de 01/11)
+- **Ids estáveis** (migração 006): módulos e tópicos ganham `slug` no `trilha.json`. O progresso, as sessões, os exercícios e os arquivos de conteúdo seguem o slug, então dá para reordenar ou mover tópicos sem trocar o progresso de lugar.
+- A discutir em seguida: juntar as fontes de dados (planilha, `seed.json`, `trilha.json`), com a planilha continuando como o plano mestre; proteção das branches no GitHub.
+
 ### v0.6 · TypeScript
 - API convertida, `strict` ligado, `tsc --noEmit` no CI. Exercícios e painel continuam em JavaScript.
 

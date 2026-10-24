@@ -27,20 +27,20 @@ describe("arquivos de conteúdo (conteudo/)", () => {
     expect(conteudos.length).toBeGreaterThan(0);
   });
 
-  it("todo arquivo corresponde a um tópico que existe na trilha", () => {
+  it("todo arquivo é <slug do módulo>/<slug de um tópico desse módulo>.md", () => {
     for (const c of conteudos) {
-      const modulo = TRILHA.modulos.find((m) => m.id === c.modulo);
+      const modulo = TRILHA.modulos.find((m) => m.slug === c.modulo);
       expect(modulo, `${c.caminho.pathname}`).toBeDefined();
-      expect(c.ordem, `${c.caminho.pathname}`).toBeLessThanOrEqual(modulo.topicos.length);
+      expect(modulo.topicos.map((t) => t.slug), `${c.caminho.pathname}`).toContain(c.topico);
     }
   });
 
   it("todo arquivo tem as seções obrigatórias e ao menos 2 links oficiais", () => {
     for (const c of conteudos) {
       const texto = readFileSync(c.caminho, "utf8");
-      for (const secao of SECOES_OBRIGATORIAS) expect(texto, `${c.modulo}.${c.ordem}: ${secao}`).toContain(secao);
+      for (const secao of SECOES_OBRIGATORIAS) expect(texto, `${c.modulo}/${c.topico}: ${secao}`).toContain(secao);
       const fontes = texto.split("## Leia na documentação oficial")[1].split("\n## ")[0];
-      expect(fontes.match(/\]\(https:\/\//g)?.length ?? 0, `${c.modulo}.${c.ordem}: links`).toBeGreaterThanOrEqual(2);
+      expect(fontes.match(/\]\(https:\/\//g)?.length ?? 0, `${c.modulo}/${c.topico}: links`).toBeGreaterThanOrEqual(2);
     }
   });
 
