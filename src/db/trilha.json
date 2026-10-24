@@ -1,4 +1,5 @@
 {
+  "plano_inicio": "2026-11-01",
   "intro": "Base condensada para estudar em paralelo ao Curso.dev. Início: 01/11/2026 = mês 1.\nCada módulo tem: **objetivo**, **tópicos** (o essencial, nada além), **recursos** (gratuitos), **mini-projeto** (repo próprio, com PR) e **pronto quando** (critério para passar adiante).",
   "fases": {
     "1": "Fase 1 · Fundamentos (meses 1–6)",
@@ -17,7 +18,7 @@
       "fase": 1,
       "mes_inicio": 1,
       "mes_fim": 1,
-      "skill": "Git e GitHub (branches, PRs, issues, code review)",
+      "skill": "git-github",
       "objetivo": "Versionar todo trabalho com branches e PRs, sem medo de errar.",
       "topicos": [
         { "slug": "modelo-do-git", "nome": "Modelo do Git", "descricao": "Working tree, staging e repositório; o que é um commit (snapshot + pai) e o que é o HEAD." },
@@ -45,7 +46,7 @@
       "fase": 1,
       "mes_inicio": 1,
       "mes_fim": 2,
-      "skill": "JavaScript moderno + TypeScript",
+      "skill": "javascript-typescript",
       "objetivo": "Ler e escrever JavaScript moderno com segurança, inclusive código assíncrono.",
       "topicos": [
         { "slug": "tipos-e-coercao", "nome": "Tipos e coerção", "descricao": "Primitivos x objetos, `===` x `==`, truthy/falsy, `typeof`, `null` x `undefined`." },
@@ -74,7 +75,7 @@
       "fase": 1,
       "mes_inicio": 1,
       "mes_fim": 6,
-      "skill": "HTML semântico, CSS responsivo e acessibilidade básica",
+      "skill": "html-css-acessibilidade",
       "objetivo": "Construir páginas semânticas, responsivas e acessíveis sem depender de framework. Trilha paralela e leve: pratique nos freelas.",
       "topicos": [
         { "slug": "html-semantico", "nome": "HTML semântico", "descricao": "`header`, `nav`, `main`, `article`, `section`, `footer`; títulos em ordem; por que nem tudo é `div`." },
@@ -105,7 +106,7 @@
       "fase": 1,
       "mes_inicio": 2,
       "mes_fim": 2,
-      "skill": "Node.js e APIs REST (HTTP, status codes, validação)",
+      "skill": "node-apis-rest",
       "objetivo": "Construir uma API HTTP correta, validada e testada.",
       "topicos": [
         { "slug": "runtime-do-node", "nome": "Runtime do Node", "descricao": "O que o Node é (V8 + libuv), `process`, variáveis de ambiente, `node --watch`." },
@@ -133,7 +134,7 @@
       "fase": 1,
       "mes_inicio": 3,
       "mes_fim": 3,
-      "skill": "SQL / PostgreSQL (SELECT, JOIN, modelagem simples, migrations)",
+      "skill": "sql-postgresql",
       "objetivo": "Modelar um banco e escrever consultas sem depender de ORM.",
       "topicos": [
         { "slug": "modelo-relacional", "nome": "Modelo relacional", "descricao": "Tabela, linha, coluna, chave primária e chave estrangeira." },
@@ -162,7 +163,7 @@
       "fase": 1,
       "mes_inicio": 4,
       "mes_fim": 4,
-      "skill": "JavaScript moderno + TypeScript",
+      "skill": "javascript-typescript",
       "objetivo": "Usar o sistema de tipos para pegar erros antes de rodar o código.",
       "topicos": [
         { "slug": "por-que-tipos", "nome": "Por que tipos", "descricao": "O que o TS verifica, o que não verifica (tipos somem no runtime) e o papel do `tsc`." },
@@ -190,7 +191,7 @@
       "fase": 1,
       "mes_inicio": 5,
       "mes_fim": 5,
-      "skill": "Lógica, estruturas de dados básicas (arrays, mapas, filas) e noção de complexidade",
+      "skill": "logica-e-estruturas-de-dados",
       "objetivo": "Entender o que acontece por baixo e analisar a eficiência do próprio código.",
       "topicos": [
         { "slug": "big-o", "nome": "Big O", "descricao": "Contar operações: O(1), O(log n), O(n), O(n log n), O(n²), com exemplos do dia a dia." },
@@ -215,7 +216,7 @@
       "fase": 1,
       "mes_inicio": 6,
       "mes_fim": 6,
-      "skill": "Autenticação básica (sessão/JWT, senhas com hash)",
+      "skill": "autenticacao",
       "objetivo": "Proteger uma aplicação com login seguro e evitar as falhas mais comuns.",
       "topicos": [
         { "slug": "autenticacao-x-autorizacao", "nome": "Autenticação x autorização", "descricao": "Quem é você x o que você pode fazer; 401 x 403." },
@@ -243,7 +244,7 @@
       "fase": 2,
       "mes_inicio": 7,
       "mes_fim": 7,
-      "skill": "React / Next.js (componentes, estado, rotas, SSR)",
+      "skill": "react-nextjs",
       "objetivo": "Construir interfaces com React e publicá-las com Next.js.",
       "topicos": [
         { "slug": "componentes-e-jsx", "nome": "Componentes e JSX", "descricao": "Componente é uma função que retorna UI; JSX, props e composição." },
@@ -270,7 +271,7 @@
       "fase": 2,
       "mes_inicio": 8,
       "mes_fim": 8,
-      "skill": "Testes automatizados (unitários e integração)",
+      "skill": "testes-automatizados",
       "objetivo": "Ir além dos testes de API que você escreve desde o módulo 4: estratégia, componentes e e2e.",
       "topicos": [
         { "slug": "o-que-testar", "nome": "O que testar", "descricao": "Teste como rede de segurança para refatorar; o que vale e o que não vale testar." },
@@ -298,7 +299,7 @@
       "fase": 2,
       "mes_inicio": 9,
       "mes_fim": 9,
-      "skill": "Deploy, variáveis de ambiente, Docker básico",
+      "skill": "deploy-docker",
       "objetivo": "Empacotar a aplicação e colocá-la no ar de forma reproduzível.",
       "topicos": [
         { "slug": "containers", "nome": "Containers", "descricao": "Imagem x container, e por que \"funciona na minha máquina\" deixa de ser problema." },
@@ -325,7 +326,7 @@
       "fase": 2,
       "mes_inicio": 10,
       "mes_fim": 10,
-      "skill": "Deploy, variáveis de ambiente, Docker básico",
+      "skill": "deploy-docker",
       "objetivo": "Automatizar teste e deploy a cada mudança.",
       "topicos": [
         { "slug": "ci-x-cd", "nome": "CI x CD", "descricao": "Integração contínua (testar cada mudança) x entrega e implantação contínuas." },
@@ -351,7 +352,7 @@
       "fase": 2,
       "mes_inicio": 11,
       "mes_fim": 12,
-      "skill": "Fundamentos de cloud (AWS)",
+      "skill": "cloud-aws",
       "objetivo": "Entender os fundamentos de cloud e conquistar a primeira certificação.",
       "topicos": [
         { "slug": "conceitos-de-cloud", "nome": "Conceitos de cloud", "descricao": "IaaS, PaaS e SaaS; regiões e zonas; modelo de responsabilidade compartilhada." },

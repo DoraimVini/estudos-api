@@ -1,7 +1,7 @@
 # estudos-api
 
 API REST que organiza meus estudos de dev full stack a partir do plano de 3 anos.
-Ela já vem carregada com as 28 habilidades (júnior → pleno → sênior) e os cursos da planilha,
+Ela já vem carregada com as 28 habilidades (júnior → pleno → sênior) e os cursos externos do plano,
 e responde **o que estudar agora**, em ordem de prioridade, com o motivo de cada sugestão.
 
 ## Requisitos
@@ -29,7 +29,7 @@ No PowerShell, se `npm` der erro de "execução de scripts", use `npm.cmd` (ex.:
 npm install
 npm run dev        # painel em http://localhost:3000, API em /api/v1; reinicia ao salvar arquivos
 npm test           # roda os testes da API (Vitest + Supertest)
-npm run db:reset   # apaga o banco local e recarrega os dados da planilha
+npm run db:reset   # apaga o banco local e recria a partir dos arquivos JSON
 npm run plano      # gera o PLANO.md a partir de src/db/trilha.json
 npm run exercicio  # lista os exercícios; npm run exercicio js/01 roda um deles
 npm run links      # confere se os links da trilha e do conteúdo continuam no ar (precisa de internet)
@@ -105,10 +105,12 @@ src/
   routes/             HTTP: lê a requisição, valida e responde
   services/           regras puras: prioridade (plano.js), trilha (trilha.js), PLANO.md (markdown.js)
   repositories/       SQL: o único lugar que fala com o banco
-  db/database.js      abre o banco, migra, carrega o seed.json e sincroniza a trilha
+  db/database.js      abre o banco, migra e sincroniza habilidades, cursos, trilha e exercícios
   db/migrate.js       aplica db/migrations/NNN_nome.sql em ordem (PRAGMA user_version)
-  db/seed.json        habilidades e cursos exportados da planilha
-  db/trilha.json      fonte da trilha: módulos, tópicos e recursos
+  db/habilidades.json habilidades do plano (definição; a autoavaliação fica no banco)
+  db/cursos.json      cursos externos (definição; status e prioridade ficam no banco)
+  db/habilidades-cursos.js  sincroniza os dois com o banco pelo slug
+  db/trilha.json      fonte da trilha: data de início, módulos, tópicos e recursos
   db/trilha.js        sincroniza o trilha.json com o banco sem perder o progresso
   db/exercicios.js    sincroniza exercicios/catalogo.json com o banco e lê os enunciados
   scripts/            npm run plano (gera o PLANO.md) e npm run exercicio (roda e registra)
@@ -128,7 +130,7 @@ iniciar.cmd           dois cliques: sobe a API e abre o painel
 
 Mudou o schema? Crie `src/db/migrations/NNN_descricao.sql` com o próximo número. Nunca edite uma migração que já foi para a `develop`.
 
-Mudou a trilha? Edite `src/db/trilha.json` e rode `npm run plano`. O banco se atualiza sozinho ao abrir, mantendo o status dos tópicos (identificados por módulo + posição). Um teste falha se o `PLANO.md` ficar desatualizado.
+Mudou a trilha? Edite `src/db/trilha.json` e rode `npm run plano`. O banco se atualiza sozinho ao abrir, mantendo o status dos tópicos (identificados pelo slug). Habilidades e cursos funcionam igual: edite `habilidades.json` ou `cursos.json`, nunca o slug. Um teste falha se o `PLANO.md` ficar desatualizado.
 
 ## Fluxo de branches
 

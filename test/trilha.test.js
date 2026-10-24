@@ -31,16 +31,16 @@ describe("trilha.json (consistência do conteúdo)", () => {
 
   it("toda habilidade júnior com prazo no plano tem módulo", () => {
     // Exceções: habilidades contínuas, praticadas no dia a dia e não estudadas em módulo.
-    const continuas = [/^Usar IA/, /^Pedir ajuda/];
+    const continuas = ["ia-como-assistente", "pedir-ajuda-e-estimar"];
     const comModulo = new Set(TRILHA.modulos.map((m) => m.skill));
-    const semModulo = db.prepare("SELECT nome FROM skills WHERE nivel = 'Júnior'").all()
-      .map((s) => s.nome)
-      .filter((nome) => !comModulo.has(nome) && !continuas.some((re) => re.test(nome)));
+    const semModulo = db.prepare("SELECT slug FROM skills WHERE nivel = 'Júnior'").all()
+      .map((s) => s.slug)
+      .filter((slug) => !comModulo.has(slug) && !continuas.includes(slug));
     expect(semModulo).toEqual([]);
   });
 
   it("os meses de cada módulo cabem na janela da habilidade ligada", () => {
-    const skill = new Map(db.prepare("SELECT * FROM skills").all().map((s) => [s.nome, s]));
+    const skill = new Map(db.prepare("SELECT * FROM skills").all().map((s) => [s.slug, s]));
     const foraDaJanela = TRILHA.modulos
       .filter((m) => {
         const s = skill.get(m.skill);

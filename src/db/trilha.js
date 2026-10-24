@@ -1,23 +1,19 @@
 import { readFileSync } from "node:fs";
+import { conferirSlug } from "./slug.js";
 
 /** Conteúdo da trilha (fonte única: src/db/trilha.json). */
 export const TRILHA = JSON.parse(
   readFileSync(new URL("./trilha.json", import.meta.url), "utf8"),
 );
 
-const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+const DATA = /^\d{4}-\d{2}-\d{2}$/;
 
 /** Todo módulo e tópico precisa de um slug válido e único (é por ele que o progresso é encontrado). */
 function validarSlugs(trilha) {
-  const vistos = new Set();
-  const conferir = (slug, onde) => {
-    if (!SLUG.test(slug ?? "")) throw new Error(`${onde}: slug "${slug}" inválido (use letras minúsculas, números e hífens).`);
-    if (vistos.has(slug)) throw new Error(`${onde}: slug "${slug}" repetido.`);
-    vistos.add(slug);
-  };
-  for (const m of trilha.modulos) conferir(m.slug, `Módulo ${m.id}`);
-  vistos.clear(); // módulos e tópicos são conjuntos separados
-  for (const m of trilha.modulos) m.topicos.forEach((t, i) => conferir(t.slug, `Tópico ${m.id}.${i + 1}`));
+  const modulos = new Set();
+  const topicos = new Set(); // módulos e tópicos são conjuntos separados
+  for (const m of trilha.modulos) conferirSlug(m.slug, `Módulo ${m.id}`, modulos);
+  for (const m of trilha.modulos) m.topicos.forEach((t, i) => conferirSlug(t.slug, `Tópico ${m.id}.${i + 1}`, topicos));
 }
 
 /**
@@ -26,12 +22,14 @@ function validarSlugs(trilha) {
  * - Tópicos: identificados pelo slug. Mudar a ordem, o nome ou até o módulo de um tópico
  *   não mexe no status, no concluido_em nem nas sessões e exercícios ligados a ele.
  * - Recursos: não têm progresso, então são recriados.
- * O que saiu do JSON é apagado do banco.
+ * O que saiu do JSON é apagado do banco. Também grava a data de início do plano (config.plano_inicio).
+ * Roda depois de sincronizarHabilidades: o módulo aponta para o slug da habilidade.
  */
 export function sincronizarTrilha(db, trilha = TRILHA) {
   validarSlugs(trilha);
-  const skillPorNome = new Map(
-    db.prepare("SELECT id, nome FROM skills").all().map((s) => [s.nome, s.id]),
+  if (!DATA.test(trilha.plano_inicio ?? "")) throw new Error(`plano_inicio "${trilha.plano_inicio}" inválido (use AAAA-MM-DD).`);
+  const skillPorSlug = new Map(
+    db.prepare("SELECT id, slug FROM skills").all().map((s) => [s.slug, s.id]),
   );
 
   const upsertModulo = db.prepare(`
@@ -58,10 +56,12 @@ export function sincronizarTrilha(db, trilha = TRILHA) {
 
   db.exec("BEGIN");
   try {
+    db.prepare("INSERT OR REPLACE INTO config (chave, valor) VALUES ('plano_inicio', ?)").run(trilha.plano_inicio);
+
     for (const m of trilha.modulos) {
-      const skillId = skillPorNome.get(m.skill);
+      const skillId = skillPorSlug.get(m.skill);
       if (m.skill && skillId === undefined) {
-        throw new Error(`Módulo ${m.id}: habilidade "${m.skill}" não existe em skills.`);
+        throw new Error(`Módulo ${m.id}: habilidade "${m.skill}" não existe em habilidades.json.`);
       }
       upsertModulo.run(m.id, m.slug, m.nome, m.fase, m.mes_inicio, m.mes_fim, m.objetivo,
         m.mini_projeto ?? null, m.pronto_quando ?? null, skillId ?? null);
