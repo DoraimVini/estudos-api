@@ -51,7 +51,8 @@ Cada versão é uma branch `feat/` com PR para `develop`. A `v1.0` vai para a `m
   como a trilha (a definição vem do arquivo; autoavaliação, status e prioridade ficam no banco). A data de início vai para o `trilha.json`.
 - **API → planilha** (`npm run planilha`): a API é dona dos estudos e atualiza só as células de estudo da planilha,
   que continua sendo o plano mestre (visto, orçamento, candidaturas, riscos). Simula por padrão; `--gravar` com backup e conferência.
-- A discutir em seguida: proteção das branches no GitHub.
+- **Proteção das branches**: rulesets versionados em `.github/rulesets/` (`main` e `develop` só por PR com CI verde,
+  sem apagar nem force push; a `main` só recebe a `develop`, conferido pelo job `origem` do CI).
 
 ### v0.6 · TypeScript
 - API convertida, `strict` ligado, `tsc --noEmit` no CI. Exercícios e painel continuam em JavaScript.

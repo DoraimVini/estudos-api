@@ -53,6 +53,8 @@
 - Nomes de domínio em português (skills/courses/sessions nas rotas por enquanto; campos em português).
 - Cada mudança com teste. Commits pequenos e descritivos em português.
 - Branches: `main` ← `develop` ← `feat/<nome>` ou `mod/<nome>`, uma por tarefa, com PR para `develop`.
+  Protegidas por rulesets (`.github/rulesets/`): push direto, force push e apagar `main`/`develop` são recusados;
+  merge só por PR com o check `testes` verde (e `origem` na `main`). Renomear um job do CI exige mudar o ruleset junto.
 - Cada versão do `ROADMAP.md` numa branch `feat/` própria com PR.
 - GitHub: `DoraimVini/estudos-api`. Commits com o e-mail noreply do GitHub.
 
