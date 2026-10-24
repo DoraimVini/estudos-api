@@ -145,7 +145,8 @@ public/               painel web: HTML, CSS e módulos JS puros, servidos pela p
   js/app.js           roteamento por hash (#/agora, #/trilha/5) e despacho das ações (data-acao)
   js/paginas/         uma página por arquivo: agora, trilha, progresso, habilidades
 iniciar.cmd           dois cliques: sobe a API e abre o painel
-.github/workflows/    CI: npm test em cada PR
+.github/workflows/    CI: npm test em cada PR (job testes) e a origem dos PRs para a main (job origem)
+.github/rulesets/     regras de proteção da main e da develop, aplicadas no GitHub (ver Fluxo de branches)
 ```
 
 Mudou o schema? Crie `src/db/migrations/NNN_descricao.sql` com o próximo número. Nunca edite uma migração que já foi para a `develop`.
@@ -164,6 +165,27 @@ main ← develop ← feat/<nome>   (funcionalidade nova, ex.: feat/post-skills)
 - Começar uma tarefa: `git switch develop`, `git pull` e `git switch -c feat/<nome>`.
 - Depois do merge, apague a branch (`git branch -d feat/<nome>`); a próxima tarefa ganha outra.
 - Rode `npm test` antes de cada commit; o PR só é aceito com os testes passando.
+
+### Proteção (rulesets do GitHub)
+
+O GitHub obriga o fluxo acima; não depende de lembrar. Os arquivos ficam em `.github/rulesets/`:
+
+- `branches-principais.json` (`main` e `develop`): só entra por PR, com o check `testes` verde, conversas
+  resolvidas e merge commit; não dá para apagar a branch nem fazer force push; ninguém tem exceção.
+  O PR exige 0 aprovações porque o GitHub não deixa o autor aprovar o próprio PR (o repositório tem uma pessoa).
+- `main-so-de-develop.json` (`main`): exige o check `origem`, que só passa quando o PR vem da `develop`.
+
+O arquivo não se aplica sozinho. Depois de mudar um deles e fazer o merge, atualize no GitHub:
+
+```bash
+gh api repos/DoraimVini/estudos-api/rulesets
+```
+```bash
+gh api --method PUT repos/DoraimVini/estudos-api/rulesets/<id> --input .github/rulesets/<arquivo>.json
+```
+
+O primeiro comando lista os rulesets com o `id`; para criar um novo, use `--method POST` em `.../rulesets`.
+Emergência: desative o ruleset em Settings → Rules → Rulesets (fica registrado) em vez de apagar.
 
 ## Trilha, roadmap e exercícios
 
