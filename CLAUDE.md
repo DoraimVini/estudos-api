@@ -15,10 +15,13 @@
 - Node.js >= 22.13 (usa `node:sqlite`, sem dependência nativa), Express 5, ESM.
 - Testes: Vitest + Supertest (`test/*.test.js`). Rodar sempre antes de commitar.
   Testes de `exercicios/` rodam à parte (`vitest.exercicios.config.js`), fora do `npm test` e do CI.
-- `npm install` · `npm run dev` · `npm test` · `npm run db:reset` · `npm run plano` · `npm run exercicio [slug]`
+- `npm install` · `npm run dev` · `npm test` · `npm run db:reset` · `npm run plano` · `npm run exercicio [slug]` · `npm run planilha [-- --gravar]`
 - Banco: `estudos.db` (SQLite, fora do Git). Definições em `src/db/habilidades.json`, `cursos.json` e `trilha.json`
   (inclui `plano_inicio`), sincronizadas por slug a cada abertura; o progresso (autoavaliação, status, sessões) fica no banco.
-  Dados de estudo: a API é a dona e escreve na planilha, nunca o contrário.
+  Dados de estudo: a API é a dona e escreve na planilha, nunca o contrário (`npm run planilha`, em `src/planilha/`).
+- Planilha: tem dados pessoais, nunca entra no repo (testes usam planilha sintética). Só se editam as células-alvo no XML
+  (`src/planilha/xlsx.js`): bibliotecas que regravam o arquivo inteiro (exceljs) estragam larguras e validações.
+  Nunca gravar na planilha real sem eu pedir; para testar, usar uma cópia com `PLANILHA_PATH`.
 
 ## Arquitetura
 - `src/app.js` monta o app sem abrir porta (os testes usam banco `:memory:` e data congelada via `opcoes.agora`).
