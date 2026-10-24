@@ -16,7 +16,9 @@
 - Testes: Vitest + Supertest (`test/*.test.js`). Rodar sempre antes de commitar.
   Testes de `exercicios/` rodam à parte (`vitest.exercicios.config.js`), fora do `npm test` e do CI.
 - `npm install` · `npm run dev` · `npm test` · `npm run db:reset` · `npm run plano` · `npm run exercicio [slug]`
-- Banco: `estudos.db` (SQLite, fora do Git). Dados iniciais em `src/db/seed.json`, exportados da planilha.
+- Banco: `estudos.db` (SQLite, fora do Git). Definições em `src/db/habilidades.json`, `cursos.json` e `trilha.json`
+  (inclui `plano_inicio`), sincronizadas por slug a cada abertura; o progresso (autoavaliação, status, sessões) fica no banco.
+  Dados de estudo: a API é a dona e escreve na planilha, nunca o contrário.
 
 ## Arquitetura
 - `src/app.js` monta o app sem abrir porta (os testes usam banco `:memory:` e data congelada via `opcoes.agora`).
@@ -25,6 +27,7 @@
 - Datas de calendário via `src/datas.js` (fuso America/Sao_Paulo), nunca `toISOString().slice(0, 10)`.
 - Validação em `src/validators.js`; erros sempre no formato `{ erro, detalhes }`.
 - Regra de prioridade em `src/services/plano.js` (`pontuarSkill`, `proximasPrioridades`). Plano começa em 01/11/2026 = mês 1.
+- Habilidades e cursos: `src/db/habilidades-cursos.js`, mesmo modelo da trilha (slug fixo; `inicial` só vale ao criar).
 - Trilha: `sincronizarTrilha` (em `src/db/trilha.js`) roda a cada abertura do banco. Tópico é identificado pelo
   `slug` (fixo, único na trilha inteira; nunca renomear um slug que já tem progresso); a ordem é só exibição.
   Status do módulo é derivado dos tópicos (`src/services/trilha.js`), nunca guardado.
