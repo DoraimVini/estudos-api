@@ -1,5 +1,7 @@
 # Roda os testes em todo PR e em todo push para develop/main.
 # Se falhar, o PR mostra um X vermelho antes do merge.
+# Os nomes dos jobs (testes, origem) são os checks exigidos nos rulesets de .github/rulesets/:
+# renomear um job aqui sem mudar lá deixaria todo PR travado esperando um check que não existe.
 name: CI
 
 on:
@@ -18,3 +20,24 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+
+  # PR para a main só pode vir da develop deste repositório (fluxo main ← develop).
+  # Nos outros PRs o job aparece como "skipped", e ele só é exigido na main.
+  origem:
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confere que o PR vem da develop
+        # O nome da branch é escolhido por quem abre o PR. Ele entra por variável de ambiente,
+        # nunca como ${{ }} dentro do script: ali o texto seria colado no shell, e uma branch
+        # chamada, por exemplo, a$(curl ...) rodaria comandos no CI.
+        env:
+          ORIGEM: ${{ github.head_ref }}
+          REPO_ORIGEM: ${{ github.event.pull_request.head.repo.full_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ "$ORIGEM" != "develop" ] || [ "$REPO_ORIGEM" != "$REPO" ]; then
+            echo "::error::PR para a main só pode vir da develop deste repositório (veio de $REPO_ORIGEM:$ORIGEM)."
+            exit 1
+          fi
+          echo "Origem ok: $REPO_ORIGEM:$ORIGEM"

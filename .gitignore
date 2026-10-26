@@ -3,3 +3,6 @@ node_modules/
 *.db-journal
 .env
 coverage/
+# A planilha do plano tem dados pessoais: nunca entra no repositório.
+*.xlsx
+~$*

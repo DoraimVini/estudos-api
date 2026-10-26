@@ -22,6 +22,7 @@ beforeEach(() => {
 
 const idDoTopico = (moduloId, ordem) =>
   db.prepare("SELECT id FROM topicos WHERE modulo_id = ? AND ordem = ?").get(moduloId, ordem).id;
+const idPorSlug = (slug) => db.prepare("SELECT id FROM topicos WHERE slug = ?").get(slug).id;
 
 describe("trilha.json (consistência do conteúdo)", () => {
   it("tem os 13 módulos numerados em sequência", () => {
@@ -30,16 +31,16 @@ describe("trilha.json (consistência do conteúdo)", () => {
 
   it("toda habilidade júnior com prazo no plano tem módulo", () => {
     // Exceções: habilidades contínuas, praticadas no dia a dia e não estudadas em módulo.
-    const continuas = [/^Usar IA/, /^Pedir ajuda/];
+    const continuas = ["ia-como-assistente", "pedir-ajuda-e-estimar"];
     const comModulo = new Set(TRILHA.modulos.map((m) => m.skill));
-    const semModulo = db.prepare("SELECT nome FROM skills WHERE nivel = 'Júnior'").all()
-      .map((s) => s.nome)
-      .filter((nome) => !comModulo.has(nome) && !continuas.some((re) => re.test(nome)));
+    const semModulo = db.prepare("SELECT slug FROM skills WHERE nivel = 'Júnior'").all()
+      .map((s) => s.slug)
+      .filter((slug) => !comModulo.has(slug) && !continuas.includes(slug));
     expect(semModulo).toEqual([]);
   });
 
   it("os meses de cada módulo cabem na janela da habilidade ligada", () => {
-    const skill = new Map(db.prepare("SELECT * FROM skills").all().map((s) => [s.nome, s]));
+    const skill = new Map(db.prepare("SELECT * FROM skills").all().map((s) => [s.slug, s]));
     const foraDaJanela = TRILHA.modulos
       .filter((m) => {
         const s = skill.get(m.skill);
@@ -59,6 +60,15 @@ describe("trilha.json (consistência do conteúdo)", () => {
       for (const t of m.topicos) expect(t.descricao, `${m.id}: ${t.nome}`).toBeTruthy();
       for (const r of m.recursos) expect(r.url).toMatch(/^https:\/\//);
     }
+  });
+
+  it("todo módulo e tópico tem slug único em letras minúsculas e hífens", () => {
+    const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+    const modulos = TRILHA.modulos.map((m) => m.slug);
+    const topicos = TRILHA.modulos.flatMap((m) => m.topicos.map((t) => t.slug));
+    for (const slug of [...modulos, ...topicos]) expect(slug).toMatch(SLUG);
+    expect(new Set(modulos).size).toBe(modulos.length);
+    expect(new Set(topicos).size).toBe(topicos.length);
   });
 
   it("os meses seguem a ordem dos módulos", () => {
@@ -217,6 +227,74 @@ describe("sincronizarTrilha", () => {
     expect(db.prepare("SELECT COUNT(*) AS n FROM modulos").get().n).toBe(TRILHA.modulos.length - 1);
     expect(db.prepare("SELECT COUNT(*) AS n FROM topicos WHERE modulo_id = 1").get().n)
       .toBe(TRILHA.modulos[0].topicos.length - 1);
+  });
+
+  it("reordenar tópicos leva o progresso e as sessões junto com o tópico", () => {
+    const id = idPorSlug("escopo-e-closures"); // 2.2
+    db.prepare("UPDATE topicos SET status = 'Concluído', concluido_em = '2026-11-10' WHERE id = ?").run(id);
+    db.prepare("INSERT INTO sessions (data, minutos, topico_id) VALUES ('2026-11-10', 50, ?)").run(id);
+
+    const trilha = copia();
+    const js = trilha.modulos[1].topicos;
+    [js[0], js[1]] = [js[1], js[0]]; // troca 2.1 e 2.2 de lugar
+    sincronizarTrilha(db, trilha);
+
+    expect(db.prepare("SELECT * FROM topicos WHERE id = ?").get(id))
+      .toMatchObject({ slug: "escopo-e-closures", ordem: 1, status: "Concluído", concluido_em: "2026-11-10" });
+    expect(db.prepare("SELECT * FROM topicos WHERE slug = 'tipos-e-coercao'").get())
+      .toMatchObject({ ordem: 2, status: "Não iniciado" });
+    expect(db.prepare("SELECT topico_id FROM sessions").get().topico_id).toBe(id);
+  });
+
+  it("tópico novo no meio do módulo não herda o progresso de ninguém", () => {
+    const id = idPorSlug("escopo-e-closures");
+    db.prepare("UPDATE topicos SET status = 'Concluído' WHERE id = ?").run(id);
+
+    const trilha = copia();
+    trilha.modulos[1].topicos.unshift({ slug: "ambiente", nome: "Ambiente", descricao: "Node e navegador." });
+    sincronizarTrilha(db, trilha);
+
+    expect(db.prepare("SELECT ordem, status FROM topicos WHERE slug = 'ambiente'").get())
+      .toEqual({ ordem: 1, status: "Não iniciado" });
+    expect(db.prepare("SELECT ordem, status FROM topicos WHERE id = ?").get(id))
+      .toEqual({ ordem: 3, status: "Concluído" });
+  });
+
+  it("tópico que muda de módulo leva o progresso", () => {
+    const id = idPorSlug("testes-de-api"); // último tópico do módulo 4
+    db.prepare("UPDATE topicos SET status = 'Em andamento' WHERE id = ?").run(id);
+
+    const trilha = copia();
+    trilha.modulos[9].topicos.push(trilha.modulos[3].topicos.pop());
+    sincronizarTrilha(db, trilha);
+
+    expect(db.prepare("SELECT modulo_id, ordem, status FROM topicos WHERE id = ?").get(id))
+      .toEqual({ modulo_id: 10, ordem: TRILHA.modulos[9].topicos.length + 1, status: "Em andamento" });
+  });
+
+  it("banco anterior à migração 006 recebe os slugs pela posição, sem perder o progresso", () => {
+    // Estado de um banco antigo logo depois da migração 006: colunas criadas, slugs ainda vazios.
+    db.exec("UPDATE topicos SET slug = NULL; UPDATE modulos SET slug = NULL");
+    const id = idDoTopico(2, 2);
+    db.prepare("UPDATE topicos SET status = 'Concluído' WHERE id = ?").run(id);
+
+    sincronizarTrilha(db);
+
+    expect(db.prepare("SELECT slug, status FROM topicos WHERE id = ?").get(id))
+      .toEqual({ slug: "escopo-e-closures", status: "Concluído" });
+    expect(db.prepare("SELECT COUNT(*) AS n FROM topicos WHERE slug IS NULL").get().n).toBe(0);
+    expect(db.prepare("SELECT COUNT(*) AS n FROM topicos").get().n).toBe(TOTAL_TOPICOS);
+    expect(db.prepare("SELECT slug FROM modulos WHERE id = 2").get().slug).toBe("javascript");
+  });
+
+  it("recusa slug repetido ou inválido", () => {
+    const repetido = copia();
+    repetido.modulos[1].topicos[1].slug = "tipos-e-coercao";
+    expect(() => sincronizarTrilha(db, repetido)).toThrow(/Tópico 2.2: slug "tipos-e-coercao" repetido/);
+
+    const invalido = copia();
+    invalido.modulos[0].slug = "Git e GitHub";
+    expect(() => sincronizarTrilha(db, invalido)).toThrow(/Módulo 1: slug .* inválido/);
   });
 
   it("recusa habilidade inexistente e não altera nada", () => {

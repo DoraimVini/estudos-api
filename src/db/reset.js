@@ -1,4 +1,4 @@
-// Apaga o banco local e recria a partir do seed.json (dados da planilha).
+// Apaga o banco local e recria a partir dos arquivos do repositório (habilidades, cursos, trilha e exercícios).
 import { rmSync } from "node:fs";
 import { openDatabase } from "./database.js";
 

@@ -1,7 +1,7 @@
 # estudos-api
 
 API REST que organiza meus estudos de dev full stack a partir do plano de 3 anos.
-Ela já vem carregada com as 28 habilidades (júnior → pleno → sênior) e os cursos da planilha,
+Ela já vem carregada com as 28 habilidades (júnior → pleno → sênior) e os cursos externos do plano,
 e responde **o que estudar agora**, em ordem de prioridade, com o motivo de cada sugestão.
 
 ## Requisitos
@@ -29,13 +29,32 @@ No PowerShell, se `npm` der erro de "execução de scripts", use `npm.cmd` (ex.:
 npm install
 npm run dev        # painel em http://localhost:3000, API em /api/v1; reinicia ao salvar arquivos
 npm test           # roda os testes da API (Vitest + Supertest)
-npm run db:reset   # apaga o banco local e recarrega os dados da planilha
+npm run db:reset   # apaga o banco local e recria a partir dos arquivos JSON
 npm run plano      # gera o PLANO.md a partir de src/db/trilha.json
 npm run exercicio  # lista os exercícios; npm run exercicio js/01 roda um deles
 npm run links      # confere se os links da trilha e do conteúdo continuam no ar (precisa de internet)
+npm run planilha   # mostra o que mudaria na planilha do plano; npm run planilha -- --gravar aplica
 ```
 
 O banco fica no arquivo `estudos.db` (fora do Git). Para outro caminho: `DB_PATH=meu.db npm start`.
+
+### Planilha do plano (`npm run planilha`)
+
+A planilha `..\Plano_3_anos_Vini.xlsx` continua sendo o plano mestre (visto, orçamento, candidaturas, riscos).
+A API é dona dos estudos e escreve só nestas células:
+
+| Aba | Células | De onde vem |
+|---|---|---|
+| Cronograma | "Estudos" (D) dos meses da trilha | Curso.dev + módulos do mês |
+| Habilidades | A–H, J e o id em K (a fórmula "Falta" fica) | `habilidades.json` + autoavaliação do painel |
+| Cursos | meses, prioridade e status (E, F, G, M) e o id em O | `cursos.json` e o painel; temas que viraram módulo usam meses e status do módulo |
+
+- Simula por padrão; `-- --gravar` grava. Outro arquivo: `PLANILHA_PATH=...`.
+- Recusa gravar com a planilha aberta no Excel, com outra data de início (Premissas!B3), com cabeçalho mudado
+  ou com linha que não existe na API. Nunca sobrescreve fórmula.
+- Antes de gravar, faz backup em `..\backups-planilha\` (guarda os 10 últimos) e confere que só as células pedidas mudaram.
+- A autoavaliação passa a ser feita no painel (página Habilidades): o que for digitado nessas colunas da planilha é
+  sobrescrito, e a simulação avisa antes.
 
 ## Endpoints (`/api/v1`)
 
@@ -105,30 +124,34 @@ src/
   routes/             HTTP: lê a requisição, valida e responde
   services/           regras puras: prioridade (plano.js), trilha (trilha.js), PLANO.md (markdown.js)
   repositories/       SQL: o único lugar que fala com o banco
-  db/database.js      abre o banco, migra, carrega o seed.json e sincroniza a trilha
+  db/database.js      abre o banco, migra e sincroniza habilidades, cursos, trilha e exercícios
   db/migrate.js       aplica db/migrations/NNN_nome.sql em ordem (PRAGMA user_version)
-  db/seed.json        habilidades e cursos exportados da planilha
-  db/trilha.json      fonte da trilha: módulos, tópicos e recursos
+  db/habilidades.json habilidades do plano (definição; a autoavaliação fica no banco)
+  db/cursos.json      cursos externos (definição; status e prioridade ficam no banco)
+  db/habilidades-cursos.js  sincroniza os dois com o banco pelo slug
+  db/trilha.json      fonte da trilha: data de início, módulos, tópicos e recursos
   db/trilha.js        sincroniza o trilha.json com o banco sem perder o progresso
   db/exercicios.js    sincroniza exercicios/catalogo.json com o banco e lê os enunciados
-  scripts/            npm run plano (gera o PLANO.md) e npm run exercicio (roda e registra)
+  planilha/           API -> planilha: xlsx.js (edição cirúrgica do .xlsx), alteracoes.js (regra), atualizar.js (backup e gravação)
+  scripts/            npm run plano (gera o PLANO.md), npm run exercicio (roda e registra) e npm run planilha
   datas.js            datas no fuso de São Paulo
   constantes.js       níveis, status e prioridades válidos
   errors.js           formato único de erro { erro, detalhes }
   validators.js       validação de entrada
 test/                 testes de integração e unidade (Vitest + Supertest)
-conteudo/             conteúdo de estudo de cada tópico (Markdown), baseado na documentação oficial
+conteudo/             conteúdo de estudo de cada tópico (<módulo>/<tópico>.md, pelos slugs da trilha)
 exercicios/           exercícios de JS, Node e SQL com testes próprios (fora do npm test)
 public/               painel web: HTML, CSS e módulos JS puros, servidos pela própria API
   js/app.js           roteamento por hash (#/agora, #/trilha/5) e despacho das ações (data-acao)
   js/paginas/         uma página por arquivo: agora, trilha, progresso, habilidades
 iniciar.cmd           dois cliques: sobe a API e abre o painel
-.github/workflows/    CI: npm test em cada PR
+.github/workflows/    CI: npm test em cada PR (job testes) e a origem dos PRs para a main (job origem)
+.github/rulesets/     regras de proteção da main e da develop, aplicadas no GitHub (ver Fluxo de branches)
 ```
 
 Mudou o schema? Crie `src/db/migrations/NNN_descricao.sql` com o próximo número. Nunca edite uma migração que já foi para a `develop`.
 
-Mudou a trilha? Edite `src/db/trilha.json` e rode `npm run plano`. O banco se atualiza sozinho ao abrir, mantendo o status dos tópicos (identificados por módulo + posição). Um teste falha se o `PLANO.md` ficar desatualizado.
+Mudou a trilha? Edite `src/db/trilha.json` e rode `npm run plano`. O banco se atualiza sozinho ao abrir, mantendo o status dos tópicos (identificados pelo slug). Habilidades e cursos funcionam igual: edite `habilidades.json` ou `cursos.json`, nunca o slug. Um teste falha se o `PLANO.md` ficar desatualizado.
 
 ## Fluxo de branches
 
@@ -142,6 +165,27 @@ main ← develop ← feat/<nome>   (funcionalidade nova, ex.: feat/post-skills)
 - Começar uma tarefa: `git switch develop`, `git pull` e `git switch -c feat/<nome>`.
 - Depois do merge, apague a branch (`git branch -d feat/<nome>`); a próxima tarefa ganha outra.
 - Rode `npm test` antes de cada commit; o PR só é aceito com os testes passando.
+
+### Proteção (rulesets do GitHub)
+
+O GitHub obriga o fluxo acima; não depende de lembrar. Os arquivos ficam em `.github/rulesets/`:
+
+- `branches-principais.json` (`main` e `develop`): só entra por PR, com o check `testes` verde, conversas
+  resolvidas e merge commit; não dá para apagar a branch nem fazer force push; ninguém tem exceção.
+  O PR exige 0 aprovações porque o GitHub não deixa o autor aprovar o próprio PR (o repositório tem uma pessoa).
+- `main-so-de-develop.json` (`main`): exige o check `origem`, que só passa quando o PR vem da `develop`.
+
+O arquivo não se aplica sozinho. Depois de mudar um deles e fazer o merge, atualize no GitHub:
+
+```bash
+gh api repos/DoraimVini/estudos-api/rulesets
+```
+```bash
+gh api --method PUT repos/DoraimVini/estudos-api/rulesets/<id> --input .github/rulesets/<arquivo>.json
+```
+
+O primeiro comando lista os rulesets com o `id`; para criar um novo, use `--method POST` em `.../rulesets`.
+Emergência: desative o ruleset em Settings → Rules → Rulesets (fica registrado) em vez de apagar.
 
 ## Trilha, roadmap e exercícios
 

@@ -45,6 +45,15 @@ Cada versão é uma branch `feat/` com PR para `develop`. A `v1.0` vai para a `m
 - **Conteúdo de estudo por tópico** (`conteudo/`), escrito a partir da documentação oficial, com a página do tópico no painel e `npm run links`.
   Meses 1 e 2 completos (módulos 1–4, 37 tópicos). Os outros 77 tópicos entram antes do mês em que cada módulo começa.
 
+### v0.5.x · Base para crescer (antes de 01/11)
+- **Ids estáveis** (migração 006): módulos e tópicos ganham `slug` no `trilha.json`. O progresso, as sessões, os exercícios e os arquivos de conteúdo seguem o slug, então dá para reordenar ou mover tópicos sem trocar o progresso de lugar.
+- **Uma fonte por dado** (migração 007): o `seed.json` vira `habilidades.json` e `cursos.json`, com `slug` e sincronizados
+  como a trilha (a definição vem do arquivo; autoavaliação, status e prioridade ficam no banco). A data de início vai para o `trilha.json`.
+- **API → planilha** (`npm run planilha`): a API é dona dos estudos e atualiza só as células de estudo da planilha,
+  que continua sendo o plano mestre (visto, orçamento, candidaturas, riscos). Simula por padrão; `--gravar` com backup e conferência.
+- **Proteção das branches**: rulesets versionados em `.github/rulesets/` (`main` e `develop` só por PR com CI verde,
+  sem apagar nem force push; a `main` só recebe a `develop`, conferido pelo job `origem` do CI).
+
 ### v0.6 · TypeScript
 - API convertida, `strict` ligado, `tsc --noEmit` no CI. Exercícios e painel continuam em JavaScript.
 

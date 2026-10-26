@@ -1,7 +1,7 @@
 /** Configurações gerais e informações do banco. */
 export function configRepository(db) {
   return {
-    /** Data de início do plano (AAAA-MM-DD), carregada da planilha. */
+    /** Data de início do plano (AAAA-MM-DD), vinda do trilha.json. */
     planoInicio: () =>
       db.prepare("SELECT valor FROM config WHERE chave = 'plano_inicio'").get()?.valor,
 

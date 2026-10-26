@@ -1,24 +1,24 @@
 {
   "exercicios": [
-    { "slug": "js/01-closures", "modulo": 2, "topico": 2, "titulo": "Contador e gerador de ids com closures" },
-    { "slug": "js/02-arrays", "modulo": 2, "topico": 5, "titulo": "Relatório de sessões com map, filter e reduce" },
-    { "slug": "js/03-objetos", "modulo": 2, "topico": 6, "titulo": "Mesclar e recortar objetos sem mutar" },
-    { "slug": "js/04-promises", "modulo": 2, "topico": 8, "titulo": "Buscas em paralelo, falhas e timeout" },
-    { "slug": "js/05-event-loop", "modulo": 2, "topico": 9, "titulo": "Preveja a ordem do event loop" },
+    { "slug": "js/01-closures", "topico": "escopo-e-closures", "titulo": "Contador e gerador de ids com closures" },
+    { "slug": "js/02-arrays", "topico": "arrays", "titulo": "Relatório de sessões com map, filter e reduce" },
+    { "slug": "js/03-objetos", "topico": "objetos", "titulo": "Mesclar e recortar objetos sem mutar" },
+    { "slug": "js/04-promises", "topico": "promises-e-async-await", "titulo": "Buscas em paralelo, falhas e timeout" },
+    { "slug": "js/05-event-loop", "topico": "event-loop", "titulo": "Preveja a ordem do event loop" },
 
-    { "slug": "node/01-arquivos", "modulo": 4, "topico": 2, "titulo": "Ler arquivos com fs/promises" },
-    { "slug": "node/02-http-puro", "modulo": 4, "topico": 4, "titulo": "Servidor HTTP sem Express" },
-    { "slug": "node/03-middlewares", "modulo": 4, "topico": 6, "titulo": "Middlewares do Express" },
-    { "slug": "node/04-validacao", "modulo": 4, "topico": 7, "titulo": "Validar o corpo de uma requisição" },
-    { "slug": "node/05-api-rest", "modulo": 4, "topico": 5, "titulo": "API REST de tarefas" },
+    { "slug": "node/01-arquivos", "topico": "modulos-nativos", "titulo": "Ler arquivos com fs/promises" },
+    { "slug": "node/02-http-puro", "topico": "http", "titulo": "Servidor HTTP sem Express" },
+    { "slug": "node/03-middlewares", "topico": "express", "titulo": "Middlewares do Express" },
+    { "slug": "node/04-validacao", "topico": "validacao", "titulo": "Validar o corpo de uma requisição" },
+    { "slug": "node/05-api-rest", "topico": "design-rest", "titulo": "API REST de tarefas" },
 
-    { "slug": "sql/01-select", "modulo": 5, "topico": 2, "titulo": "SELECT com filtro e ordenação" },
-    { "slug": "sql/02-agregacao", "modulo": 5, "topico": 3, "titulo": "Agregação por categoria" },
-    { "slug": "sql/03-join", "modulo": 5, "topico": 4, "titulo": "Pedidos com o nome do cliente" },
-    { "slug": "sql/04-sem-pedidos", "modulo": 5, "topico": 4, "titulo": "Clientes que nunca compraram" },
-    { "slug": "sql/05-having", "modulo": 5, "topico": 3, "titulo": "Quem gastou mais (GROUP BY + HAVING)" },
-    { "slug": "sql/06-cte", "modulo": 5, "topico": 5, "titulo": "Acima da média da categoria" },
-    { "slug": "sql/07-atualizacao", "modulo": 5, "topico": 6, "titulo": "Reajuste de preços com UPDATE" },
-    { "slug": "sql/08-modelagem", "modulo": 5, "topico": 8, "titulo": "Modelar avaliações com restrições" }
+    { "slug": "sql/01-select", "topico": "consultas-basicas", "titulo": "SELECT com filtro e ordenação" },
+    { "slug": "sql/02-agregacao", "topico": "agregacao", "titulo": "Agregação por categoria" },
+    { "slug": "sql/03-join", "topico": "joins", "titulo": "Pedidos com o nome do cliente" },
+    { "slug": "sql/04-sem-pedidos", "topico": "joins", "titulo": "Clientes que nunca compraram" },
+    { "slug": "sql/05-having", "topico": "agregacao", "titulo": "Quem gastou mais (GROUP BY + HAVING)" },
+    { "slug": "sql/06-cte", "topico": "subqueries-e-ctes", "titulo": "Acima da média da categoria" },
+    { "slug": "sql/07-atualizacao", "topico": "escrita", "titulo": "Reajuste de preços com UPDATE" },
+    { "slug": "sql/08-modelagem", "topico": "restricoes", "titulo": "Modelar avaliações com restrições" }
   ]
 }

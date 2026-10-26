@@ -15,8 +15,13 @@
 - Node.js >= 22.13 (usa `node:sqlite`, sem dependência nativa), Express 5, ESM.
 - Testes: Vitest + Supertest (`test/*.test.js`). Rodar sempre antes de commitar.
   Testes de `exercicios/` rodam à parte (`vitest.exercicios.config.js`), fora do `npm test` e do CI.
-- `npm install` · `npm run dev` · `npm test` · `npm run db:reset` · `npm run plano` · `npm run exercicio [slug]`
-- Banco: `estudos.db` (SQLite, fora do Git). Dados iniciais em `src/db/seed.json`, exportados da planilha.
+- `npm install` · `npm run dev` · `npm test` · `npm run db:reset` · `npm run plano` · `npm run exercicio [slug]` · `npm run planilha [-- --gravar]`
+- Banco: `estudos.db` (SQLite, fora do Git). Definições em `src/db/habilidades.json`, `cursos.json` e `trilha.json`
+  (inclui `plano_inicio`), sincronizadas por slug a cada abertura; o progresso (autoavaliação, status, sessões) fica no banco.
+  Dados de estudo: a API é a dona e escreve na planilha, nunca o contrário (`npm run planilha`, em `src/planilha/`).
+- Planilha: tem dados pessoais, nunca entra no repo (testes usam planilha sintética). Só se editam as células-alvo no XML
+  (`src/planilha/xlsx.js`): bibliotecas que regravam o arquivo inteiro (exceljs) estragam larguras e validações.
+  Nunca gravar na planilha real sem eu pedir; para testar, usar uma cópia com `PLANILHA_PATH`.
 
 ## Arquitetura
 - `src/app.js` monta o app sem abrir porta (os testes usam banco `:memory:` e data congelada via `opcoes.agora`).
@@ -25,24 +30,31 @@
 - Datas de calendário via `src/datas.js` (fuso America/Sao_Paulo), nunca `toISOString().slice(0, 10)`.
 - Validação em `src/validators.js`; erros sempre no formato `{ erro, detalhes }`.
 - Regra de prioridade em `src/services/plano.js` (`pontuarSkill`, `proximasPrioridades`). Plano começa em 01/11/2026 = mês 1.
-- Trilha: `sincronizarTrilha` (em `src/db/trilha.js`) roda a cada abertura do banco; tópico = (módulo, ordem).
+- Habilidades e cursos: `src/db/habilidades-cursos.js`, mesmo modelo da trilha (slug fixo; `inicial` só vale ao criar).
+- Trilha: `sincronizarTrilha` (em `src/db/trilha.js`) roda a cada abertura do banco. Tópico é identificado pelo
+  `slug` (fixo, único na trilha inteira; nunca renomear um slug que já tem progresso); a ordem é só exibição.
   Status do módulo é derivado dos tópicos (`src/services/trilha.js`), nunca guardado.
-- Exercícios: catálogo em `exercicios/catalogo.json`, sincronizado por slug (`src/db/exercicios.js`).
+- Exercícios: catálogo em `exercicios/catalogo.json`, sincronizado por slug (`src/db/exercicios.js`); cada
+  exercício aponta para o slug do tópico.
   Só `npm run exercicio` marca como Resolvido (não há PATCH de propósito).
 - Painel web em `public/` (HTML/CSS/JS puros, sem build), servido pelo Express na raiz. Roteamento por hash;
   cada página em `public/js/paginas/` exporta `{ titulo, render(param), acoes }`. Todo texto vindo da API passa por `esc()`.
-- Conteúdo de estudo em `conteudo/<módulo>-<nome>/<ordem>-<nome>.md`, servido por `GET /topicos/:id` e aberto pelo
+- Conteúdo de estudo em `conteudo/<slug do módulo>/<slug do tópico>.md`, servido por `GET /topicos/:id` e aberto pelo
   botão Estudar. Regras: ler a página oficial ANTES de escrever (nunca de memória); texto próprio, sem copiar a
   documentação; links para a seção exata; preferir pt-BR, mas usar en-US quando a tradução estiver desatualizada (e avisar);
   seções obrigatórias "Em poucas palavras", "Leia na documentação oficial" (2+ links) e "Confira se entendeu";
   comandos que funcionem no PowerShell; não entregar a solução dos exercícios. Rodar `npm run links` antes de commitar.
 - Meu `estudos.db` tem dados reais: para testar no navegador, usar `DB_PATH=demo.db` em outra porta (`.claude/launch.json`).
+  Se o meu `npm run dev` estiver rodando (`--watch`), ele reinicia com o código da branch e aplica migrações novas
+  no `estudos.db`: avisar antes de criar migração.
 - Windows: PowerShell bloqueia `npm.ps1`; uso `npm.cmd` ou o `iniciar.cmd`.
 
 ## Convenções
 - Nomes de domínio em português (skills/courses/sessions nas rotas por enquanto; campos em português).
 - Cada mudança com teste. Commits pequenos e descritivos em português.
 - Branches: `main` ← `develop` ← `feat/<nome>` ou `mod/<nome>`, uma por tarefa, com PR para `develop`.
+  Protegidas por rulesets (`.github/rulesets/`): push direto, force push e apagar `main`/`develop` são recusados;
+  merge só por PR com o check `testes` verde (e `origem` na `main`). Renomear um job do CI exige mudar o ruleset junto.
 - Cada versão do `ROADMAP.md` numa branch `feat/` própria com PR.
 - GitHub: `DoraimVini/estudos-api`. Commits com o e-mail noreply do GitHub.
 
