@@ -1,38 +1,26 @@
-/* Tokens: mude aqui e o painel inteiro acompanha. Tema escuro automático pelo sistema. */
+/* Tokens: mude aqui e o painel inteiro acompanha.
+   Cada cor é light-dark(clara, escura): o navegador escolhe pela color-scheme da página.
+   - Automático (padrão): "light dark", segue o tema do sistema.
+   - Claro ou escuro: o botão do topo grava data-tema no <html> (js/tema.js), e a regra abaixo força um dos dois. */
 :root {
-  --fundo: #f6f7f9;
-  --superficie: #ffffff;
-  --borda: #e2e5ea;
-  --texto: #1d2129;
-  --texto-suave: #5d6570;
-  --destaque: #3b5bdb;
-  --destaque-texto: #ffffff;
-  --ok: #2b8a3e;
-  --alerta: #c2410c;
-  --andamento: #b07d05;
-  --codigo: #eef0f4;
+  color-scheme: light dark;
+  --fundo: light-dark(#f6f7f9, #111418);
+  --superficie: light-dark(#ffffff, #1a1e24);
+  --borda: light-dark(#e2e5ea, #2c323b);
+  --texto: light-dark(#1d2129, #e6e9ee);
+  --texto-suave: light-dark(#5d6570, #9aa3ae);
+  --destaque: light-dark(#3b5bdb, #7c94ff);
+  --destaque-texto: light-dark(#ffffff, #0c0f14);
+  --ok: light-dark(#2b8a3e, #69db7c);
+  --alerta: light-dark(#c2410c, #ff8a4c);
+  --andamento: light-dark(#b07d05, #fcc419);
+  --codigo: light-dark(#eef0f4, #252a32);
   --raio: 10px;
-  --sombra: 0 1px 2px rgb(0 0 0 / 0.06);
-  color-scheme: light;
+  /* light-dark só aceita cores, então a sombra fica transparente no escuro (antes era "none"). */
+  --sombra: 0 1px 2px light-dark(rgb(0 0 0 / 0.06), transparent);
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --fundo: #111418;
-    --superficie: #1a1e24;
-    --borda: #2c323b;
-    --texto: #e6e9ee;
-    --texto-suave: #9aa3ae;
-    --destaque: #7c94ff;
-    --destaque-texto: #0c0f14;
-    --ok: #69db7c;
-    --alerta: #ff8a4c;
-    --andamento: #fcc419;
-    --codigo: #252a32;
-    --sombra: none;
-    color-scheme: dark;
-  }
-}
+:root[data-tema="claro"] { color-scheme: light; }
+:root[data-tema="escuro"] { color-scheme: dark; }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -77,6 +65,13 @@ h3 { font-size: 1rem; margin: 0; }
 }
 .topo nav a:hover { color: var(--texto); background: var(--fundo); }
 .topo nav a[aria-current="page"] { color: var(--destaque-texto); background: var(--destaque); }
+.tema { margin-left: auto; white-space: nowrap; }
+/* Tela estreita: nome e botão de tema na primeira linha, menu inteiro na segunda. */
+@media (max-width: 860px) {
+  .topo { gap: 0.5rem 1rem; padding: 0.75rem 1rem; }
+  .tema { order: 1; }
+  .topo nav { order: 2; width: 100%; }
+}
 
 /* Layout: conteúdo + Pomodoro fixo ao lado (em telas grandes) */
 .layout {
