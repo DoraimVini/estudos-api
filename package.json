@@ -24,6 +24,7 @@
     "marked": "18.0.14"
   },
   "devDependencies": {
+    "node-html-parser": "9.0.4",
     "supertest": "^7.1.0",
     "vitest": "^3.2.0"
   }
