@@ -79,6 +79,14 @@ Isso não acontece com padding, nem dentro de containers `flex` e `grid`.
 2. [MDN · box-sizing](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/box-sizing): a referência da propriedade.
 3. [web.dev · Box model](https://web.dev/learn/css/box-model): outra explicação, com bons diagramas.
 
+## Pratique
+
+Exercício com correção automática: **css/01 · Preveja a cascata e o box model**. A segunda metade é sobre o box model.
+
+```bash
+npm run exercicio css/01
+```
+
 ## Confira se entendeu
 
 <details><summary>Com <code>width: 200px; padding: 10px; border: 1px solid</code>, qual a largura visível no modelo padrão? E com <code>border-box</code>?</summary>

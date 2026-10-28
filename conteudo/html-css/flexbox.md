@@ -67,6 +67,14 @@ Flexbox é **uma dimensão** (linha **ou** coluna) e é guiado pelo conteúdo: o
 2. [MDN · Grid x Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Relationship_with_other_layout_methods#grid_and_flexbox): quando usar cada um.
 3. [MDN · gap](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/gap): o espaçamento entre itens, que funciona em flex e em grid.
 
+## Pratique
+
+Exercício com correção automática: **css/02 · Calcule o layout: flexbox, grid e media queries**. Você calcula as larguras antes de conferir no DevTools.
+
+```bash
+npm run exercicio css/02
+```
+
 ## Confira se entendeu
 
 <details><summary>Em <code>flex-direction: column</code>, qual propriedade centraliza os itens na horizontal?</summary>

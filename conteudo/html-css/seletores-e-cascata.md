@@ -63,6 +63,14 @@ Valores que controlam a herança: `inherit` (usa o valor do pai), `initial` (o v
 2. [MDN · Specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Specificity#how_is_specificity_calculated): o cálculo em detalhe, as exceções de `:is()`, `:not()` e `:where()`, e [dicas para lidar com problemas de especificidade](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Specificity#tips_for_handling_specificity_headaches).
 3. [Chrome DevTools · View and change CSS](https://developer.chrome.com/docs/devtools/css): como ler e editar o painel Styles.
 
+## Pratique
+
+Exercício com correção automática: **css/01 · Preveja a cascata e o box model**. Você prevê qual regra vence antes de testar.
+
+```bash
+npm run exercicio css/01
+```
+
 ## Confira se entendeu
 
 <details><summary>Qual vence: <code>.menu a</code> ou <code>nav ul li a</code>?</summary>
