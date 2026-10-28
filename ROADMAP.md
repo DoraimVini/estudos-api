@@ -53,6 +53,8 @@ Cada versão é uma branch `feat/` com PR para `develop`. A `v1.0` vai para a `m
   que continua sendo o plano mestre (visto, orçamento, candidaturas, riscos). Simula por padrão; `--gravar` com backup e conferência.
 - **Proteção das branches**: rulesets versionados em `.github/rulesets/` (`main` e `develop` só por PR com CI verde,
   sem apagar nem force push; a `main` só recebe a `develop`, conferido pelo job `origem` do CI).
+- **Exercícios de Git** (6): cada um prepara um repositório de treino em `..\treino-git\` e o teste confere o estado
+  dele (staging, merge, conflito, remotos, revert/reflog, segredos). Os de HTML/CSS vêm em seguida.
 
 ### v0.6 · TypeScript
 - API convertida, `strict` ligado, `tsc --noEmit` no CI. Exercícios e painel continuam em JavaScript.

@@ -77,6 +77,14 @@ git log --oneline --graph --all   # veja a bolha do merge
 3. [git merge](https://git-scm.com/docs/git-merge): referência, com as opções `--ff-only` e `--no-ff`.
 4. [git rebase](https://git-scm.com/docs/git-rebase): referência. A seção "RECOVERING FROM UPSTREAM REBASE" mostra o estrago que a regra de ouro evita.
 
+## Pratique
+
+Exercício com correção automática: **git/02 · Fast-forward e commit de merge**. Na primeira vez, o comando cria um repositório de treino em `..\treino-git\` e diz onde ele está; você resolve lá com comandos git, e o teste confere o resultado.
+
+```bash
+npm run exercicio git/02
+```
+
 ## Confira se entendeu
 
 <details><summary>Quando um merge vira fast-forward?</summary>

@@ -73,6 +73,14 @@ As aspas em `"HEAD@{1}"` são necessárias no PowerShell, por causa das chaves. 
 3. [git revert](https://git-scm.com/docs/git-revert): como desfazer com segurança o que já foi publicado.
 4. [git reflog](https://git-scm.com/docs/git-reflog): a sintaxe `HEAD@{n}` e os prazos de expiração.
 
+## Pratique
+
+Exercício com correção automática: **git/05 · Desfazer sem reescrever e recuperar com o reflog**. Na primeira vez, o comando cria um repositório de treino em `..\treino-git\` e diz onde ele está; você resolve lá com comandos git, e o teste confere o resultado.
+
+```bash
+npm run exercicio git/05
+```
+
 ## Confira se entendeu
 
 <details><summary>Você preparou um arquivo por engano. Como tirá-lo da área de preparo sem perder a edição?</summary>

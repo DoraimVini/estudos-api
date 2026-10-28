@@ -75,7 +75,13 @@ git log --oneline --graph           # o commit de merge com os dois lados
 
 ## Pratique
 
-Este é o **mini-projeto do módulo 1**: crie um repositório de anotações no GitHub, gere um conflito entre duas branches e resolva **pelo PR**, não só localmente.
+Este é também o **mini-projeto do módulo 1**: crie um repositório de anotações no GitHub, gere um conflito entre duas branches e resolva **pelo PR**, não só localmente.
+
+Exercício com correção automática: **git/03 · Conflito: combinar, não escolher**. Na primeira vez, o comando cria um repositório de treino em `..\treino-git\` e diz onde ele está; você resolve lá com comandos git, e o teste confere o resultado.
+
+```bash
+npm run exercicio git/03
+```
 
 ## Confira se entendeu
 
