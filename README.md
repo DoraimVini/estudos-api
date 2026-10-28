@@ -21,6 +21,8 @@ Dê dois cliques em **`iniciar.cmd`**: ele sobe a API e abre o painel em http://
 
 O **Pomodoro** fica ao lado de todas as páginas: escolha o tópico, inicie e, no fim, registre a sessão. O tópico passa para "Em andamento" sozinho.
 
+O botão **Tema** no topo alterna entre automático (segue o tema do Windows), escuro e claro; a escolha fica salva no navegador.
+
 No PowerShell, se `npm` der erro de "execução de scripts", use `npm.cmd` (ex.: `npm.cmd run dev`) ou libere com `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 
 ## Como rodar

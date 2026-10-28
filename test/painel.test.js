@@ -38,6 +38,29 @@ describe("painel web (public/)", () => {
     }
   });
 
+  it("tema: o script entra no <head> antes do CSS, sem defer, e o botão existe", async () => {
+    const html = (await request(app).get("/")).text;
+    const head = html.split("</head>")[0];
+    // Sem defer/module: o tema salvo precisa ser aplicado antes de a página ser desenhada.
+    expect(head).toMatch(/<script src="js\/tema\.js"><\/script>\s*<link rel="stylesheet" href="styles\.css">/);
+    expect(html).toContain('<button type="button" id="tema"');
+    expect((await request(app).get("/js/tema.js")).status).toBe(200);
+  });
+
+  it("toda cor do tema tem versão clara e escura (light-dark)", () => {
+    const css = readFileSync(new URL("styles.css", PUBLICO), "utf8");
+    const raiz = css.match(/:root \{([\s\S]*?)\n\}/)[1];
+    const tokens = [...raiz.matchAll(/^\s*(--[\w-]+):\s*([^;]+);/gm)];
+    const semEscuro = tokens
+      .filter(([, nome]) => nome !== "--raio") // única medida que não é cor
+      .filter(([, , valor]) => !valor.includes("light-dark("))
+      .map(([, nome]) => nome);
+    expect(tokens.length).toBeGreaterThan(10);
+    expect(semEscuro).toEqual([]);
+    expect(css).toContain(':root[data-tema="claro"] { color-scheme: light; }');
+    expect(css).toContain(':root[data-tema="escuro"] { color-scheme: dark; }');
+  });
+
   it("a API continua respondendo JSON, inclusive no 404", async () => {
     expect((await request(app).get("/api/v1/status")).body.ok).toBe(true);
     const res = await request(app).get("/api/v1/nao-existe");
