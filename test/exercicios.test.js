@@ -39,14 +39,16 @@ describe("catálogo de exercícios (consistência)", () => {
     for (const { slug } of CATALOGO) {
       expect(existsSync(arquivo(slug, "README.md")), `${slug}/README.md`).toBe(true);
       expect(existsSync(arquivo(slug, "solucao.test.js")), `${slug}/solucao.test.js`).toBe(true);
-      const temEsqueleto = existsSync(arquivo(slug, "solucao.js")) || existsSync(arquivo(slug, "solucao.sql"));
-      expect(temEsqueleto, `${slug}/solucao.*`).toBe(true);
+      // Nos de Git o "esqueleto" é o preparar.js: ele monta o repositório de treino fora do projeto.
+      const esqueletos = slug.startsWith("git/") ? ["preparar.js"] : ["solucao.js", "solucao.sql"];
+      const temEsqueleto = esqueletos.some((nome) => existsSync(arquivo(slug, nome)));
+      expect(temEsqueleto, `${slug}/${esqueletos.join(" ou ")}`).toBe(true);
     }
   });
 
   it("toda pasta de exercício está no catálogo", () => {
     const raiz = new URL("../exercicios/", import.meta.url);
-    const pastas = ["js", "node", "sql"].flatMap((grupo) =>
+    const pastas = ["git", "js", "node", "sql"].flatMap((grupo) =>
       readdirSync(new URL(`${grupo}/`, raiz), { withFileTypes: true })
         .filter((d) => d.isDirectory() && !d.name.startsWith("_"))
         .map((d) => `${grupo}/${d.name}`));
@@ -54,7 +56,8 @@ describe("catálogo de exercícios (consistência)", () => {
   });
 
   it("nenhuma solução foi commitada: os esqueletos continuam vazios", () => {
-    for (const { slug } of CATALOGO) {
+    // Os de Git não têm o que commitar aqui: a solução fica no repositório de treino, em ..	reino-git.
+    for (const { slug } of CATALOGO.filter((e) => !e.slug.startsWith("git/"))) {
       if (existsSync(arquivo(slug, "solucao.sql"))) {
         const sql = readFileSync(arquivo(slug, "solucao.sql"), "utf8").replace(/--.*$/gm, "").trim();
         expect(sql, `${slug}/solucao.sql`).toBe("");
@@ -71,7 +74,7 @@ describe("GET /exercicios", () => {
     expect(res.status).toBe(200);
     expect(res.body.map((e) => e.slug)).toEqual(CATALOGO.map((e) => e.slug));
     expect(res.body[0]).toMatchObject({
-      slug: "js/01-closures", modulo_nome: "JavaScript moderno", topico_nome: "Escopo e closures",
+      slug: "git/01-staging", modulo_nome: "Git e GitHub", topico_nome: "Modelo do Git",
       status: "Pendente", tentativas: 0, resolvido_em: null,
     });
   });
@@ -119,16 +122,16 @@ describe("tentativas (npm run exercicio)", () => {
 
 describe("exercícios no /proximo e no /progresso", () => {
   it("sugere os pendentes dos módulos em foco, na ordem deles", async () => {
-    // Mês 4: o primeiro módulo em foco com exercícios é o 2 (JavaScript, atrasado).
+    // Mês 4: o módulo em foco mais atrasado é o 1 (Git, mês 1), então os exercícios dele vêm primeiro.
     const res = await request(app).get("/api/v1/proximo");
-    expect(res.body.exercicios.map((e) => e.slug)).toEqual(["js/01-closures", "js/02-arrays", "js/03-objetos"]);
-    expect(res.body.exercicios[0].comando).toBe("npm run exercicio js/01-closures");
+    expect(res.body.exercicios.map((e) => e.slug)).toEqual(["git/01-staging", "git/02-merge", "git/03-conflito"]);
+    expect(res.body.exercicios[0].comando).toBe("npm run exercicio git/01-staging");
   });
 
   it("resolvido sai da sugestão", async () => {
-    repos.exercicios.registrarTentativa("js/01-closures", true, "2027-02-11");
+    repos.exercicios.registrarTentativa("git/01-staging", true, "2027-02-11");
     const res = await request(app).get("/api/v1/proximo");
-    expect(res.body.exercicios[0].slug).toBe("js/02-arrays");
+    expect(res.body.exercicios[0].slug).toBe("git/02-merge");
   });
 
   it("/progresso conta os resolvidos", async () => {

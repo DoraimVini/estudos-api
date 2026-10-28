@@ -37,6 +37,8 @@
 - Exercícios: catálogo em `exercicios/catalogo.json`, sincronizado por slug (`src/db/exercicios.js`); cada
   exercício aponta para o slug do tópico.
   Só `npm run exercicio` marca como Resolvido (não há PATCH de propósito).
+  Exercícios de Git (`exercicios/git/`): `preparar.js` monta um repositório de treino em `..\treino-git\` (fora do repo)
+  e o teste confere o estado dele; validar cada um com `TREINO_GIT` numa pasta temporária (sem resolver falha, resolvido passa).
 - Painel web em `public/` (HTML/CSS/JS puros, sem build), servido pelo Express na raiz. Roteamento por hash;
   cada página em `public/js/paginas/` exporta `{ titulo, render(param), acoes }`. Todo texto vindo da API passa por `esc()`.
 - Conteúdo de estudo em `conteudo/<slug do módulo>/<slug do tópico>.md`, servido por `GET /topicos/:id` e aberto pelo

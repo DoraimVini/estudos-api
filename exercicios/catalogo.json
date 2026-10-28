@@ -1,5 +1,12 @@
 {
   "exercicios": [
+    { "slug": "git/01-staging", "topico": "modelo-do-git", "titulo": "Um commit só com a correção" },
+    { "slug": "git/02-merge", "topico": "merge-e-rebase", "titulo": "Fast-forward e commit de merge" },
+    { "slug": "git/03-conflito", "topico": "conflitos", "titulo": "Conflito: combinar, não escolher" },
+    { "slug": "git/04-remotos", "topico": "remotos", "titulo": "Push, fetch e prune" },
+    { "slug": "git/05-desfazer", "topico": "desfazer-coisas", "titulo": "Desfazer sem reescrever e recuperar com o reflog" },
+    { "slug": "git/06-segredos", "topico": "gitignore-e-segredos", "titulo": "Tirar o .env e o node_modules do repositório" },
+
     { "slug": "js/01-closures", "topico": "escopo-e-closures", "titulo": "Contador e gerador de ids com closures" },
     { "slug": "js/02-arrays", "topico": "arrays", "titulo": "Relatório de sessões com map, filter e reduce" },
     { "slug": "js/03-objetos", "topico": "objetos", "titulo": "Mesclar e recortar objetos sem mutar" },

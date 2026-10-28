@@ -68,6 +68,14 @@ git remote show origin        # tudo junto: URL, branches remotas e o que o pull
 3. [git fetch · PRUNING](https://git-scm.com/docs/git-fetch#_pruning): o que o `--prune` remove e o que não remove.
 4. [git push](https://git-scm.com/docs/git-push): referência, incluindo `-u` e por que um push é rejeitado.
 
+## Pratique
+
+Exercício com correção automática: **git/04 · Push, fetch e prune**. Na primeira vez, o comando cria um repositório de treino em `..\treino-git\` e diz onde ele está; você resolve lá com comandos git, e o teste confere o resultado.
+
+```bash
+npm run exercicio git/04
+```
+
 ## Confira se entendeu
 
 <details><summary>Qual a diferença entre <code>git fetch</code> e <code>git pull</code>?</summary>

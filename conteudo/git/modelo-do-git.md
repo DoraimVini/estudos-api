@@ -78,6 +78,14 @@ Agora edite `notas.txt`, faça um segundo commit e rode `git cat-file -p HEAD` d
 4. [git cat-file](https://git-scm.com/docs/git-cat-file): para inspecionar objetos como no "Na prática" acima.
 5. Para ir além: [Pro Git 10.2 · Git Objects](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects) (em inglês), que monta um commit "na mão", sem `git commit`.
 
+## Pratique
+
+Exercício com correção automática: **git/01 · Um commit só com a correção**. Na primeira vez, o comando cria um repositório de treino em `..\treino-git\` e diz onde ele está; você resolve lá com comandos git, e o teste confere o resultado.
+
+```bash
+npm run exercicio git/01
+```
+
 ## Confira se entendeu
 
 <details><summary>Se você editar um arquivo e der <code>git commit</code> sem <code>git add</code>, o que entra no commit?</summary>

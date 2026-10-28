@@ -74,6 +74,14 @@ git check-ignore -v .env   # .gitignore:1:.env   .env
 2. [gitignore · PATTERN FORMAT](https://git-scm.com/docs/gitignore#_pattern_format): a referência completa dos padrões. Veja também [NOTES](https://git-scm.com/docs/gitignore#_notes), sobre arquivos já rastreados.
 3. [GitHub · Remover dados confidenciais de um repositório](https://docs.github.com/pt/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository): por que revogar vem primeiro, e o custo de reescrever o histórico.
 
+## Pratique
+
+Exercício com correção automática: **git/06 · Tirar o .env e o node_modules do repositório**. Na primeira vez, o comando cria um repositório de treino em `..\treino-git\` e diz onde ele está; você resolve lá com comandos git, e o teste confere o resultado.
+
+```bash
+npm run exercicio git/06
+```
+
 ## Confira se entendeu
 
 <details><summary>Você adicionou <code>config.json</code> ao <code>.gitignore</code>, mas ele continua aparecendo como modificado. Por quê?</summary>
