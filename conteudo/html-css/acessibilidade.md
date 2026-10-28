@@ -66,6 +66,14 @@ O foco segue a **ordem do HTML**. `tabindex="0"` põe um elemento que não é fo
 3. [web.dev · Keyboard focus](https://web.dev/learn/accessibility/focus): ordem do foco, `tabindex`, links para pular conteúdo e estilos de foco.
 4. [W3C · An alt Decision Tree](https://www.w3.org/WAI/tutorials/images/decision-tree/): um fluxograma para decidir o `alt` de cada imagem.
 
+## Pratique
+
+Exercício com correção automática: **html/03 · Conserte os 7 problemas de acessibilidade**.
+
+```bash
+npm run exercicio html/03
+```
+
 ## Confira se entendeu
 
 <details><summary>Qual o <code>alt</code> certo para uma imagem só decorativa?</summary>

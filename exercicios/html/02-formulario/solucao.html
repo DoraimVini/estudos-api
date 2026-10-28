@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Cadastro</title>
+</head>
+<body>
+  <!-- TODO: deixe este formulário acessível e com validação nativa. Leia o README.md desta pasta. -->
+  <h1>Cadastro para a mentoria</h1>
+
+  <form action="/cadastro" method="post">
+    Nome <input name="nome">
+    E-mail <input name="email">
+    Telefone <input name="telefone">
+    CEP <input name="cep">
+
+    Nível:
+    <input type="radio" name="nivel" value="junior"> Júnior
+    <input type="radio" name="nivel" value="pleno"> Pleno
+    <input type="radio" name="nivel" value="senior"> Sênior
+
+    <input type="checkbox" name="termos"> Li e aceito os termos
+
+    <div onclick="this.closest('form').submit()">Enviar</div>
+  </form>
+</body>
+</html>

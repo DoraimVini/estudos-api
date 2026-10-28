@@ -67,6 +67,14 @@ A imagem encolhe com o container, mas nunca cresce além do tamanho original. Pa
 3. [MDN · CSS values and units](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Values_and_units): `rem`, `em`, `%`, `vw` e as outras unidades.
 4. Para ir além: [MDN · Responsive images](https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Responsive_images), sobre `srcset` e `<picture>`.
 
+## Pratique
+
+Exercício com correção automática: **css/02 · Calcule o layout: flexbox, grid e media queries**. Tem perguntas de media query e de `em` x `rem`.
+
+```bash
+npm run exercicio css/02
+```
+
 ## Confira se entendeu
 
 <details><summary>O que acontece no celular se faltar a meta viewport?</summary>

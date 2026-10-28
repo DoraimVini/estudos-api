@@ -83,6 +83,14 @@ A MDN resume assim: **controla linhas *ou* colunas → flexbox; linhas *e* colun
 2. [MDN · Grid x Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Relationship_with_other_layout_methods#grid_and_flexbox): unidimensional x bidimensional, com exemplos.
 3. [web.dev · Grid](https://web.dev/learn/css/grid): outra explicação, com bons diagramas.
 
+## Pratique
+
+Exercício com correção automática: **css/02 · Calcule o layout: flexbox, grid e media queries**. Tem perguntas de `fr` e `auto-fill`.
+
+```bash
+npm run exercicio css/02
+```
+
 ## Confira se entendeu
 
 <details><summary>Em <code>grid-template-columns: 200px 1fr 1fr</code> num container de 800px sem gap, quanto mede cada coluna?</summary>

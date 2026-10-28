@@ -6,6 +6,8 @@ Exercícios com correção automática para praticar os módulos da trilha:
 |---|---|---|
 | `git/` | 1 · Git e GitHub | staging, merge, conflito, remotos, desfazer, segredos ([como funcionam](#exercícios-de-git)) |
 | `js/` | 2 · JavaScript moderno | closures, arrays, objetos, promises, event loop |
+| `html/` | 3 · HTML, CSS e acessibilidade | semântica, formulário, acessibilidade ([como funcionam](#exercícios-de-html-e-css)) |
+| `css/` | 3 · HTML, CSS e acessibilidade | preveja a cascata e o box model; calcule flexbox, grid e media queries |
 | `node/` | 4 · Node e APIs REST | arquivos, HTTP puro, middlewares, validação, API REST |
 | `sql/` | 5 · SQL e PostgreSQL | do `SELECT` à modelagem, sobre [o banco de uma loja](sql/README.md) |
 
@@ -13,7 +15,7 @@ Exercícios com correção automática para praticar os módulos da trilha:
 
 1. Veja a lista e o que falta: `npm run exercicio`.
 2. Abra a pasta do exercício e leia o `README.md` (enunciado, dicas e critério de pronto).
-3. Escreva sua resposta em `solucao.js` ou `solucao.sql` (nos de Git, veja [abaixo](#exercícios-de-git)). **Não mexa no `solucao.test.js`.**
+3. Escreva sua resposta em `solucao.js`, `solucao.sql` ou `solucao.html` (nos de Git, veja [abaixo](#exercícios-de-git)). **Não mexa no `solucao.test.js`.**
 4. Rode os testes daquele exercício:
    ```bash
    npm run exercicio js/01
@@ -36,6 +38,12 @@ Alguns comandos (merge com commit, `revert`, o commit que conclui um conflito) a
 ```bash
 git config --global core.editor "code --wait"
 ```
+
+## Exercícios de HTML e CSS
+
+- **`html/`**: o `solucao.html` é uma página com problemas. Você a corrige e abre no navegador (dois cliques) para ver o resultado. O teste lê a **estrutura** do HTML (tags, atributos, rótulos, títulos), sem navegador.
+- **`css/`**: você **prevê** o que o navegador faz (qual regra vence, qual a largura de cada item) e responde em `solucao.js`. Todas as respostas foram conferidas num navegador; no teste, o gabarito fica guardado só como hash, para você não ver a resposta por acidente.
+- O que depende de desenhar a página (contraste, layout real, nota do Lighthouse) os testes **não** cobrem. Isso fica com o DevTools e com o mini-projeto do portfólio.
 
 ## Regras
 - **A solução é sua.** Use a IA para tirar dúvidas e revisar, não para resolver. Um teste da API garante que nenhuma solução seja commitada no repositório.

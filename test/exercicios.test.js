@@ -40,7 +40,7 @@ describe("catálogo de exercícios (consistência)", () => {
       expect(existsSync(arquivo(slug, "README.md")), `${slug}/README.md`).toBe(true);
       expect(existsSync(arquivo(slug, "solucao.test.js")), `${slug}/solucao.test.js`).toBe(true);
       // Nos de Git o "esqueleto" é o preparar.js: ele monta o repositório de treino fora do projeto.
-      const esqueletos = slug.startsWith("git/") ? ["preparar.js"] : ["solucao.js", "solucao.sql"];
+      const esqueletos = slug.startsWith("git/") ? ["preparar.js"] : ["solucao.js", "solucao.sql", "solucao.html"];
       const temEsqueleto = esqueletos.some((nome) => existsSync(arquivo(slug, nome)));
       expect(temEsqueleto, `${slug}/${esqueletos.join(" ou ")}`).toBe(true);
     }
@@ -48,7 +48,7 @@ describe("catálogo de exercícios (consistência)", () => {
 
   it("toda pasta de exercício está no catálogo", () => {
     const raiz = new URL("../exercicios/", import.meta.url);
-    const pastas = ["git", "js", "node", "sql"].flatMap((grupo) =>
+    const pastas = ["git", "js", "html", "css", "node", "sql"].flatMap((grupo) =>
       readdirSync(new URL(`${grupo}/`, raiz), { withFileTypes: true })
         .filter((d) => d.isDirectory() && !d.name.startsWith("_"))
         .map((d) => `${grupo}/${d.name}`));
@@ -58,7 +58,10 @@ describe("catálogo de exercícios (consistência)", () => {
   it("nenhuma solução foi commitada: os esqueletos continuam vazios", () => {
     // Os de Git não têm o que commitar aqui: a solução fica no repositório de treino, em ..	reino-git.
     for (const { slug } of CATALOGO.filter((e) => !e.slug.startsWith("git/"))) {
-      if (existsSync(arquivo(slug, "solucao.sql"))) {
+      if (existsSync(arquivo(slug, "solucao.html"))) {
+        // O esqueleto de HTML é a página com problemas; o comentário TODO só sai na solução.
+        expect(readFileSync(arquivo(slug, "solucao.html"), "utf8"), `${slug}/solucao.html`).toMatch(/TODO/);
+      } else if (existsSync(arquivo(slug, "solucao.sql"))) {
         const sql = readFileSync(arquivo(slug, "solucao.sql"), "utf8").replace(/--.*$/gm, "").trim();
         expect(sql, `${slug}/solucao.sql`).toBe("");
       } else {

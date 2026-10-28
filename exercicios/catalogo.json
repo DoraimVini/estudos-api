@@ -13,6 +13,12 @@
     { "slug": "js/04-promises", "topico": "promises-e-async-await", "titulo": "Buscas em paralelo, falhas e timeout" },
     { "slug": "js/05-event-loop", "topico": "event-loop", "titulo": "Preveja a ordem do event loop" },
 
+    { "slug": "html/01-semantica", "topico": "html-semantico", "titulo": "Da sopa de div ao HTML semântico" },
+    { "slug": "html/02-formulario", "topico": "formularios", "titulo": "Formulário acessível com validação nativa" },
+    { "slug": "html/03-acessibilidade", "topico": "acessibilidade", "titulo": "Conserte os 7 problemas de acessibilidade" },
+    { "slug": "css/01-cascata", "topico": "seletores-e-cascata", "titulo": "Preveja a cascata e o box model" },
+    { "slug": "css/02-layout", "topico": "flexbox", "titulo": "Calcule o layout: flexbox, grid e media queries" },
+
     { "slug": "node/01-arquivos", "topico": "modulos-nativos", "titulo": "Ler arquivos com fs/promises" },
     { "slug": "node/02-http-puro", "topico": "http", "titulo": "Servidor HTTP sem Express" },
     { "slug": "node/03-middlewares", "topico": "express", "titulo": "Middlewares do Express" },

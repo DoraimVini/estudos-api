@@ -74,6 +74,14 @@ input:user-invalid { border-color: crimson; }
 2. [MDN · Client-side form validation](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation): leia [What is form validation?](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation#what_is_form_validation) e [Using built-in form validation](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation#using_built-in_form_validation).
 3. [MDN · `<input>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input): a referência, com a lista de todos os `type`.
 
+## Pratique
+
+Exercício com correção automática: **html/02 · Formulário acessível com validação nativa**.
+
+```bash
+npm run exercicio html/02
+```
+
 ## Confira se entendeu
 
 <details><summary>O que acontece ao clicar num <code>&lt;button&gt;</code> sem <code>type</code> dentro de um <code>&lt;form&gt;</code>?</summary>

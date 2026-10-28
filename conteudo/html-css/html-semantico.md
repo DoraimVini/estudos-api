@@ -74,6 +74,14 @@ Regra prática: **link (`<a href>`) leva a outro lugar; botão (`<button>`) faz 
 2. [web.dev · Semantic HTML](https://web.dev/learn/html/semantic-html): a árvore de acessibilidade e os papéis implícitos de cada elemento.
 3. [MDN · Elementos de título h1–h6](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/Heading_Elements#usage_notes): como usar títulos, incluindo a seção [Accessibility](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/Heading_Elements#accessibility).
 
+## Pratique
+
+Exercício com correção automática: **html/01 · Da sopa de div ao HTML semântico**.
+
+```bash
+npm run exercicio html/01
+```
+
 ## Confira se entendeu
 
 <details><summary>Quantos <code>&lt;main&gt;</code> uma página deve ter?</summary>
