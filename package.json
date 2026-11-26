@@ -1,22 +1,23 @@
 {
   "name": "estudos-api",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "API REST para organizar meus estudos de dev full stack, a partir do plano de 3 anos",
   "type": "module",
-  "main": "src/server.js",
+  "main": "src/server.ts",
   "engines": {
-    "node": ">=22.13"
+    "node": ">=22.18"
   },
   "scripts": {
-    "start": "node --no-warnings=ExperimentalWarning src/server.js",
-    "dev": "node --no-warnings=ExperimentalWarning --watch src/server.js",
+    "start": "node --no-warnings=ExperimentalWarning src/server.ts",
+    "dev": "node --no-warnings=ExperimentalWarning --watch src/server.ts",
     "test": "vitest run",
     "test:watch": "vitest",
-    "db:reset": "node --no-warnings=ExperimentalWarning src/db/reset.js",
-    "plano": "node src/scripts/gerar-plano.js",
-    "exercicio": "node --no-warnings=ExperimentalWarning src/scripts/exercicio.js",
-    "links": "node src/scripts/verificar-links.js",
-    "planilha": "node --no-warnings=ExperimentalWarning src/scripts/planilha.js"
+    "db:reset": "node --no-warnings=ExperimentalWarning src/db/reset.ts",
+    "plano": "node src/scripts/gerar-plano.ts",
+    "exercicio": "node --no-warnings=ExperimentalWarning src/scripts/exercicio.ts",
+    "links": "node src/scripts/verificar-links.ts",
+    "planilha": "node --no-warnings=ExperimentalWarning src/scripts/planilha.ts",
+    "typecheck": "tsc -p ."
   },
   "dependencies": {
     "express": "^5.1.0",
@@ -24,7 +25,10 @@
     "marked": "18.0.14"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.11",
     "supertest": "^7.1.0",
+    "typescript": "^7.0.2",
     "vitest": "^3.2.0"
   }
 }
