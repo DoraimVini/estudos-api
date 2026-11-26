@@ -4,7 +4,7 @@
     {
       "name": "painel-demo",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["--no-warnings=ExperimentalWarning", "src/server.js"],
+      "runtimeArgs": ["--no-warnings=ExperimentalWarning", "src/server.ts"],
       "env": { "DB_PATH": "demo.db", "PORT": "3100" },
       "port": 3100
     }

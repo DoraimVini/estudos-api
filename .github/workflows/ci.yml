@@ -19,6 +19,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # Confere os tipos (TypeScript strict). Fica no job testes para não precisar mudar os rulesets.
+      - run: npm run typecheck
       - run: npm test
 
   # PR para a main só pode vir da develop deste repositório (fluxo main ← develop).

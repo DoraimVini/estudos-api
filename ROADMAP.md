@@ -56,8 +56,10 @@ Cada versão é uma branch `feat/` com PR para `develop`. A `v1.0` vai para a `m
 - **Exercícios de Git** (6): cada um prepara um repositório de treino em `..\treino-git\` e o teste confere o estado
   dele (staging, merge, conflito, remotos, revert/reflog, segredos). Os de HTML/CSS vêm em seguida.
 
-### v0.6 · TypeScript
-- API convertida, `strict` ligado, `tsc --noEmit` no CI. Exercícios e painel continuam em JavaScript.
+### v0.6 · TypeScript ✅
+- API convertida, `strict` ligado, `tsc --noEmit` no CI (`npm run typecheck`). Exercícios, painel e testes continuam em JavaScript.
+- Sem build: o Node 22.18+ roda o `.ts` direto (type stripping); o `tsc` só confere os tipos.
+- Tipos das tabelas em `src/tipos.ts` e consultas tipadas em `src/db/sql.ts`.
 
 ### v0.7 · PostgreSQL + Docker
 - `docker-compose.yml` com PostgreSQL; migrações reescritas para PostgreSQL.

@@ -6,7 +6,8 @@ e responde **o que estudar agora**, em ordem de prioridade, com o motivo de cada
 
 ## Requisitos
 
-- Node.js **22.13 ou mais novo** (usa o SQLite que já vem no Node, `node:sqlite`: nada para compilar).
+- Node.js **22.18 ou mais novo**: usa o SQLite que já vem no Node (`node:sqlite`) e roda o TypeScript direto,
+  apagando os tipos ao carregar (type stripping). Não há etapa de build.
 
 ## Como estudar com ela
 
@@ -31,6 +32,7 @@ No PowerShell, se `npm` der erro de "execução de scripts", use `npm.cmd` (ex.:
 npm install
 npm run dev        # painel em http://localhost:3000, API em /api/v1; reinicia ao salvar arquivos
 npm test           # roda os testes da API (Vitest + Supertest)
+npm run typecheck  # confere os tipos do TypeScript (tsc, modo strict)
 npm run db:reset   # apaga o banco local e recria a partir dos arquivos JSON
 npm run plano      # gera o PLANO.md a partir de src/db/trilha.json
 npm run exercicio  # lista os exercícios; npm run exercicio js/01 roda um deles
@@ -106,7 +108,7 @@ curl localhost:3000/api/v1/progresso
 
 ## Como a prioridade é calculada
 
-Fica em `src/services/plano.js` (função `pontuarSkill`), de propósito num lugar só para você mexer:
+Fica em `src/services/plano.ts` (função `pontuarSkill`), de propósito num lugar só para você mexer:
 
 - `(meta − hoje) × 2`: quanto mais longe da meta, mais prioridade (autoavaliação vazia conta como 1);
 - nível: júnior +6, pleno +4, sênior +2;
@@ -121,25 +123,25 @@ O mês do plano é calculado a partir de 01/11/2026 (mês 1). Para simular outro
 
 ```
 src/
-  app.js              monta o Express (sem abrir porta; usado pelos testes)
-  server.js           abre a porta
+  app.ts              monta o Express (sem abrir porta; usado pelos testes)
+  server.ts           abre a porta
   routes/             HTTP: lê a requisição, valida e responde
-  services/           regras puras: prioridade (plano.js), trilha (trilha.js), PLANO.md (markdown.js)
+  services/           regras puras: prioridade (plano.ts), trilha (trilha.ts), PLANO.md (markdown.ts)
   repositories/       SQL: o único lugar que fala com o banco
-  db/database.js      abre o banco, migra e sincroniza habilidades, cursos, trilha e exercícios
-  db/migrate.js       aplica db/migrations/NNN_nome.sql em ordem (PRAGMA user_version)
+  db/database.ts      abre o banco, migra e sincroniza habilidades, cursos, trilha e exercícios
+  db/migrate.ts       aplica db/migrations/NNN_nome.sql em ordem (PRAGMA user_version)
   db/habilidades.json habilidades do plano (definição; a autoavaliação fica no banco)
   db/cursos.json      cursos externos (definição; status e prioridade ficam no banco)
-  db/habilidades-cursos.js  sincroniza os dois com o banco pelo slug
+  db/habilidades-cursos.ts  sincroniza os dois com o banco pelo slug
   db/trilha.json      fonte da trilha: data de início, módulos, tópicos e recursos
-  db/trilha.js        sincroniza o trilha.json com o banco sem perder o progresso
-  db/exercicios.js    sincroniza exercicios/catalogo.json com o banco e lê os enunciados
-  planilha/           API -> planilha: xlsx.js (edição cirúrgica do .xlsx), alteracoes.js (regra), atualizar.js (backup e gravação)
+  db/trilha.ts        sincroniza o trilha.json com o banco sem perder o progresso
+  db/exercicios.ts    sincroniza exercicios/catalogo.json com o banco e lê os enunciados
+  planilha/           API -> planilha: xlsx.ts (edição cirúrgica do .xlsx), alteracoes.ts (regra), atualizar.ts (backup e gravação)
   scripts/            npm run plano (gera o PLANO.md), npm run exercicio (roda e registra) e npm run planilha
-  datas.js            datas no fuso de São Paulo
-  constantes.js       níveis, status e prioridades válidos
-  errors.js           formato único de erro { erro, detalhes }
-  validators.js       validação de entrada
+  datas.ts            datas no fuso de São Paulo
+  constantes.ts       níveis, status e prioridades válidos
+  errors.ts           formato único de erro { erro, detalhes }
+  validators.ts       validação de entrada
 test/                 testes de integração e unidade (Vitest + Supertest)
 conteudo/             conteúdo de estudo de cada tópico (<módulo>/<tópico>.md, pelos slugs da trilha)
 exercicios/           exercícios de JS, Node e SQL com testes próprios (fora do npm test)

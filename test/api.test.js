@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import request from "supertest";
-import { createApp } from "../src/app.js";
-import { openDatabase } from "../src/db/database.js";
-import { mesDoPlano, pontuarSkill } from "../src/services/plano.js";
+import { createApp } from "../src/app.ts";
+import { openDatabase } from "../src/db/database.ts";
+import { mesDoPlano, pontuarSkill } from "../src/services/plano.ts";
 
 // Data congelada: 15/02/2027 = mês 4 do plano (início em nov/2026).
 const AGORA = new Date("2027-02-15T12:00:00Z");
@@ -27,6 +27,17 @@ describe("skills", () => {
     const res = await request(app).get("/api/v1/skills");
     expect(res.status).toBe(200);
     expect(res.body).toHaveLength(28);
+  });
+
+  it("filtra por área e recusa a área repetida na query", async () => {
+    const backend = await request(app).get("/api/v1/skills?area=Backend");
+    expect(backend.status).toBe(200);
+    expect(backend.body.length).toBeGreaterThan(0);
+    expect(backend.body.every((s) => s.area === "Backend")).toBe(true);
+
+    const repetida = await request(app).get("/api/v1/skills?area=Backend&area=Frontend");
+    expect(repetida.status).toBe(400);
+    expect(repetida.body.erro).toMatch(/area/);
   });
 
   it("filtra por nível", async () => {

@@ -3,12 +3,12 @@ import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSy
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { zipSync, unzipSync, strToU8, strFromU8 } from "fflate";
-import { openDatabase } from "../src/db/database.js";
-import { HABILIDADES, CURSOS, sincronizarHabilidades } from "../src/db/habilidades-cursos.js";
-import { criarRepositorios } from "../src/repositories/index.js";
-import { abrir, conferir, definirCelula, gravar, lerAba, referencia } from "../src/planilha/xlsx.js";
-import { calcularAlteracoes, dataDoExcel, mesesDoPlano } from "../src/planilha/alteracoes.js";
-import { atualizarPlanilha, dadosDaApi, fazerBackup } from "../src/planilha/atualizar.js";
+import { openDatabase } from "../src/db/database.ts";
+import { HABILIDADES, CURSOS, sincronizarHabilidades } from "../src/db/habilidades-cursos.ts";
+import { criarRepositorios } from "../src/repositories/index.ts";
+import { abrir, conferir, definirCelula, gravar, lerAba, referencia } from "../src/planilha/xlsx.ts";
+import { calcularAlteracoes, dataDoExcel, mesesDoPlano } from "../src/planilha/alteracoes.ts";
+import { atualizarPlanilha, dadosDaApi, fazerBackup } from "../src/planilha/atualizar.ts";
 
 // A planilha real tem dados pessoais e nunca entra no repositório. Estes testes montam uma
 // planilha sintética com o mesmo layout: abas, cabeçalhos, fórmulas, validação e linha de total.

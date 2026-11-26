@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { openDatabase } from "../src/db/database.js";
+import { openDatabase } from "../src/db/database.ts";
 import {
   HABILIDADES, CURSOS, sincronizarHabilidades, sincronizarCursos,
-} from "../src/db/habilidades-cursos.js";
-import { TRILHA, sincronizarTrilha } from "../src/db/trilha.js";
+} from "../src/db/habilidades-cursos.ts";
+import { TRILHA, sincronizarTrilha } from "../src/db/trilha.ts";
 
 let db;
 
