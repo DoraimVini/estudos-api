@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { DatabaseSync } from "node:sqlite";
 import request from "supertest";
-import { createApp } from "../src/app.js";
-import { openDatabase } from "../src/db/database.js";
-import { listarMigracoes, migrar } from "../src/db/migrate.js";
-import { hojeISO, somarDias } from "../src/datas.js";
-import { mesDoPlano } from "../src/services/plano.js";
+import { createApp } from "../src/app.ts";
+import { openDatabase } from "../src/db/database.ts";
+import { listarMigracoes, migrar } from "../src/db/migrate.ts";
+import { hojeISO, somarDias } from "../src/datas.ts";
+import { mesDoPlano } from "../src/services/plano.ts";
 
 const versaoDoBanco = (db) => db.prepare("PRAGMA user_version").get().user_version;
 

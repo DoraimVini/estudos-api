@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { readFileSync } from "node:fs";
 import request from "supertest";
-import { createApp } from "../src/app.js";
-import { openDatabase } from "../src/db/database.js";
-import { TRILHA } from "../src/db/trilha.js";
-import { listarConteudos } from "../src/db/conteudo.js";
+import { createApp } from "../src/app.ts";
+import { openDatabase } from "../src/db/database.ts";
+import { TRILHA } from "../src/db/trilha.ts";
+import { listarConteudos } from "../src/db/conteudo.ts";
 
 let app;
 let db;

@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { readdirSync, readFileSync } from "node:fs";
 import request from "supertest";
-import { createApp } from "../src/app.js";
-import { openDatabase } from "../src/db/database.js";
+import { createApp } from "../src/app.ts";
+import { openDatabase } from "../src/db/database.ts";
 
 const app = createApp(openDatabase(":memory:"));
 const PUBLICO = new URL("../public/", import.meta.url);

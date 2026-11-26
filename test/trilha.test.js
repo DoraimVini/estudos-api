@@ -2,12 +2,12 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { readFileSync } from "node:fs";
 import { DatabaseSync } from "node:sqlite";
 import request from "supertest";
-import { createApp } from "../src/app.js";
-import { openDatabase } from "../src/db/database.js";
-import { migrar } from "../src/db/migrate.js";
-import { TRILHA, sincronizarTrilha } from "../src/db/trilha.js";
-import { trilhaEmMarkdown } from "../src/services/markdown.js";
-import { statusDoModulo } from "../src/services/trilha.js";
+import { createApp } from "../src/app.ts";
+import { openDatabase } from "../src/db/database.ts";
+import { migrar } from "../src/db/migrate.ts";
+import { TRILHA, sincronizarTrilha } from "../src/db/trilha.ts";
+import { trilhaEmMarkdown } from "../src/services/markdown.ts";
+import { statusDoModulo } from "../src/services/trilha.ts";
 
 // Mesma data dos outros testes: 15/02/2027 = mês 4 do plano.
 const AGORA = new Date("2027-02-15T12:00:00Z");

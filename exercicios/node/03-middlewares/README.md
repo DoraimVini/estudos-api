@@ -2,7 +2,7 @@
 
 **Módulo 4 · Node e APIs REST · tópico: Express**
 
-Middleware é uma função `(req, res, next)` que roda no caminho da requisição: pode responder, alterar `req`/`res` ou passar adiante com `next()`. Middleware de **erro** tem quatro parâmetros: `(err, req, res, next)`. Esta API usa os dois tipos (veja `src/errors.js`).
+Middleware é uma função `(req, res, next)` que roda no caminho da requisição: pode responder, alterar `req`/`res` ou passar adiante com `next()`. Middleware de **erro** tem quatro parâmetros: `(err, req, res, next)`. Esta API usa os dois tipos (veja `src/errors.ts`).
 
 ## O que fazer
 
