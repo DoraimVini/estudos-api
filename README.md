@@ -1,8 +1,25 @@
 # estudos-api
 
-API REST que organiza meus estudos de dev full stack a partir do plano de 3 anos.
-Ela já vem carregada com as 28 habilidades (júnior → pleno → sênior) e os cursos externos do plano,
-e responde **o que estudar agora**, em ordem de prioridade, com o motivo de cada sugestão.
+[![CI](https://github.com/DoraimVini/estudos-api/actions/workflows/ci.yml/badge.svg)](https://github.com/DoraimVini/estudos-api/actions/workflows/ci.yml)
+
+API REST com painel web que responde **o que estudar agora**. Ela organiza uma trilha de estudos de dev full stack
+(13 módulos, 28 habilidades de júnior a sênior), registra o progresso e as sessões de estudo, e prioriza
+os próximos tópicos com uma regra explicável: o motivo de cada sugestão vem junto na resposta.
+
+![Painel: página Agora, com os módulos do mês e o Pomodoro](docs/img/painel-agora.png)
+
+## Destaques
+
+- **API REST** em Node.js 22 e Express 5, com camadas separadas: `routes/` (HTTP e validação) → `services/` (regras puras) → `repositories/` (SQL).
+- **SQLite nativo do Node** (`node:sqlite`) com **migrações versionadas** (`PRAGMA user_version`).
+- **Testes automatizados** com Vitest e Supertest (banco em memória e data congelada) rodando no **GitHub Actions** a cada PR.
+- **Fluxo de Git profissional**: `main` ← `develop` ← branches por tarefa, protegido por rulesets (só entra por PR com CI verde).
+- **Painel web** em HTML, CSS e JavaScript puros, sem build, servido pela própria API.
+- **Exercícios com correção automática** de JavaScript, Node, SQL e Git, e conteúdo de estudo escrito a partir da documentação oficial.
+
+| Trilha | Progresso |
+|---|---|
+| ![Página Trilha](docs/img/painel-trilha.png) | ![Página Progresso](docs/img/painel-progresso.png) |
 
 ## Requisitos
 
@@ -40,9 +57,11 @@ npm run planilha   # mostra o que mudaria na planilha do plano; npm run planilha
 
 O banco fica no arquivo `estudos.db` (fora do Git). Para outro caminho: `DB_PATH=meu.db npm start`.
 
-### Planilha do plano (`npm run planilha`)
+### Integração opcional com planilha (`npm run planilha`)
 
-A planilha `..\Plano_3_anos_Vini.xlsx` continua sendo o plano mestre (visto, orçamento, candidaturas, riscos).
+Uso pessoal: a API funciona sem isso. Quem clonar o projeto pode ignorar esta seção.
+
+A planilha pessoal do plano (fora do repositório; caminho em `PLANILHA_PATH`) continua sendo o plano mestre (visto, orçamento, candidaturas, riscos).
 A API é dona dos estudos e escreve só nestas células:
 
 | Aba | Células | De onde vem |
