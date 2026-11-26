@@ -12,7 +12,11 @@
   Nunca commitar solução em `exercicios/` (um teste da API verifica que os esqueletos continuam vazios).
 
 ## Stack e comandos
-- Node.js >= 22.13 (usa `node:sqlite`, sem dependência nativa), Express 5, ESM.
+- Node.js >= 22.18 (usa `node:sqlite` e roda TypeScript direto, sem build), Express 5, ESM.
+- TypeScript em `src/` com `strict` (v0.6). O Node só apaga os tipos (type stripping): imports com `.ts`,
+  e nada de `enum`, `namespace` ou parameter properties (`erasableSyntaxOnly`). `npm run typecheck` (tsc) roda no CI.
+  Tipos das tabelas em `src/tipos.ts`; consultas tipadas com `umaLinha`/`linhas`/`linhaUnica` (`src/db/sql.ts`).
+  Testes, painel e exercícios continuam em JavaScript.
 - Testes: Vitest + Supertest (`test/*.test.js`). Rodar sempre antes de commitar.
   Testes de `exercicios/` rodam à parte (`vitest.exercicios.config.js`), fora do `npm test` e do CI.
 - `npm install` · `npm run dev` · `npm test` · `npm run db:reset` · `npm run plano` · `npm run exercicio [slug]` · `npm run planilha [-- --gravar]`
@@ -20,21 +24,21 @@
   (inclui `plano_inicio`), sincronizadas por slug a cada abertura; o progresso (autoavaliação, status, sessões) fica no banco.
   Dados de estudo: a API é a dona e escreve na planilha, nunca o contrário (`npm run planilha`, em `src/planilha/`).
 - Planilha: tem dados pessoais, nunca entra no repo (testes usam planilha sintética). Só se editam as células-alvo no XML
-  (`src/planilha/xlsx.js`): bibliotecas que regravam o arquivo inteiro (exceljs) estragam larguras e validações.
+  (`src/planilha/xlsx.ts`): bibliotecas que regravam o arquivo inteiro (exceljs) estragam larguras e validações.
   Nunca gravar na planilha real sem eu pedir; para testar, usar uma cópia com `PLANILHA_PATH`.
 
 ## Arquitetura
-- `src/app.js` monta o app sem abrir porta (os testes usam banco `:memory:` e data congelada via `opcoes.agora`).
+- `src/app.ts` monta o app sem abrir porta (os testes usam banco `:memory:` e data congelada via `opcoes.agora`).
 - Camadas: `routes/` (HTTP, validação) → `services/` (regras puras) → `repositories/` (todo o SQL). Rotas recebem `repos`, nunca o `db`.
 - Schema só muda por migração nova em `src/db/migrations/` (`PRAGMA user_version`); nunca editar migração já mergeada.
-- Datas de calendário via `src/datas.js` (fuso America/Sao_Paulo), nunca `toISOString().slice(0, 10)`.
-- Validação em `src/validators.js`; erros sempre no formato `{ erro, detalhes }`.
-- Regra de prioridade em `src/services/plano.js` (`pontuarSkill`, `proximasPrioridades`). Plano começa em 01/11/2026 = mês 1.
-- Habilidades e cursos: `src/db/habilidades-cursos.js`, mesmo modelo da trilha (slug fixo; `inicial` só vale ao criar).
-- Trilha: `sincronizarTrilha` (em `src/db/trilha.js`) roda a cada abertura do banco. Tópico é identificado pelo
+- Datas de calendário via `src/datas.ts` (fuso America/Sao_Paulo), nunca `toISOString().slice(0, 10)`.
+- Validação em `src/validators.ts`; erros sempre no formato `{ erro, detalhes }`.
+- Regra de prioridade em `src/services/plano.ts` (`pontuarSkill`, `proximasPrioridades`). Plano começa em 01/11/2026 = mês 1.
+- Habilidades e cursos: `src/db/habilidades-cursos.ts`, mesmo modelo da trilha (slug fixo; `inicial` só vale ao criar).
+- Trilha: `sincronizarTrilha` (em `src/db/trilha.ts`) roda a cada abertura do banco. Tópico é identificado pelo
   `slug` (fixo, único na trilha inteira; nunca renomear um slug que já tem progresso); a ordem é só exibição.
-  Status do módulo é derivado dos tópicos (`src/services/trilha.js`), nunca guardado.
-- Exercícios: catálogo em `exercicios/catalogo.json`, sincronizado por slug (`src/db/exercicios.js`); cada
+  Status do módulo é derivado dos tópicos (`src/services/trilha.ts`), nunca guardado.
+- Exercícios: catálogo em `exercicios/catalogo.json`, sincronizado por slug (`src/db/exercicios.ts`); cada
   exercício aponta para o slug do tópico.
   Só `npm run exercicio` marca como Resolvido (não há PATCH de propósito).
   Exercícios de Git (`exercicios/git/`): `preparar.js` monta um repositório de treino em `..\treino-git\` (fora do repo)
